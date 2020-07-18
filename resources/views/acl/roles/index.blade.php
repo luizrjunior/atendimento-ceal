@@ -26,7 +26,7 @@
                 <thead>
                     <tr>
                         <td><b>Cadastrado em</b></td>
-                        <td><b>Nome do Perfil</b></td>
+                        <td><b>Nome</b></td>
                         <td><b>Descrição</b></td>
                         <td><b>Ações</b></td>
                     </tr>
@@ -34,10 +34,10 @@
                 <tbody>
                     @foreach($roles as $role)
                     <tr>
-                        <td>{{$role->created_at}}</td>
+                        <td>{{date('d/m/Y H:i:s', strtotime($role->created_at))}}</td>
                         <td>{{$role->name}}</td>
                         <td>{{$role->description}}</td>
-                        <td><a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                     </tr>
                     @endforeach
 

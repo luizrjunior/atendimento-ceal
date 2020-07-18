@@ -19,6 +19,22 @@ class PermissionsTableSeeder extends Seeder {
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
+        $this->command->info('2 - Inserindo Permissao: Menu_Cadastros');
+        DB::table('permissions')->insert([
+            'name' => 'Menu_Cadastros',
+            'description' => 'Permissão para o menu Cadastros.',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        $this->command->info('3 - Inserindo Permissao: Menu_Colaboradores');
+        DB::table('permissions')->insert([
+            'name' => 'Menu_Colaboradores',
+            'description' => 'Permissão para o menu Colaboradores.',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
     }
 
 }

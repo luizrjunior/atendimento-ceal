@@ -75,6 +75,9 @@ $disabled = "";
                             <button type="submit" class="btn btn-primary" {{$disabled}}>
                                 Atualizar
                             </button>
+                            <a href="{{ url('roles/create') }}" class="btn btn-primary">
+                                Novo
+                            </a>
                         </div>
                     </form>
 

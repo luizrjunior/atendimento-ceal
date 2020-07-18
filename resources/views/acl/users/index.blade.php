@@ -26,7 +26,7 @@
                 <thead>
                     <tr>
                         <td><b>Cadastrado em</b></td>
-                        <td><b>Nome de Usuário</b></td>
+                        <td><b>Nome</b></td>
                         <td><b>E-mail</b></td>
                         <td><b>Ações</b></td>
                     </tr>
@@ -34,10 +34,10 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td>{{$user->created_at}}</td>
+                        <td>{{date('d/m/Y H:i:s', strtotime($user->created_at))}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-                        <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                     </tr>
                     @endforeach
                 </tbody>

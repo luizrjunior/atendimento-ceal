@@ -26,7 +26,7 @@
                 <thead>
                     <tr>
                         <td><b>Cadastrado em</b></td>
-                        <td><b>Nome da Permissão</b></td>
+                        <td><b>Nome</b></td>
                         <td><b>Descrição</b></td>
                         <td><b>Ações</b></td>
                     </tr>
@@ -34,10 +34,10 @@
                 <tbody>
                     @foreach($permissions as $permission)
                     <tr>
-                        <td>{{$permission->created_at}}</td>
+                        <td>{{date('d/m/Y H:i:s', strtotime($permission->created_at))}}</td>
                         <td>{{$permission->name}}</td>
                         <td>{{$permission->description}}</td>
-                        <td><a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                     </tr>
                     @endforeach
                 </tbody>

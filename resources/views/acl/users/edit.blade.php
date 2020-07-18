@@ -1,3 +1,12 @@
+@php
+$disabled = "";
+@endphp
+@if ($user->id == 1)
+    @php
+    $disabled = "disabled";
+    @endphp
+@endif
+
 @extends('layouts.app')
 
 @section('javascript')
@@ -58,9 +67,12 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" {{$disabled}}>
                                 Atualizar
                             </button>
+                            <a href="{{ url('users/create') }}" class="btn btn-primary">
+                                Novo
+                            </a>
                         </div>
                     </form>
 
@@ -100,7 +112,7 @@
                             <textarea class="form-control" id="permissoes" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" {{$disabled}}>
                                 Adicionar
                             </button>
                         </div>
@@ -138,7 +150,7 @@
                                       @method('DELETE')
                                       <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
                                       <input type="hidden" id="role_id" name="role_id" value="{{ $userHasRole->role->id }}">
-                                      <button class="btn btn-danger" type="submit">Remover</button>
+                                      <button class="btn btn-danger" type="submit" {{$disabled}}>Remover</button>
                                     </form>
                                 </td>
                             </tr>

@@ -57,8 +57,7 @@ class CreateAclTables extends Migration
     {
         Schema::drop('roles_has_permissions');
         Schema::drop('users_has_roles');
-        Schema::drop('users_has_permissions');
-        Schema::drop('roles');
         Schema::drop('permissions');
+        Schema::drop('roles');
     }
 }
