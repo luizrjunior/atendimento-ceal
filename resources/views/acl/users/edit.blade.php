@@ -70,9 +70,9 @@ $disabled = "";
                             <button type="submit" class="btn btn-primary" {{$disabled}}>
                                 Atualizar
                             </button>
-                            <a href="{{ url('users/create') }}" class="btn btn-primary">
+                            {{-- <a href="{{ url('users/create') }}" class="btn btn-primary">
                                 Novo
-                            </a>
+                            </a> --}}
                         </div>
                     </form>
 
@@ -86,7 +86,9 @@ $disabled = "";
                 <div class="card-body">
                     <form method="post" action="{{ route('users.store-user-has-role') }}">
                         @csrf
+
                         <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
+
                         <div class="form-group">
                             <label for="role_id">Perfil de Usuário</label>
                             <select class="form-control @error('role_id') is-invalid @enderror" id="role_id" name="role_id">
@@ -107,15 +109,18 @@ $disabled = "";
                             </span>
                             @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="permissoes">Permissões do Perfil</label>
                             <textarea class="form-control" id="permissoes" rows="3"></textarea>
                         </div>
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" {{$disabled}}>
                                 Adicionar
                             </button>
                         </div>
+                        
                     </form>
                 </div>
             </div>

@@ -1,4 +1,35 @@
+@php
+$arrDiaSemana = array(
+    '1' => "Segunda-Feira",
+    '2' => "Terça-Feira",
+    '3' => "Quarta-Feira",
+    '4' => "Quinta-Feira",
+    '5' => "Sexta-Feira",
+    '6' => "Sábado",
+    '7' => "Domingo",
+);
+$arrSituacao = array(
+    '1' => "Ativado",
+    '2' => "Desativado"
+);
+$bgColor = array(
+    '1' => "success",
+    '2' => "danger"
+);
+$atividade_id = $atividade->id;
+@endphp
+                    
 @extends('layouts.app')
+
+@section('javascript')
+<script>
+    top.routeEditDiaHoraAtividadeJson = "{{ route('atividades.edit-dia-hora-atividade-json') }}";
+    top.urlEditAtividade = "{{ url('atividades/' . $atividade_id . '/edit') }}";
+    top.urlAtivarDesativarDiaHoraAtividade = "{{ url('dia-hora-atividade/ativar-desativar-dia-hora-atividade') }}";
+</script>
+<script type="text/javascript" src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/cadastros/atividades/edit-atividade.js') }}"></script>
+@endsection
 
 @section('content')
 <style>
@@ -9,6 +40,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
             <div class="card uper">
                 <div class="card-header">
                     Editar Atividade
@@ -43,7 +75,7 @@
                             <button type="submit" class="btn btn-primary">
                                 Atualizar
                             </button>
-                            <a href="{{ url('atividades/create') }}" class="btn btn-primary">
+                            <a href="{{ url('atividades/create') }}" class="btn btn-secondary">
                                 Novo
                             </a>
                         </div>
@@ -51,6 +83,136 @@
 
                 </div>
             </div>
+
+            <div class="card uper">
+                <div class="card-header">
+                    Adicionar/Editar Dia e Hora da Atividade
+                </div>
+                <div class="card-body">
+
+                    <form method="post" action="{{ route('atividades.store-dia-hora-atividade') }}">
+                        @csrf
+
+                        <input type="hidden" id="dia_hora_atividade_id" name="dia_hora_atividade_id" value="">
+                        <input type="hidden" id="atividade_id" name="atividade_id" value="{{ $atividade->id }}">
+
+                        <div class="form-group">
+                            <label for="dia_semana">Dia da Semana</label>
+                            <select class="form-control @error('dia_semana') is-invalid @enderror" id="dia_semana" name="dia_semana" required>
+                                <option value=""> - - SELECIONE - - </option>
+                                <option value="1"> SEGUNDA-FEIRA </option>
+                                <option value="2"> TERÇA-FEIRA </option>
+                                <option value="3"> QUARTA-FEIRA </option>
+                                <option value="4"> QUINTA-FEIRA </option>
+                                <option value="5"> SEXTA-FEIRA </option>
+                                <option value="6"> SÁBADO </option>
+                                <option value="7"> DOMINGO </option>
+                            </select>
+                            @error('dia_semana')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hora_inicio">Hora Início</label>
+                            <input id="hora_inicio" type="text" class="form-control @error('hora_inicio') is-invalid @enderror" name="hora_inicio" value="" required autocomplete="hora_inicio">
+                            @error('hora_inicio')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hora_termino">Hora Término</label>
+                            <input id="hora_termino" type="text" class="form-control @error('hora_termino') is-invalid @enderror" name="hora_termino" value="" required autocomplete="hora_termino">
+                            @error('hora_termino')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <button id="btnAdEdDiaHora" type="submit" class="btn btn-primary">
+                                Adicionar
+                            </button>
+                            <a id="btnCancelDiaHora" href="{{ url('atividades/' . $atividade_id . '/edit') }}" class="btn btn-danger" style="display: none;">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="card uper">
+                <div class="card-header">
+                    Lista de Dias e Horários da Atividade
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Dia Semana</td>
+                                <td>Hora Início</td>
+                                <td>Hora Término</td>
+                                <td>Situação</td>
+                                <td colspan="2">Ações</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @php
+                            $diaHoraAtividadeController = new \App\Http\Controllers\Cadastros\DiaHoraAtividadeController();
+                            $diasHorasAtividade = $diaHoraAtividadeController->loadDiasHorasAtividade($atividade->id);
+                            @endphp
+
+                            @foreach($diasHorasAtividade as $diaHoraAtividade)
+                            <tr>
+                                <td>{{$arrDiaSemana[$diaHoraAtividade->dia_semana]}}</td>
+                                <td>{{$diaHoraAtividade->hora_inicio}}</td>
+                                <td>{{$diaHoraAtividade->hora_termino}}</td>
+                                <td>
+                                    <h4>
+                                        <span class="badge badge-{{$bgColor[$diaHoraAtividade->situacao]}}"
+                                            data-toggle="tooltip" title="{{$arrSituacao[$diaHoraAtividade->situacao]}}">
+                                            {{$arrSituacao[$diaHoraAtividade->situacao]}}
+                                        </span>
+                                    </h4>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" type="button" title="Editar" 
+                                        onclick="editDiaHoraAtividade({{ $diaHoraAtividade->id }})">Editar</button>
+                                </td>
+                                <td>
+                                    @if ($diaHoraAtividade->situacao == 1)
+                                    <button class="btn btn-danger btn-sm" type="button" title="Desativar" 
+                                        onclick="ativarDesativarDiaHoraAtividade({{ $diaHoraAtividade->id }})"> Desativar
+                                    </button>
+                                    @else
+                                    <button class="btn btn-success btn-sm" type="button" title="Ativar" 
+                                        onclick="ativarDesativarDiaHoraAtividade({{ $diaHoraAtividade->id }})"> Ativar
+                                    </button>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+        
+                            @if (count($diasHorasAtividade) == 0)
+                            <tr>
+                                <td colspan="4">Nenhum registro encontrado!</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                <div>
+            <div>
+
+
+
         </div>
     </div>
 </div>

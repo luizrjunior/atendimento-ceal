@@ -22,8 +22,8 @@ class LocalController extends Controller
      */
     public function index()
     {
-        $locals = Local::all();
-        return view('cadastros.locals.index', compact('locals'));
+        $locais = Local::all();
+        return view('cadastros.locais.index', compact('locais'));
     }
 
     /**
@@ -33,7 +33,7 @@ class LocalController extends Controller
      */
     public function create()
     {
-        return view('cadastros.locals.create');
+        return view('cadastros.locais.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class LocalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:locals',
+            'nome'=>'required|string|max:255|unique:locais',
             'numero'=>'required|string|max:255'
           ]);
   
@@ -55,7 +55,7 @@ class LocalController extends Controller
           ]);
           $local->save();
   
-          return redirect('/locals/' . $local->id . '/edit')->with('success', 'Local adicionado com sucesso!');
+          return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local adicionado com sucesso!');
     }
 
     /**
@@ -67,7 +67,7 @@ class LocalController extends Controller
     public function edit($id)
     {
         $local = Local::find($id);
-        return view('cadastros.locals.edit', compact('local'));
+        return view('cadastros.locais.edit', compact('local'));
     }
 
     /**
@@ -80,7 +80,7 @@ class LocalController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:locals,nome,' . $id . ',id',
+            'nome'=>'required|string|max:255|unique:locais,nome,' . $id . ',id',
             'numero'=>'required|string|max:255'
         ]);
   
@@ -89,7 +89,7 @@ class LocalController extends Controller
         $local->numero = $request->get('numero');
         $local->save();
   
-        return redirect('/locals/' . $local->id . '/edit')->with('success', 'Local atualizado com sucesso!');
+        return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local atualizado com sucesso!');
     }
 
     public function ativarDesativarLocal(Request $request) {

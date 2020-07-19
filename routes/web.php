@@ -34,26 +34,29 @@ Route::post('user-has-role/store', 'Acl\UserHasRoleController@store')->name('use
 Route::delete('user-has-role/destroy', 'Acl\UserHasRoleController@destroy')->name('users.destroy-user-has-role');
 
 Route::post('role-has-permission/store', 'Acl\RoleHasPermissionController@store')->name('roles.store-role-has-permission');
-Route::delete('role-has-permission/destroy', 'Acl\RoleHasPermissionController@destroy')->name('roles.destroy-role-has-permission');
-
 Route::post('role-has-permission/load-permissions-role-json', 'Acl\RoleHasPermissionController@loadPermissionsRoleJson')->name('roles.load-permissions-role-json');
+Route::delete('role-has-permission/destroy', 'Acl\RoleHasPermissionController@destroy')->name('roles.destroy-role-has-permission');
 
 /**
  * CADASTROS
  */
-Route::resource('funcaos', 'Cadastros\FuncaoController');
-Route::post('funcaos/ativar-desativar-funcao', 'Cadastros\FuncaoController@ativarDesativarFuncao');
+Route::resource('funcoes', 'Cadastros\FuncaoController');
+Route::post('funcoes/ativar-desativar-funcao', 'Cadastros\FuncaoController@ativarDesativarFuncao');
 
-Route::resource('locals', 'Cadastros\LocalController');
-Route::post('locals/ativar-desativar-local', 'Cadastros\LocalController@ativarDesativarLocal');
+Route::resource('locais', 'Cadastros\LocalController');
+Route::post('locais/ativar-desativar-local', 'Cadastros\LocalController@ativarDesativarLocal');
 
 Route::resource('atividades', 'Cadastros\AtividadeController');
 Route::post('atividades/ativar-desativar-atividade', 'Cadastros\AtividadeController@ativarDesativarAtividade');
+
+Route::post('dia-hora-atividade/store', 'Cadastros\DiaHoraAtividadeController@store')->name('atividades.store-dia-hora-atividade');
+Route::post('dia-hora-atividade/edit', 'Cadastros\DiaHoraAtividadeController@edit')->name('atividades.edit-dia-hora-atividade-json');
+Route::post('dia-hora-atividade/ativar-desativar-dia-hora-atividade', 'Cadastros\DiaHoraAtividadeController@ativarDesativarDiaHoraAtividade');
 
 /**
  * PESSOAS
  */
 Route::resource('pessoas', 'Pessoas\PessoaController');
 
-Route::resource('colaboradors', 'Pessoas\ColaboradorController');
-Route::post('colaboradors/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');
+Route::resource('colaboradores', 'Pessoas\ColaboradorController');
+Route::post('colaboradores/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');

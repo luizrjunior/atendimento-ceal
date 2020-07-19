@@ -56,7 +56,7 @@
                             
                             @can('Menu_Colaboradors')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('colaboradors') }}">Colaboradores</a>
+                                <a class="nav-link" href="{{ url('colaboradores') }}">Colaboradores</a>
                             </li>
                             @endcan
                             
@@ -67,10 +67,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
-                                    <a class="dropdown-item" href="{{ url('funcaos') }}">
+                                    <a class="dropdown-item" href="{{ url('funcoes') }}">
                                         Funções
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('locals') }}">
+                                    <a class="dropdown-item" href="{{ url('locais') }}">
                                         Locais
                                     </a>
                                     <a class="dropdown-item" href="{{ url('atividades') }}">

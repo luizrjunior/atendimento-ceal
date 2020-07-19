@@ -28,7 +28,7 @@ class CreatePessoasTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('colaboradors', function (Blueprint $table) {
+        Schema::create('colaboradores', function (Blueprint $table) {
             $table->id();
             $table->integer('situacao')->default(1);
             $table->unsignedBigInteger('pessoa_id');
@@ -44,7 +44,7 @@ class CreatePessoasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colaboradors');
+        Schema::dropIfExists('colaboradores');
         Schema::dropIfExists('pessoas');
     }
 }

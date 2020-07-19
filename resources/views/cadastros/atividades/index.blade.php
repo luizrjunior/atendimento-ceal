@@ -56,19 +56,21 @@ $bgColor = array(
                         <td>{{date('d/m/Y H:i:s', strtotime($atividade->created_at))}}</td>
                         <td>{{$atividade->nome}}</td>
                         <td>
-                            <span class="badge badge-{{$bgColor[$atividade->situacao]}}"
-                                  data-toggle="tooltip" title="{{$arrSituacao[$atividade->situacao]}}">
-                                {{$arrSituacao[$atividade->situacao]}}
-                            </span>
+                            <h4>
+                                <span class="badge badge-{{$bgColor[$atividade->situacao]}}"
+                                    data-toggle="tooltip" title="{{$arrSituacao[$atividade->situacao]}}">
+                                    {{$arrSituacao[$atividade->situacao]}}
+                                </span>
+                            </h4>
                         </td>
                         <td><a href="{{ route('atividades.edit', $atividade->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td>
                             @if ($atividade->situacao == 1)
-                            <button class="btn btn-primary btn-sm" type="button" title="Desativar" 
+                            <button class="btn btn-danger btn-sm" type="button" title="Desativar" 
                                 onclick="ativarDesativarAtividade({{ $atividade->id }})"> Desativar
                             </button>
                             @else
-                            <button class="btn btn-primary btn-sm" type="button" title="Ativar" 
+                            <button class="btn btn-success btn-sm" type="button" title="Ativar" 
                                 onclick="ativarDesativarAtividade({{ $atividade->id }})"> Ativar
                             </button>
                             @endif

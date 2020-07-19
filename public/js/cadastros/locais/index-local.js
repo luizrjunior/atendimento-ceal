@@ -3,26 +3,26 @@ function validar()
     $('#carregando').show();
 }
 
-function ativarDesativarFuncao(funcao_id) 
+function ativarDesativarLocal(local_id) 
 {
     $('#carregando').show();
-    var formURL = top.urlAtivarDesativarFuncao;
+    var formURL = top.urlAtivarDesativarLocal;
     $.ajax({
         type: "POST",
         url: formURL,
         data: {
             _token: $("input[name='_token']").val(),
-            funcao_id: funcao_id
+            local_id: local_id
         },
         dataType: "json",
         success: function (data) {
             $('#carregando').hide();
-            Componentes.modalAlerta(data.textoMsg, atualizarListaFuncao);
+            Componentes.modalAlerta(data.textoMsg, atualizarListaLocal);
         }
     });
 }
 
-function atualizarListaFuncao() 
+function atualizarListaLocal() 
 {
-    location.href=top.urlListaFuncaos;
+    location.href=top.urlListaLocais;
 }

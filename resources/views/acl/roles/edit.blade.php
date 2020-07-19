@@ -13,7 +13,7 @@ $disabled = "";
 <script>
     top.routeLoadPermissionsRoleJson = "{{ route('roles.load-permissions-role-json') }}";
 </script>
-<script type="text/javascript" src="{{ asset('/js/acl/roles-has-permissions/roles-has-permissions.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/acl/roles/edit-role.js') }}"></script>
 @endsection
 
 @section('content')
@@ -75,7 +75,7 @@ $disabled = "";
                             <button type="submit" class="btn btn-primary" {{$disabled}}>
                                 Atualizar
                             </button>
-                            <a href="{{ url('roles/create') }}" class="btn btn-primary">
+                            <a href="{{ url('roles/create') }}" class="btn btn-secondary">
                                 Novo
                             </a>
                         </div>

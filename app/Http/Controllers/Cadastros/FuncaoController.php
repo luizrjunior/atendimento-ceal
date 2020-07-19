@@ -22,8 +22,8 @@ class FuncaoController extends Controller
      */
     public function index()
     {
-        $funcaos = Funcao::all();
-        return view('cadastros.funcaos.index', compact('funcaos'));
+        $funcoes = Funcao::all();
+        return view('cadastros.funcoes.index', compact('funcoes'));
     }
 
     /**
@@ -33,7 +33,7 @@ class FuncaoController extends Controller
      */
     public function create()
     {
-        return view('cadastros.funcaos.create');
+        return view('cadastros.funcoes.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class FuncaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:funcaos'
+            'nome'=>'required|string|max:255|unique:funcoes'
           ]);
   
           $funcao = new Funcao([
@@ -53,7 +53,7 @@ class FuncaoController extends Controller
           ]);
           $funcao->save();
   
-          return redirect('/funcaos/' . $funcao->id . '/edit')->with('success', 'Função adicionada com sucesso!');
+          return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função adicionada com sucesso!');
     }
 
     /**
@@ -65,7 +65,7 @@ class FuncaoController extends Controller
     public function edit($id)
     {
         $funcao = Funcao::find($id);
-        return view('cadastros.funcaos.edit', compact('funcao'));
+        return view('cadastros.funcoes.edit', compact('funcao'));
     }
 
     /**
@@ -78,14 +78,14 @@ class FuncaoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:funcaos,nome,' . $id . ',id'
+            'nome'=>'required|string|max:255|unique:funcoes,nome,' . $id . ',id'
         ]);
   
         $funcao = Funcao::find($id);
         $funcao->nome = $request->get('nome');
         $funcao->save();
   
-        return redirect('/funcaos/' . $funcao->id . '/edit')->with('success', 'Função atualizada com sucesso!');
+        return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função atualizada com sucesso!');
     }
 
     public function ativarDesativarFuncao(Request $request) {
