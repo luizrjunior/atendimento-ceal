@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Funcao extends Model
 {
-  
   public $table = 'funcoes';
 
   protected $fillable = [

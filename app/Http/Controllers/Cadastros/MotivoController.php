@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Cadastros;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Funcao;
+use App\Models\Motivo;
 
-class FuncaoController extends Controller
+class MotivoController extends Controller
 {
 
     public function __construct()
@@ -22,8 +22,8 @@ class FuncaoController extends Controller
      */
     public function index()
     {
-        $funcoes = Funcao::all();
-        return view('cadastros.funcoes.index', compact('funcoes'));
+        $motivos = Motivo::all();
+        return view('cadastros.motivos.index', compact('motivos'));
     }
 
     /**
@@ -33,7 +33,7 @@ class FuncaoController extends Controller
      */
     public function create()
     {
-        return view('cadastros.funcoes.create');
+        return view('cadastros.motivos.create');
     }
 
     /**
@@ -45,15 +45,15 @@ class FuncaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:funcoes'
+            'descricao'=>'required|string|max:255|unique:motivos'
           ]);
   
-          $funcao = new Funcao([
-            'nome' => $request->get('nome')
+          $motivo = new Motivo([
+            'descricao' => $request->get('descricao')
           ]);
-          $funcao->save();
+          $motivo->save();
   
-          return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função adicionada com sucesso!');
+          return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo adicionado com sucesso!');
     }
 
     /**
@@ -64,8 +64,8 @@ class FuncaoController extends Controller
      */
     public function edit($id)
     {
-        $funcao = Funcao::find($id);
-        return view('cadastros.funcoes.edit', compact('funcao'));
+        $motivo = Motivo::find($id);
+        return view('cadastros.motivos.edit', compact('motivo'));
     }
 
     /**
@@ -78,26 +78,26 @@ class FuncaoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:funcoes,nome,' . $id . ',id'
+            'descricao'=>'required|string|max:255|unique:motivos,descricao,' . $id . ',id'
         ]);
   
-        $funcao = Funcao::find($id);
-        $funcao->nome = $request->get('nome');
-        $funcao->save();
+        $motivo = Motivo::find($id);
+        $motivo->descricao = $request->get('descricao');
+        $motivo->save();
   
-        return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função atualizada com sucesso!');
+        return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo atualizado com sucesso!');
     }
 
-    public function ativarDesativarFuncao(Request $request) {
-        $funcao = Funcao::find($request->funcao_id);
-        $msg = "Função ativada com sucesso!";
+    public function ativarDesativarMotivo(Request $request) {
+        $motivo = Motivo::find($request->motivo_id);
+        $msg = "Motivo ativado com sucesso!";
         $situacao = 1;
-        if ($funcao->situacao == 1) {
-            $msg = "Função desativada com sucesso!";
+        if ($motivo->situacao == 1) {
+            $msg = "Motivo desativado com sucesso!";
             $situacao = 2;
         }
-        $funcao->situacao = $situacao;
-        $funcao->save();
+        $motivo->situacao = $situacao;
+        $motivo->save();
 
         $dados = array();
         $dados['textoMsg'] = $msg;
@@ -105,9 +105,9 @@ class FuncaoController extends Controller
         return response()->json($dados, 200);
     }
 
-    public function carregarFuncoes()
+    public function carregarMotivos()
     {
-        return Funcao::all();
+        return Motivo::all();
     }
 
 }

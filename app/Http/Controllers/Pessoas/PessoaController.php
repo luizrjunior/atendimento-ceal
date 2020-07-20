@@ -122,4 +122,14 @@ class PessoaController extends Controller
         return redirect('/pessoas/' . $pessoa->id . '/edit')->with('success', 'Dados Cadastrais atualizado com sucesso!');
     }
 
+    public function carregarPessoaPorCPF(Request $request)
+    {
+        $pessoa = null;
+        $pessoa_request = Pessoa::where('cpf', $request->cpf)->get();
+        if (count($pessoa_request) > 0) {
+            $pessoa = $pessoa_request[0];
+        }
+        return response()->json($pessoa, 200);
+    }
+
 }

@@ -53,10 +53,19 @@ Route::post('dia-hora-atividade/store', 'Cadastros\DiaHoraAtividadeController@st
 Route::post('dia-hora-atividade/edit', 'Cadastros\DiaHoraAtividadeController@edit')->name('atividades.edit-dia-hora-atividade-json');
 Route::post('dia-hora-atividade/ativar-desativar-dia-hora-atividade', 'Cadastros\DiaHoraAtividadeController@ativarDesativarDiaHoraAtividade');
 
+Route::resource('motivos', 'Cadastros\MotivoController');
+Route::post('motivos/ativar-desativar-motivo', 'Cadastros\MotivoController@ativarDesativarMotivo');
+
+Route::resource('orientacoes', 'Cadastros\OrientacaoController');
+Route::post('orientacoes/ativar-desativar-orientacao', 'Cadastros\OrientacaoController@ativarDesativarOrientacao');
+
 /**
  * PESSOAS
  */
 Route::resource('pessoas', 'Pessoas\PessoaController');
+Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPessoaPorCPF')->name('pessoas.carrregar-pessoa-cpf');
 
 Route::resource('colaboradores', 'Pessoas\ColaboradorController');
 Route::post('colaboradores/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');
+
+Route::post('colaborador-funcao/store', 'Pessoas\ColaboradorFuncaoController@store')->name('colaboradores.store-colaborador-funcao');

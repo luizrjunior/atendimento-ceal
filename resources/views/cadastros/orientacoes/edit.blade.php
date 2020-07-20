@@ -1,17 +1,5 @@
 @extends('layouts.app')
 
-@section('javascript')
-<script>
-    top.routeCarregarPessoaCPF = "{{ route('pessoas.carrregar-pessoa-cpf') }}";
-</script>
-<script type="text/javascript" 
-    src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
-<script type="text/javascript" 
-    src="{{ asset('/js/pessoas/create-edit-pessoa.js') }}"></script>
-<script type="text/javascript" 
-    src="{{ asset('/js/pessoas/colaboradores/create-edit-colaborador.js') }}"></script>
-@endsection
-
 @section('content')
 <style>
   .uper {
@@ -23,8 +11,8 @@
         <div class="col-md-8">
             <div class="card uper">
                 <div class="card-header">
-                    Adicionar Colaborador
-                    <a href="{{ url('colaboradores') }}" class="float-right">
+                    Editar Orientação
+                    <a href="{{ url('orientacoes') }}" class="float-right">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                             <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
@@ -37,17 +25,27 @@
 
                     @include('components.alertas')
 
-                    <form method="post" action="{{ route('colaboradores.store') }}">
+                    <form method="post" action="{{ route('orientacoes.update', $orientacao->id) }}">
+                        @method('PATCH')
                         @csrf
 
-                        <input type="hidden" id="pessoa_id" name="pessoa_id" value="">
+                        <div class="form-group">
+                            <label for="descricao">Descrição</label>
+                            <input id="descricao" type="text" class="form-control @error('descricao') is-invalid @enderror" name="descricao" value="{{ $orientacao->descricao }}" required autocomplete="descricao" autofocus>
+                            @error('descricao')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
 
-                        @include('pessoas.partials.create-pessoa')
-
-                        <div class="form-group mb-0">
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary">
-                                Adicionar
+                                Atualizar
                             </button>
+                            <a href="{{ url('orientacoes/create') }}" class="btn btn-secondary">
+                                Novo
+                            </a>
                         </div>
                     </form>
 

@@ -42,7 +42,7 @@ class UserHasRoleController extends Controller
 
     public function destroy(Request $request)
     {
-         UserHasRole::where('user_id', $request->user_id)->where('role_id', $request->role_id)->delete();
+         UserHasRole::where('user_id', $request->uhr_user_id)->where('role_id', $request->uhr_role_id)->delete();
          return redirect('/users/' . $request->user_id . '/edit')->with('success', 'Perfil de Usuário removido com sucesso!');
     }
 

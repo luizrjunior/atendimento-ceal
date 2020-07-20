@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pessoas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\Models\Colaborador;
 
@@ -22,8 +23,8 @@ class ColaboradorController extends Controller
      */
     public function index()
     {
-        $colaboradors = Colaborador::all();
-        return view('pessoas.colaboradors.index', compact('colaboradors'));
+        $colaboradores = Colaborador::all();
+        return view('pessoas.colaboradores.index', compact('colaboradores'));
     }
 
     /**
@@ -33,7 +34,7 @@ class ColaboradorController extends Controller
      */
     public function create()
     {
-        return view('pessoas.colaboradors.create');
+        return view('pessoas.colaboradores.create');
     }
 
     /**
@@ -45,15 +46,19 @@ class ColaboradorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:colaboradors'
-          ]);
-  
-          $colaborador = new Colaborador([
-            'nome' => $request->get('nome')
-          ]);
-          $colaborador->save();
-  
-          return redirect('/colaboradors/' . $colaborador->id . '/edit')->with('success', 'Colaborador adicionado com sucesso!');
+            'cpf' => 'required|cpf',
+            'pessoa_id' => [
+                'required',
+                Rule::unique('colaboradores'),
+            ],
+        ]);
+        
+        $colaborador = new Colaborador([
+            'pessoa_id' => $request->get('pessoa_id')
+        ]);
+        $colaborador->save();
+    
+        return redirect('/colaboradores/' . $colaborador->id . '/edit')->with('success', 'Colaborador adicionado com sucesso!');
     }
 
     /**
@@ -65,27 +70,7 @@ class ColaboradorController extends Controller
     public function edit($id)
     {
         $colaborador = Colaborador::find($id);
-        return view('pessoas.colaboradors.edit', compact('colaborador'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nome'=>'required|string|max:255|unique:colaboradors,nome,' . $id . ',id'
-        ]);
-  
-        $colaborador = Colaborador::find($id);
-        $colaborador->nome = $request->get('nome');
-        $colaborador->save();
-  
-        return redirect('/colaboradors/' . $colaborador->id . '/edit')->with('success', 'Colaborador atualizado com sucesso!');
+        return view('pessoas.colaboradores.edit', compact('colaborador'));
     }
 
     public function ativarDesativarColaborador(Request $request) {
