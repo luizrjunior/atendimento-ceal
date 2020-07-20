@@ -10,6 +10,10 @@ use App\Models\Colaborador;
 
 class ColaboradorController extends Controller
 {
+    const MESSAGES_ERRORS = [	
+        'pessoa_id.unique' => 'A pessoa informada já está associada como colaborador. Por favor, '
+        . 'você pode verificar isso?',
+    ];
 
     public function __construct()
     {
