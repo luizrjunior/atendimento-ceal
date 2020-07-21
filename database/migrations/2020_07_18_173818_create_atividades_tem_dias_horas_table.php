@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDiasHorasAtividadesTable extends Migration
+class CreateAtividadesTemDiasHorasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDiasHorasAtividadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dias_horas_atividades', function (Blueprint $table) {
+        Schema::create('atividades_tem_dias_horas', function (Blueprint $table) {
             $table->id();
             $table->integer('situacao')->default(1);
             $table->integer('dia_semana');
@@ -32,6 +32,6 @@ class CreateDiasHorasAtividadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dias_horas_atividades');
+        Schema::dropIfExists('atividades_tem_dias_horas');
     }
 }

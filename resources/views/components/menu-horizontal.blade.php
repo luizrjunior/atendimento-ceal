@@ -93,6 +93,9 @@
                                 Meus Dados Cadastrais
                             </a>
                             @endif
+                            <a class="dropdown-item" href="{{ url('meu-perfil/') }}">
+                                Meu Perfil de Usuário
+                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">

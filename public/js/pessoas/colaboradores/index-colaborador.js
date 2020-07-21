@@ -24,5 +24,5 @@ function ativarDesativarColaborador(colaborador_id)
 
 function atualizarListaColaborador() 
 {
-    location.href=top.urlListaColaboradors;
+    location.href=top.urlListaColaboradores;
 }

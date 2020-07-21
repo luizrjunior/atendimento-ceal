@@ -60,19 +60,21 @@ $bgColor = array(
                         <td>{{$colaborador->pessoa->telefone}}</td>
                         <td>{{$colaborador->pessoa->bairro}}</td>
                         <td>
-                            <span class="badge badge-{{$bgColor[$colaborador->situacao]}}"
-                                  data-toggle="tooltip" title="{{$arrSituacao[$colaborador->situacao]}}">
-                                {{$arrSituacao[$colaborador->situacao]}}
-                            </span>
+                            <h4>
+                                <span class="badge badge-{{$bgColor[$colaborador->situacao]}}"
+                                    data-toggle="tooltip" title="{{$arrSituacao[$colaborador->situacao]}}">
+                                    {{$arrSituacao[$colaborador->situacao]}}
+                                </span>
+                            </h4>
                         </td>
                         <td><a href="{{ route('colaboradores.edit', $colaborador->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td>
                             @if ($colaborador->situacao == 1)
-                            <button class="btn btn-primary btn-sm" type="button" title="Desativar" 
+                            <button class="btn btn-danger btn-sm" type="button" title="Desativar" 
                                 onclick="ativarDesativarColaborador({{ $colaborador->id }})"> Desativar
                             </button>
                             @else
-                            <button class="btn btn-primary btn-sm" type="button" title="Ativar" 
+                            <button class="btn btn-success btn-sm" type="button" title="Ativar" 
                                 onclick="ativarDesativarColaborador({{ $colaborador->id }})"> Ativar
                             </button>
                             @endif

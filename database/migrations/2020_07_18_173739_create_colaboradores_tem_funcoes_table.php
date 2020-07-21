@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateColaboradoresFuncoesTable extends Migration
+class CreateColaboradoresTemFuncoesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateColaboradoresFuncoesTable extends Migration
      */
     public function up()
     {
-        Schema::create('colaboradores_funcoes', function (Blueprint $table) {
+        Schema::create('colaboradores_tem_funcoes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->unsignedBigInteger('colaborador_id');
             $table->foreign('colaborador_id')->references('id')->on('colaboradores')->onDelete('cascade');
@@ -30,6 +30,6 @@ class CreateColaboradoresFuncoesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colaboradores_funcoes');
+        Schema::dropIfExists('colaboradores_tem_funcoes');
     }
 }

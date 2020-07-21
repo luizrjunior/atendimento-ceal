@@ -1,18 +1,28 @@
-function editDiaHoraAtividade(dia_hora_atividade_id) 
+function abrirCard(card) {
+    $('#divCardAddRoleUser').hide();
+    $('#divCardListRolesUser').show();
+    if (card == 2) {
+        $('#divCardListRolesUser').hide();
+        $('#divCardAddRoleUser').show();
+    }
+}
+
+function editAtividadeTemDiaHora(atividade_tem_dia_hora_id) 
 {
     $('#carregando').show();
-    var formURL = top.routeEditDiaHoraAtividadeJson;
+    var formURL = top.routeEditAtividadeTemDiaHoraJson;
     $.ajax({
         type: 'POST',
         url: formURL,
         data: { 
             _token: $("input[name='_token']").val(),
-            dia_hora_atividade_id: dia_hora_atividade_id 
+            atividade_tem_dia_hora_id: atividade_tem_dia_hora_id 
         },
         dataType: "json",
         success: function (data) {
+            abrirCard(2);
             $('#carregando').hide();
-            $('#dia_hora_atividade_id').val(data.id);
+            $('#atividade_tem_dia_hora_id').val(data.id);
             $('#dia_semana').val(data.dia_semana);
             $('#hora_inicio').val(data.hora_inicio);
             $('#hora_termino').val(data.hora_termino);
@@ -23,16 +33,16 @@ function editDiaHoraAtividade(dia_hora_atividade_id)
     });
 }
 
-function ativarDesativarDiaHoraAtividade(dia_hora_atividade_id) 
+function ativarDesativarAtividadeTemDiaHora(atividade_tem_dia_hora_id) 
 {
     $('#carregando').show();
-    var formURL = top.urlAtivarDesativarDiaHoraAtividade;
+    var formURL = top.urlAtivarDesativarAtividadeTemDiaHora;
     $.ajax({
         type: "POST",
         url: formURL,
         data: {
             _token: $("input[name='_token']").val(),
-            dia_hora_atividade_id: dia_hora_atividade_id
+            atividade_tem_dia_hora_id: atividade_tem_dia_hora_id
         },
         dataType: "json",
         success: function (data) {
@@ -54,5 +64,6 @@ $(document).ready(function () {
     $("#role_id").change(function () {
         loadPermissionsRoleJson();
     });
+    abrirCard(1);
 });
 

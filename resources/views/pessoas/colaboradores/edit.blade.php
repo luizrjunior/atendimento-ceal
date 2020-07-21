@@ -68,7 +68,7 @@ $bairro = $colaborador->pessoa->bairro;
                 </div>
                 <div class="card-body">
 
-                    <form method="post" action="{{ route('colaboradores.store-colaborador-funcao') }}">
+                    <form method="post" action="{{ route('colaboradores.store-colaborador-tem-funcao') }}">
                         @csrf
                         <input type="hidden" id="colaborador_id" name="colaborador_id" value="{{ $colaborador->id }}">
                         <div class="DocumentList">
@@ -85,12 +85,12 @@ $bairro = $colaborador->pessoa->bairro;
                                     $funcaoController = new \App\Http\Controllers\Cadastros\FuncaoController();
                                     $funcoes = $funcaoController->carregarFuncoes();
 
-                                    $colaboradorFuncaoController = new \App\Http\Controllers\Pessoas\ColaboradorFuncaoController();
-                                    $colaboradoresFuncoes = $colaboradorFuncaoController->carregarFuncoesColaborador($colaborador->id);
+                                    $colaboradorTemFuncaoController = new \App\Http\Controllers\Pessoas\ColaboradorTemFuncaoController();
+                                    $colaboradoresTemFuncoes = $colaboradorTemFuncaoController->carregarFuncoesColaborador($colaborador->id);
 
                                     $arrFuncoesId = [];
-                                    foreach ($colaboradoresFuncoes as $colaboradorFuncao) {
-                                        $arrFuncoesId[] = $colaboradorFuncao->funcao_id;
+                                    foreach ($colaboradoresTemFuncoes as $colaboradorTemFuncao) {
+                                        $arrFuncoesId[] = $colaboradorTemFuncao->funcao_id;
                                     }
                                     @endphp
 
@@ -98,7 +98,7 @@ $bairro = $colaborador->pessoa->bairro;
                                         @php
                                         $checked = "";
                                         @endphp
-                                        @if (count($colaboradoresFuncoes) > 0)
+                                        @if (count($colaboradoresTemFuncoes) > 0)
                                             @if (in_array($funcao->id, $arrFuncoesId))
                                                 @php
                                                 $checked = "checked";

@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DiaHoraAtividade extends Model
+class AtividadeTemDiaHora extends Model
 {
-    public $table = 'dias_horas_atividades';
+    public $table = 'atividades_tem_dias_horas';
 
     protected $fillable = [
         'dia_semana',

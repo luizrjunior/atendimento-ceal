@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ColaboradorFuncao extends Model
+class ColaboradorTemFuncao extends Model
 {
-    public $table = 'colaboradores_funcoes';
+    public $table = 'colaboradores_tem_funcoes';
 
     public $incrementing = false;
 

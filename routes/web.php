@@ -49,9 +49,9 @@ Route::post('locais/ativar-desativar-local', 'Cadastros\LocalController@ativarDe
 Route::resource('atividades', 'Cadastros\AtividadeController');
 Route::post('atividades/ativar-desativar-atividade', 'Cadastros\AtividadeController@ativarDesativarAtividade');
 
-Route::post('dia-hora-atividade/store', 'Cadastros\DiaHoraAtividadeController@store')->name('atividades.store-dia-hora-atividade');
-Route::post('dia-hora-atividade/edit', 'Cadastros\DiaHoraAtividadeController@edit')->name('atividades.edit-dia-hora-atividade-json');
-Route::post('dia-hora-atividade/ativar-desativar-dia-hora-atividade', 'Cadastros\DiaHoraAtividadeController@ativarDesativarDiaHoraAtividade');
+Route::post('atividades-tem-dias-horas/store', 'Cadastros\AtividadeTemDiaHoraController@store')->name('atividades.store-atividade-tem-dia-hora');
+Route::post('atividades-tem-dias-horas/edit', 'Cadastros\AtividadeTemDiaHoraController@edit')->name('atividades.edit-atividade-tem-dia-hora-json');
+Route::post('atividades-tem-dias-horas/ativar-desativar-atividade-tem-dia-hora', 'Cadastros\AtividadeTemDiaHoraController@ativarDesativarAtividadeTemDiaHora');
 
 Route::resource('motivos', 'Cadastros\MotivoController');
 Route::post('motivos/ativar-desativar-motivo', 'Cadastros\MotivoController@ativarDesativarMotivo');
@@ -68,4 +68,4 @@ Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPes
 Route::resource('colaboradores', 'Pessoas\ColaboradorController');
 Route::post('colaboradores/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');
 
-Route::post('colaborador-funcao/store', 'Pessoas\ColaboradorFuncaoController@store')->name('colaboradores.store-colaborador-funcao');
+Route::post('colaborador-tem-funcao/store', 'Pessoas\ColaboradorTemFuncaoController@store')->name('colaboradores.store-colaborador-tem-funcao');
