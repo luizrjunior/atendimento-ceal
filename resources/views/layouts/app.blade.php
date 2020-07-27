@@ -19,6 +19,11 @@
     <!-- Styles Extras -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bootstrap/4.4.1/css/bootstrap-datepicker.css') }}" rel="stylesheet"/>
+    <style type="text/css">
+        input.maiuscula {
+          text-transform: uppercase;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

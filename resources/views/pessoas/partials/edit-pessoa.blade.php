@@ -10,7 +10,7 @@
 
 <div class="form-group">
     <label for="nome">{{ __('Name') }}</label>
-    <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ $nome }}" required autocomplete="nome">
+    <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror maiuscula" name="nome" value="{{ $nome }}" required autocomplete="nome">
     @error('nome')
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
 
 <div class="form-group">
     <label for="profissao">Profissão</label>
-    <input id="profissao" type="text" class="form-control @error('profissao') is-invalid @enderror" name="profissao" value="{{ $profissao }}" required autocomplete="telefone">
+    <input id="profissao" type="text" class="form-control @error('profissao') is-invalid @enderror maiuscula" name="profissao" value="{{ $profissao }}" required autocomplete="telefone">
     @error('profissao')
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
@@ -83,7 +83,7 @@
 
 <div class="form-group">
     <label for="bairro">Bairro</label>
-    <input id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" value="{{ $bairro }}" required autocomplete="bairro">
+    <input id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror maiuscula" name="bairro" value="{{ $bairro }}" required autocomplete="bairro">
     @error('bairro')
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>

@@ -4,14 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AtividadeTemDiaHora extends Model
+class Horario extends Model
 {
-    public $table = 'atividades_tem_dias_horas';
-
     protected $fillable = [
         'dia_semana',
         'hora_inicio',
         'hora_termino',
+        'local_id',
         'atividade_id'
     ];
+
+    public function local()
+    {
+        return $this->belongsTo(\App\Models\Local::class, 'local_id');
+    }
 }

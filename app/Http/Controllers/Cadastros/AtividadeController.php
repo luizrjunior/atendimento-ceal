@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cadastros;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Atividade;
 
@@ -46,14 +47,14 @@ class AtividadeController extends Controller
     {
         $request->validate([
             'nome'=>'required|string|max:255|unique:atividades'
-          ]);
-  
-          $atividade = new Atividade([
-            'nome' => $request->get('nome')
-          ]);
-          $atividade->save();
-  
-          return redirect('/atividades/' . $atividade->id . '/edit')->with('success', 'Atividade adicionada com sucesso!');
+        ]);
+
+        $atividade = new Atividade([
+            'nome' => strtoupper($request->get('nome'))
+        ]);
+        $atividade->save();
+
+        return redirect('/atividades/' . $atividade->id . '/edit')->with('success', 'Atividade adicionada com sucesso!');
     }
 
     /**
@@ -64,6 +65,7 @@ class AtividadeController extends Controller
      */
     public function edit($id)
     {
+        Session::put('atividade_id', $id);
         $atividade = Atividade::find($id);
         return view('cadastros.atividades.edit', compact('atividade'));
     }
@@ -82,7 +84,7 @@ class AtividadeController extends Controller
         ]);
   
         $atividade = Atividade::find($id);
-        $atividade->nome = $request->get('nome');
+        $atividade->nome = strtoupper($request->get('nome'));
         $atividade->save();
   
         return redirect('/atividades/' . $atividade->id . '/edit')->with('success', 'Atividade atualizada com sucesso!');

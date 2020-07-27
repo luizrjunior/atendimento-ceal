@@ -56,12 +56,10 @@ $bgColor = array(
                         <td>{{date('d/m/Y H:i:s', strtotime($atividade->created_at))}}</td>
                         <td>{{$atividade->nome}}</td>
                         <td>
-                            <h4>
-                                <span class="badge badge-{{$bgColor[$atividade->situacao]}}"
-                                    data-toggle="tooltip" title="{{$arrSituacao[$atividade->situacao]}}">
-                                    {{$arrSituacao[$atividade->situacao]}}
-                                </span>
-                            </h4>
+                            <span class="badge badge-{{$bgColor[$atividade->situacao]}}"
+                                data-toggle="tooltip" title="{{$arrSituacao[$atividade->situacao]}}">
+                                {{$arrSituacao[$atividade->situacao]}}
+                            </span>
                         </td>
                         <td><a href="{{ route('atividades.edit', $atividade->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td>

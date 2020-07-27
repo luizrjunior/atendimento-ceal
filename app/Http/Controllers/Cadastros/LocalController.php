@@ -50,8 +50,8 @@ class LocalController extends Controller
           ]);
   
           $local = new Local([
-            'nome' => $request->get('nome'),
-            'numero' => $request->get('numero')
+            'nome' => strtoupper($request->get('nome')),
+            'numero' => strtoupper($request->get('numero'))
           ]);
           $local->save();
   
@@ -85,8 +85,8 @@ class LocalController extends Controller
         ]);
   
         $local = Local::find($id);
-        $local->nome = $request->get('nome');
-        $local->numero = $request->get('numero');
+        $local->nome = strtoupper($request->get('nome'));
+        $local->numero = strtoupper($request->get('numero'));
         $local->save();
   
         return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local atualizado com sucesso!');
@@ -107,6 +107,11 @@ class LocalController extends Controller
         $dados['textoMsg'] = $msg;
 
         return response()->json($dados, 200);
+    }
+
+    public function carregarComboLocais()
+    {
+        return Local::all();
     }
 
 }

@@ -54,14 +54,6 @@ $(document).ready(function () {
         carregarPessoaCPF();
     });
 
-    $("#checkTodos").click(function () {
-        if ( $(this).is(':checked') ){
-            $('.funcao').attr("checked", true);
-        }else{
-            $('.funcao').attr("checked", false);
-        }
-    });
-
     $("#nome").prop('disabled', true);
     $("#nascimento").prop('disabled', true);
     $("#sexo").prop('disabled', true);

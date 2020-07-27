@@ -49,7 +49,7 @@ class FuncaoController extends Controller
           ]);
   
           $funcao = new Funcao([
-            'nome' => $request->get('nome')
+            'nome' => strtoupper($request->get('nome'))
           ]);
           $funcao->save();
   
@@ -82,7 +82,7 @@ class FuncaoController extends Controller
         ]);
   
         $funcao = Funcao::find($id);
-        $funcao->nome = $request->get('nome');
+        $funcao->nome = strtoupper($request->get('nome'));
         $funcao->save();
   
         return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função atualizada com sucesso!');

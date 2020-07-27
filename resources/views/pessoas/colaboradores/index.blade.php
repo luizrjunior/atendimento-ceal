@@ -60,12 +60,10 @@ $bgColor = array(
                         <td>{{$colaborador->pessoa->telefone}}</td>
                         <td>{{$colaborador->pessoa->bairro}}</td>
                         <td>
-                            <h4>
-                                <span class="badge badge-{{$bgColor[$colaborador->situacao]}}"
-                                    data-toggle="tooltip" title="{{$arrSituacao[$colaborador->situacao]}}">
-                                    {{$arrSituacao[$colaborador->situacao]}}
-                                </span>
-                            </h4>
+                            <span class="badge badge-{{$bgColor[$colaborador->situacao]}}"
+                                data-toggle="tooltip" title="{{$arrSituacao[$colaborador->situacao]}}">
+                                {{$arrSituacao[$colaborador->situacao]}}
+                            </span>
                         </td>
                         <td><a href="{{ route('colaboradores.edit', $colaborador->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td>

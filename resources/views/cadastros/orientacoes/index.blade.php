@@ -56,12 +56,10 @@ $bgColor = array(
                         <td>{{date('d/m/Y H:i:s', strtotime($orientacao->created_at))}}</td>
                         <td>{{$orientacao->descricao}}</td>
                         <td>
-                            <h4>
-                                <span class="badge badge-{{$bgColor[$orientacao->situacao]}}"
-                                    data-toggle="tooltip" title="{{$arrSituacao[$orientacao->situacao]}}">
-                                    {{$arrSituacao[$orientacao->situacao]}}
-                                </span>
-                            </h4>
+                            <span class="badge badge-{{$bgColor[$orientacao->situacao]}}"
+                                data-toggle="tooltip" title="{{$arrSituacao[$orientacao->situacao]}}">
+                                {{$arrSituacao[$orientacao->situacao]}}
+                            </span>
                         </td>
                         <td><a href="{{ route('orientacoes.edit', $orientacao->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td>

@@ -30,7 +30,7 @@
 
                         <div class="form-group">
                             <label for="descricao">Descrição</label>
-                            <input id="descricao" type="text" class="form-control @error('descricao') is-invalid @enderror" name="descricao" value="{{ old('descricao') }}" required autocomplete="descricao" autofocus>
+                            <input id="descricao" type="text" class="form-control @error('descricao') is-invalid @enderror maiuscula" name="descricao" value="{{ old('descricao') }}" required autocomplete="descricao" autofocus>
                             @error('descricao')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

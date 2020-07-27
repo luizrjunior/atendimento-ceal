@@ -60,13 +60,13 @@ class PessoaController extends Controller
 
         $pessoa = new Pessoa([
             'cpf' => $request->get('cpf'),
-            'nome' => $request->get('nome'),
+            'nome' => strtoupper($request->get('nome')),
             'nascimento' => $nascimento,
             'sexo' => $request->get('sexo'),
             'telefone' => $request->get('telefone'),
-            'profissao' => $request->get('profissao'),
+            'profissao' => strtoupper($request->get('profissao')),
             'socio' => $request->get('socio'),
-            'bairro' => $request->get('bairro'),
+            'bairro' => strtoupper($request->get('bairro')),
             'user_id' => Auth::id()
             ]);
         $pessoa->save();
@@ -110,13 +110,13 @@ class PessoaController extends Controller
   
         $pessoa = Pessoa::find($id);
         $pessoa->cpf = $request->get('cpf');
-        $pessoa->nome = $request->get('nome');
+        $pessoa->nome = strtoupper($request->get('nome'));
         $pessoa->nascimento = $nascimento;
         $pessoa->sexo = $request->get('sexo');
         $pessoa->telefone = $request->get('telefone');
-        $pessoa->profissao = $request->get('profissao');
+        $pessoa->profissao = strtoupper($request->get('profissao'));
         $pessoa->socio = $request->get('socio');
-        $pessoa->bairro = $request->get('bairro');
+        $pessoa->bairro = strtoupper($request->get('bairro'));
         $pessoa->save();
   
         return redirect('/pessoas/' . $pessoa->id . '/edit')->with('success', 'Dados Cadastrais atualizado com sucesso!');

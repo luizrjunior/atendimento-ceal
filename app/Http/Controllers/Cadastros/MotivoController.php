@@ -46,14 +46,14 @@ class MotivoController extends Controller
     {
         $request->validate([
             'descricao'=>'required|string|max:255|unique:motivos'
-          ]);
+        ]);
   
-          $motivo = new Motivo([
-            'descricao' => $request->get('descricao')
-          ]);
-          $motivo->save();
-  
-          return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo adicionado com sucesso!');
+        $motivo = new Motivo([
+        'descricao' => strtoupper($request->get('descricao'))
+        ]);
+        $motivo->save();
+
+        return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo adicionado com sucesso!');
     }
 
     /**
@@ -82,7 +82,7 @@ class MotivoController extends Controller
         ]);
   
         $motivo = Motivo::find($id);
-        $motivo->descricao = $request->get('descricao');
+        $motivo->descricao = strtoupper($request->get('descricao'));
         $motivo->save();
   
         return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo atualizado com sucesso!');

@@ -31,7 +31,7 @@
 
                         <div class="form-group">
                             <label for="nome">{{ __('Name') }}</label>
-                            <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ $funcao->nome }}" required autocomplete="nome" autofocus>
+                            <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror maiuscula" name="nome" value="{{ $funcao->nome }}" required autocomplete="nome" autofocus>
                             @error('nome')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

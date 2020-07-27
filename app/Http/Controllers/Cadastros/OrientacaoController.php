@@ -49,7 +49,7 @@ class OrientacaoController extends Controller
           ]);
   
         $orientacao = new Orientacao([
-        'descricao' => $request->get('descricao')
+        'descricao' => strtoupper($request->get('descricao'))
         ]);
         $orientacao->save();
 
@@ -82,7 +82,7 @@ class OrientacaoController extends Controller
         ]);
   
         $orientacao = Orientacao::find($id);
-        $orientacao->descricao = $request->get('descricao');
+        $orientacao->descricao = strtoupper($request->get('descricao'));
         $orientacao->save();
   
         return redirect('/orientacoes/' . $orientacao->id . '/edit')->with('success', 'Orientação atualizada com sucesso!');
