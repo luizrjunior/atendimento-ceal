@@ -14,6 +14,11 @@ class Horario extends Model
         'atividade_id'
     ];
 
+    public function atividade()
+    {
+        return $this->belongsTo(\App\Models\Atividade::class, 'atividade_id');
+    }
+
     public function local()
     {
         return $this->belongsTo(\App\Models\Local::class, 'local_id');

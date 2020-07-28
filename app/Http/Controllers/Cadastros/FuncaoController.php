@@ -105,7 +105,7 @@ class FuncaoController extends Controller
         return response()->json($dados, 200);
     }
 
-    public function carregarFuncoes()
+    public function carregarComboFuncoes()
     {
         return Funcao::all();
     }

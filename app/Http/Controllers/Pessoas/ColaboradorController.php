@@ -94,4 +94,9 @@ class ColaboradorController extends Controller
         return response()->json($dados, 200);
     }
 
+    public function carregarComboColaboradores()
+    {
+        return Colaborador::all();
+    }
+
 }

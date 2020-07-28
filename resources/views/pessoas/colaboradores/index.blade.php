@@ -27,7 +27,6 @@ $bgColor = array(
 </style>
 <div class="container">
     <div class="card uper">
-
         <div class="card-header">
             Lista de Colaboradores
             <a href="{{ url('colaboradores/create') }}" class="float-right">
@@ -38,9 +37,7 @@ $bgColor = array(
                 Adicionar Colaborador
             </a>
         </div>
-
         <div class="card-body">
-
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -65,7 +62,7 @@ $bgColor = array(
                                 {{$arrSituacao[$colaborador->situacao]}}
                             </span>
                         </td>
-                        <td><a href="{{ route('colaboradores.edit', $colaborador->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a href="{{ route('colaboradores.edit', $colaborador->id) }}" class="btn btn-primary btn-sm">Visualizar</a></td>
                         <td>
                             @if ($colaborador->situacao == 1)
                             <button class="btn btn-danger btn-sm" type="button" title="Desativar" 
@@ -79,11 +76,14 @@ $bgColor = array(
                         </td>
                     </tr>
                     @endforeach
+                    @if (count($colaboradores) == 0)
+                    <tr>
+                        <td colspan="6">Nenhum registro encontrado!</td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
-
         <div>
-
     <div>
 <div>
 @endsection

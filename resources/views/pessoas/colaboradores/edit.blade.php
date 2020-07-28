@@ -59,6 +59,12 @@ $bairro = $colaborador->pessoa->bairro;
 
                     </form>
 
+                    <div class="form-group">
+                        <a href="{{ url('colaboradores/create') }}" class="btn btn-secondary">
+                            Novo
+                        </a>
+                    </div>
+
                 </div>
             </div>
 

@@ -14,14 +14,13 @@ class CreateParticipantesTable extends Migration
     public function up()
     {
         Schema::create('participantes', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('horario_id');
             $table->foreign('horario_id')->references('id')->on('horarios')->onDelete('cascade');
             $table->unsignedBigInteger('colaborador_id');
             $table->foreign('colaborador_id')->references('id')->on('colaboradores')->onDelete('cascade');
             $table->unsignedBigInteger('funcao_id');
             $table->foreign('funcao_id')->references('id')->on('funcoes')->onDelete('cascade');
-            $table->timestamps();
+            $table->primary(['horario_id', 'colaborador_id']);
         });
     }
 

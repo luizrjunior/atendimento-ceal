@@ -3,6 +3,13 @@
 @section('javascript')
 <script type="text/javascript" src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/cadastros/horarios/create-edit-horario.js') }}"></script>
+@section('javascript')
+<script>
+    $('#dia_semana').val('{{old('dia_semana')}}');
+    $('#local_id').val('{{old('local_id')}}');
+</script>
+@endsection
+
 @endsection
 
 @section('content')
@@ -59,7 +66,7 @@
 
                         <div class="form-group">
                             <label for="hora_inicio">Hora Início</label>
-                            <input id="hora_inicio" type="text" class="form-control @error('hora_inicio') is-invalid @enderror" name="hora_inicio" value="" required autocomplete="hora_inicio">
+                            <input id="hora_inicio" type="text" class="form-control @error('hora_inicio') is-invalid @enderror" name="hora_inicio" value="{{ old('hora_inicio') }}" required autocomplete="hora_inicio">
                             @error('hora_inicio')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -69,7 +76,7 @@
 
                         <div class="form-group">
                             <label for="hora_termino">Hora Término</label>
-                            <input id="hora_termino" type="text" class="form-control @error('hora_termino') is-invalid @enderror" name="hora_termino" value="" required autocomplete="hora_termino">
+                            <input id="hora_termino" type="text" class="form-control @error('hora_termino') is-invalid @enderror" name="hora_termino" value="{{ old('hora_termino') }}" required autocomplete="hora_termino">
                             @error('hora_termino')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

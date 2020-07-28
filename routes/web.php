@@ -46,20 +46,20 @@ Route::post('funcoes/ativar-desativar-funcao', 'Cadastros\FuncaoController@ativa
 Route::resource('locais', 'Cadastros\LocalController');
 Route::post('locais/ativar-desativar-local', 'Cadastros\LocalController@ativarDesativarLocal');
 
-Route::resource('atividades', 'Cadastros\AtividadeController');
-Route::post('atividades/ativar-desativar-atividade', 'Cadastros\AtividadeController@ativarDesativarAtividade');
-
 Route::resource('horarios', 'Cadastros\HorarioController');
 Route::post('horarios/ativar-desativar-horario', 'Cadastros\HorarioController@ativarDesativarHorario');
-
-Route::resource('participantes', 'Cadastros\ParticipanteController');
-Route::post('participantes/ativar-desativar-participante', 'Cadastros\ParticipanteController@ativarDesativarParticipante');
 
 Route::resource('motivos', 'Cadastros\MotivoController');
 Route::post('motivos/ativar-desativar-motivo', 'Cadastros\MotivoController@ativarDesativarMotivo');
 
 Route::resource('orientacoes', 'Cadastros\OrientacaoController');
 Route::post('orientacoes/ativar-desativar-orientacao', 'Cadastros\OrientacaoController@ativarDesativarOrientacao');
+
+Route::resource('atividades', 'Cadastros\AtividadeController');
+Route::post('atividades/ativar-desativar-atividade', 'Cadastros\AtividadeController@ativarDesativarAtividade');
+
+Route::resource('participantes', 'Cadastros\ParticipanteController');
+Route::post('participantes/ativar-desativar-participante', 'Cadastros\ParticipanteController@ativarDesativarParticipante');
 
 /**
  * PESSOAS

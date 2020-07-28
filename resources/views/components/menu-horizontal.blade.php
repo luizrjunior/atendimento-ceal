@@ -49,14 +49,17 @@
                             <a class="dropdown-item" href="{{ url('locais') }}">
                                 Locais
                             </a>
-                            <a class="dropdown-item" href="{{ url('atividades') }}">
-                                Atividades
-                            </a>
                             <a class="dropdown-item" href="{{ url('motivos') }}">
                                 Motivos
                             </a>
                             <a class="dropdown-item" href="{{ url('orientacoes') }}">
                                 Orientações
+                            </a>
+                            <a class="dropdown-item" href="{{ url('atividades') }}">
+                                Atividades
+                            </a>
+                            <a class="dropdown-item" href="{{ url('participantes') }}">
+                                Participantes
                             </a>
                         </div>
                     </li>

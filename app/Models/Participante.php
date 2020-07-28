@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Participante extends Model
 {
+    public $incrementing = false;
+
+    public $timestamps = false;
+
+    protected $primaryKey = null;
+
     protected $fillable = [
         'horario_id',
         'colaborador_id',

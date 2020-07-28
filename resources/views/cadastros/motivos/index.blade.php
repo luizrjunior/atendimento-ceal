@@ -27,7 +27,6 @@ $bgColor = array(
 </style>
 <div class="container">
     <div class="card uper">
-
         <div class="card-header">
             Lista de Motivos
             <a href="{{ url('motivos/create') }}" class="float-right">
@@ -38,9 +37,7 @@ $bgColor = array(
                 Adicionar Motivo
             </a>
         </div>
-
         <div class="card-body">
-
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -75,11 +72,14 @@ $bgColor = array(
                         </td>
                     </tr>
                     @endforeach
+                    @if (count($motivos) == 0)
+                    <tr>
+                        <td colspan="4">Nenhum registro encontrado!</td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
-
         <div>
-
     <div>
 <div>
 @endsection

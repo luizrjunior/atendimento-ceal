@@ -35,11 +35,8 @@ $bgColor = array(
   }
 </style>
 <div class="container">
-
     <h4>{{$atividade->nome}}</h4>
-
     <div class="card uper">
-
         <div class="card-header">
             Lista de Horários
             <a href="{{ route('atividades.edit', $atividade->id) }}" class="float-right">
@@ -59,7 +56,6 @@ $bgColor = array(
                 Adicionar Horário
             </a>
         </div>
-
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
@@ -97,7 +93,6 @@ $bgColor = array(
                         </td>
                     </tr>
                     @endforeach
-
                     @if (count($horarios) == 0)
                     <tr>
                         <td colspan="5">Nenhum registro encontrado!</td>
@@ -105,9 +100,7 @@ $bgColor = array(
                     @endif
                 </tbody>
             </table>
-
         <div>
-
     <div>
 <div>
 @endsection
