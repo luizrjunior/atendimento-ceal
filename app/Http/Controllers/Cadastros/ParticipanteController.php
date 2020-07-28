@@ -25,6 +25,8 @@ class ParticipanteController extends Controller
 
     public function index()
     {
+        Session::put('tela', 'index_participantes');
+        
         $horarios = Horario::all();
         return view('cadastros.participantes.index', compact('horarios'));
     }

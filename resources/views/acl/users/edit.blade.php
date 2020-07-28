@@ -116,7 +116,7 @@ $disabled = "";
                                       @method('DELETE')
                                       <input type="hidden" id="uhr_user_id" name="uhr_user_id" value="{{ $user->id }}">
                                       <input type="hidden" id="uhr_role_id" name="uhr_role_id" value="{{ $userHasRole->role->id }}">
-                                      <button class="btn btn-danger" type="submit" {{$disabled}}>Remover</button>
+                                      <button class="btn btn-danger btn-sm" type="submit" {{$disabled}}>Remover</button>
                                     </form>
                                 </td>
                             </tr>

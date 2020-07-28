@@ -74,6 +74,7 @@ class HorarioController extends Controller
 
     public function edit($id)
     {
+        Session::put('tela', 'edit_horario');
         Session::put('horario_id', $id);
         $atividade_id = Session::get('atividade_id');
         $atividade = Atividade::find($atividade_id);

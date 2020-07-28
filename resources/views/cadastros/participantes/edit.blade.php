@@ -8,6 +8,11 @@ $arrDiaSemana = array(
     '6' => "SÁBADO",
     '7' => "DOMINGO",
 );
+
+$urlVoltar = url('participantes');
+if (Session::get('tela') == 'edit_horario') {
+    $urlVoltar = route('horarios.edit', $horario->id);
+}
 @endphp
                     
 @extends('layouts.app')
@@ -25,7 +30,7 @@ $arrDiaSemana = array(
     <div class="card uper">
         <div class="card-header">
             Participantes
-            <a href="{{ url('participantes') }}" class="float-right">
+            <a href="{{ $urlVoltar }}" class="float-right">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                     <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
@@ -67,7 +72,7 @@ $arrDiaSemana = array(
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" id="partic_colaborador_id" name="partic_colaborador_id" value="{{ $participante->colaborador->id }}">
-                                <button class="btn btn-danger" type="submit">Remover</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Remover</button>
                               </form>
                         </td>
                     </tr>
