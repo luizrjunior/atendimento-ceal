@@ -58,9 +58,11 @@
                             <a class="dropdown-item" href="{{ url('atividades') }}">
                                 Atividades
                             </a>
+                            @can('Item_Participantes')
                             <a class="dropdown-item" href="{{ url('participantes') }}">
                                 Participantes
                             </a>
+                            @endcan
                         </div>
                     </li>
                     @endcan
@@ -91,14 +93,14 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url('my-profile') }}">
+                                Meus Dados de Usuário
+                            </a>
                             @if (Session::get('pessoa_id') != "")
                             <a class="dropdown-item" href="{{ url('pessoas/' . Session::get('pessoa_id') . '/edit') }}">
                                 Meus Dados Cadastrais
                             </a>
                             @endif
-                            <a class="dropdown-item" href="{{ url('meu-perfil/') }}">
-                                Meu Perfil de Usuário
-                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">

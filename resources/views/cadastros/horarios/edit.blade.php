@@ -19,7 +19,6 @@
     <h4>{{$atividade->nome}}</h4>
     <div class="row justify-content-center">
         <div class="col-md-8">
-
             <div class="card uper">
                 <div class="card-header">
                     Editar Horário
@@ -31,6 +30,7 @@
                         </svg>
                         Voltar
                     </a>
+                    @can('Item_Participantes')
                     <span class="float-right">&nbsp;|&nbsp;</span>
                     <a href="{{ url('participantes/' . $horario->id . '/edit') }}" class="float-right">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -39,17 +39,14 @@
                         </svg>
                         Participantes
                     </a>
+                    @endcan
                 </div>
                 <div class="card-body">
-
                     @include('components.alertas')
-
                     <form method="post" action="{{ route('horarios.update', $horario->id) }}">
                         @method('PATCH')
                         @csrf
-
                         <input type="hidden" id="atividade_id" name="atividade_id" value="{{ $atividade->id }}">
-
                         <div class="form-group">
                             <label for="dia_semana">Dia da Semana</label>
                             <select class="form-control @error('dia_semana') is-invalid @enderror" id="dia_semana" name="dia_semana" required autofocus>
@@ -68,7 +65,6 @@
                             </span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="hora_inicio">Hora Início</label>
                             <input id="hora_inicio" type="text" class="form-control @error('hora_inicio') is-invalid @enderror" name="hora_inicio" value="{{substr($horario->hora_inicio, 0, -3)}}" required autocomplete="hora_inicio">
@@ -78,7 +74,6 @@
                             </span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="hora_termino">Hora Término</label>
                             <input id="hora_termino" type="text" class="form-control @error('hora_termino') is-invalid @enderror" name="hora_termino" value="{{substr($horario->hora_termino, 0, -3)}}" required autocomplete="hora_termino">
@@ -88,7 +83,6 @@
                             </span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="local_id">Local</label>
                             <select class="form-control @error('local_id') is-invalid @enderror" id="local_id" name="local_id" required>
@@ -108,7 +102,6 @@
                             </span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
                                 Atualizar
@@ -118,10 +111,8 @@
                             </a>
                         </div>
                     </form>
-
                 </div>
             </div>
-
             <div class="card uper">
                 <div class="card-header">
                     Participantes do Horário e Local
@@ -156,7 +147,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

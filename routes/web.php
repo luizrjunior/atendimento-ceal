@@ -37,6 +37,10 @@ Route::post('role-has-permission/store', 'Acl\RoleHasPermissionController@store'
 Route::post('role-has-permission/load-permissions-role-json', 'Acl\RoleHasPermissionController@loadPermissionsRoleJson')->name('roles.load-permissions-role-json');
 Route::delete('role-has-permission/destroy', 'Acl\RoleHasPermissionController@destroy')->name('roles.destroy-role-has-permission');
 
+Route::get('/my-profile', 'Acl\MyProfileController@edit')->name('my-profile');
+Route::post('/my-profile/update', 'Acl\MyProfileController@update')->name('my-profile.update');
+Route::post('/my-profile/update-password', 'Acl\MyProfileController@updatePassword')->name('my-profile.update-password');
+
 /**
  * CADASTROS
  */

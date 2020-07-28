@@ -27,8 +27,7 @@ $arrDiaSemana = array(
 </style>
 <div class="container">
     <h4>{{$horario->atividade->nome}}</h4>
-    <h4>{{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}}</h4>
-    <h4>{{$horario->local->nome}}</h4>
+    <h4>{{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}} - {{$horario->local->numero}} - {{$horario->local->nome}}</h4>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card uper">

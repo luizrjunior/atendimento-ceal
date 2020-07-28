@@ -35,6 +35,14 @@ class PermissionsTableSeeder extends Seeder {
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
+        $this->command->info('4 - Inserindo Permissao: Item_Participantes');
+        DB::table('permissions')->insert([
+            'name' => 'Item_Participantes',
+            'description' => 'Permissão para o item Participantes.',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
     }
 
 }
