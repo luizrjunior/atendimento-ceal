@@ -107,4 +107,9 @@ class AtividadeController extends Controller
         return response()->json($dados, 200);
     }
 
+    public function carregarComboAtividades()
+    {
+        return Atividade::all();
+    }
+
 }

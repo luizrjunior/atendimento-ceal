@@ -47,15 +47,15 @@ class LocalController extends Controller
         $request->validate([
             'nome'=>'required|string|max:255|unique:locais',
             'numero'=>'required|string|max:255'
-          ]);
-  
-          $local = new Local([
+        ]);
+
+        $local = new Local([
             'nome' => strtoupper($request->get('nome')),
             'numero' => strtoupper($request->get('numero'))
-          ]);
-          $local->save();
-  
-          return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local adicionado com sucesso!');
+        ]);
+        $local->save();
+
+        return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local adicionado com sucesso!');
     }
 
     /**

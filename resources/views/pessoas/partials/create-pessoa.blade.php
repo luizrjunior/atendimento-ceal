@@ -21,7 +21,7 @@
 <div class="form-group">
     <label for="nascimento">Nascimento</label>
     <div class='input-group date'>
-        <input type='text' class="form-control @error('nome') is-invalid @enderror" id="nascimento" name="nascimento" value="{{ old('nascimento') }}" required autocomplete="nascimento">
+        <input type='text' class="form-control @error('nascimento') is-invalid @enderror" id="nascimento" name="nascimento" value="{{ old('nascimento') }}" required autocomplete="nascimento">
         <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
     </span>

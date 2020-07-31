@@ -3,7 +3,6 @@
 @section('javascript')
 <script type="text/javascript" src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/cadastros/horarios/create-edit-horario.js') }}"></script>
-@section('javascript')
 <script>
     $('#dia_semana').val('{{old('dia_semana')}}');
     $('#local_id').val('{{old('local_id')}}');

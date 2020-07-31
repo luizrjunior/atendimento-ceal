@@ -46,10 +46,10 @@ class OrientacaoController extends Controller
     {
         $request->validate([
             'descricao'=>'required|string|max:255|unique:orientacoes'
-          ]);
+        ]);
   
         $orientacao = new Orientacao([
-        'descricao' => strtoupper($request->get('descricao'))
+            'descricao' => strtoupper($request->get('descricao'))
         ]);
         $orientacao->save();
 

@@ -25,6 +25,15 @@ class HorarioController extends Controller
         return Horario::where('atividade_id', $atividade_id)->get();
     }
 
+    public function carregarHorariosAtividadeJson(Request $request)
+    {
+        $horarios = Horario::select('horarios.id as id', 'horarios.dia_semana', 'horarios.hora_inicio', 
+            'horarios.hora_termino', 'locais.numero', 'locais.nome')
+            ->where('horarios.atividade_id', $request->atividade_id)
+            ->join('locais', 'horarios.local_id', 'locais.id')->get();
+        return response()->json($horarios, 200);
+    }
+
     public function index()
     {
         $atividade_id = Session::get('atividade_id');

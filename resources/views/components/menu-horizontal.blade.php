@@ -29,6 +29,22 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ url('home') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
+
+                    @can('Menu_Agendas')
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            Agendas <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
+                            <a class="dropdown-item" href="{{ url('agendamentos') }}">
+                                Agendamentos
+                            </a>
+                            <a class="dropdown-item" href="{{ url('atendimentos') }}">
+                                Atendimentos
+                            </a>
+                        </div>
+                    </li>
+                    @endcan
                     
                     @can('Menu_Colaboradors')
                     <li class="nav-item">
@@ -38,11 +54,11 @@
                     
                     @can('Menu_Cadastros')
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown2" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             Cadastros <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">
                             <a class="dropdown-item" href="{{ url('funcoes') }}">
                                 Funções
                             </a>

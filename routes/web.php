@@ -52,6 +52,7 @@ Route::post('locais/ativar-desativar-local', 'Cadastros\LocalController@ativarDe
 
 Route::resource('horarios', 'Cadastros\HorarioController');
 Route::post('horarios/ativar-desativar-horario', 'Cadastros\HorarioController@ativarDesativarHorario');
+Route::post('horarios/carregar-horarios-atividade-json', 'Cadastros\HorarioController@carregarHorariosAtividadeJson')->name('horarios.carregar-horarios-atividade-json');
 
 Route::resource('motivos', 'Cadastros\MotivoController');
 Route::post('motivos/ativar-desativar-motivo', 'Cadastros\MotivoController@ativarDesativarMotivo');
@@ -73,3 +74,10 @@ Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPes
 
 Route::resource('colaboradores', 'Pessoas\ColaboradorController');
 Route::post('colaboradores/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');
+
+/**
+ * AGENDAS
+ */
+Route::resource('agendamentos', 'Agendas\AgendamentoController');
+Route::post('agendamentos/ativar-desativar-agendamento', 'Agendas\AgendamentoController@ativarDesativarAgendamento');
+

@@ -46,14 +46,14 @@ class FuncaoController extends Controller
     {
         $request->validate([
             'nome'=>'required|string|max:255|unique:funcoes'
-          ]);
-  
-          $funcao = new Funcao([
-            'nome' => strtoupper($request->get('nome'))
-          ]);
-          $funcao->save();
-  
-          return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função adicionada com sucesso!');
+        ]);
+
+        $funcao = new Funcao([
+        'nome' => strtoupper($request->get('nome'))
+        ]);
+        $funcao->save();
+
+        return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função adicionada com sucesso!');
     }
 
     /**

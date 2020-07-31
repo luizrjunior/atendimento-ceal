@@ -49,7 +49,7 @@ class MotivoController extends Controller
         ]);
   
         $motivo = new Motivo([
-        'descricao' => strtoupper($request->get('descricao'))
+            'descricao' => strtoupper($request->get('descricao'))
         ]);
         $motivo->save();
 
