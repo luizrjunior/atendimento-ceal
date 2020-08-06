@@ -17,10 +17,11 @@ class CreateAgendamentosTable extends Migration
             $table->id();
             $table->date('data');
             $table->integer('situacao')->default(1);
-            $table->integer('numero_vagas_virtual');
-            $table->integer('numero_vagas_presencial');
-            $table->integer('numero_espera_virtual');
-            $table->integer('numero_espera_presencial');
+            $table->integer('numero_vagas_distancia')->default(0);
+            $table->integer('numero_vagas_virtual')->default(0);
+            $table->integer('numero_vagas_presencial')->default(0);
+            $table->integer('numero_espera_virtual')->default(0);
+            $table->integer('numero_espera_presencial')->default(0);
             $table->unsignedBigInteger('horario_id');
             $table->foreign('horario_id')->references('id')->on('horarios')->onDelete('cascade');
             $table->timestamps();

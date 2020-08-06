@@ -7,6 +7,9 @@ $bgColor = array(
     '1' => "success",
     '2' => "danger"
 );
+$nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
+$situacao_psq = $data['situacao_psq'] ? $data['situacao_psq'] : "";
+$totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 @endphp
                     
 @extends('layouts.app')
@@ -15,6 +18,7 @@ $bgColor = array(
 <script>
     top.urlListaColaboradores = "{{ url('colaboradores') }}";
     top.urlAtivarDesativarColaborador = "{{ url('colaboradores/ativar-desativar-colaborador') }}";
+    $('#situacao_psq').val({{$situacao_psq}});
 </script>
 <script type="text/javascript" src="{{ asset('/js/pessoas/colaboradores/index-colaborador.js') }}"></script>
 @endsection
@@ -26,6 +30,49 @@ $bgColor = array(
   }
 </style>
 <div class="container">
+
+    <form method="post" action="{{ route('colaboradores.index') }}">
+        @csrf
+
+    <div class="card uper">
+        <div class="card-header">
+            Filtro de Colaboradores
+        </div>
+        <div class="card-body">
+
+                <div class="form-group">
+                    <label for="nome_psq">{{ __('Name') }}</label>
+                    <input id="nome_psq" type="text" class="form-control @error('nome_psq') is-invalid @enderror maiuscula" name="nome_psq" value="{{ $nome_psq }}" autocomplete="nome_psq">
+                    @error('nome_psq')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                
+                <div class="form-group">
+                    <label for="situacao_psq">Situação</label>
+                    <select class="form-control @error('situacao_psq') is-invalid @enderror" id="situacao_psq" name="situacao_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                        <option value="1">ATIVO</option>
+                        <option value="2">DESATIVADO</option>
+                    </select>
+                    @error('situacao_psq')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                
+                <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary">
+                        Pesquisar
+                    </button>
+                </div>
+
+        </div>
+    </div>
+
     <div class="card uper">
         <div class="card-header">
             Lista de Colaboradores
@@ -53,9 +100,9 @@ $bgColor = array(
                     @foreach($colaboradores as $colaborador)
                     <tr>
                         <td>{{date('d/m/Y H:i:s', strtotime($colaborador->created_at))}}</td>
-                        <td>{{$colaborador->pessoa->nome}}</td>
-                        <td>{{$colaborador->pessoa->telefone}}</td>
-                        <td>{{$colaborador->pessoa->bairro}}</td>
+                        <td>{{$colaborador->nome}}</td>
+                        <td>{{$colaborador->telefone}}</td>
+                        <td>{{$colaborador->bairro}}</td>
                         <td>
                             <span class="badge badge-{{$bgColor[$colaborador->situacao]}}"
                                 data-toggle="tooltip" title="{{$arrSituacao[$colaborador->situacao]}}">
@@ -76,6 +123,31 @@ $bgColor = array(
                         </td>
                     </tr>
                     @endforeach
+
+                    @if (isset($data))
+                    <tr>
+                        <td>
+                            <input id="totalPage" name="totalPage" type="text" value="{{ $totalPage }}" 
+                                class="form-control" size="10" style="text-align: right;">
+                                Registros por página
+                        </td>
+                        <td colspan="6">
+                            {{  $colaboradores->appends($data)->links() }}
+                        </td>
+                    </tr>
+                    @else
+                    <tr>
+                        <td>
+                            <input id="totalPage" name="totalPage" type="text" value="{{ $totalPage }}" 
+                                class="form-control" size="10" style="text-align: right;">
+                                Registros por página
+                        </td>
+                        <td colspan="6">
+                            {{ $colaboradores->links() }}
+                        </td>
+                    </tr>
+                    @endif
+
                     @if (count($colaboradores) == 0)
                     <tr>
                         <td colspan="6">Nenhum registro encontrado!</td>
@@ -85,5 +157,7 @@ $bgColor = array(
             </table>
         <div>
     <div>
+    </form>
+
 <div>
 @endsection

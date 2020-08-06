@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\Pessoa;
+use App\Models\Agendamento;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,9 @@ class HomeController extends Controller
         if (count($pessoa) == 1) {
             Session::put('pessoa_id', $pessoa[0]->id);
         }
-        return view('home');
+
+        $agendamentos = Agendamento::where('situacao', 1)->where('data', '>=', date('Y-m-d'))->get();
+
+        return view('home', compact('agendamentos'));
     }
 }

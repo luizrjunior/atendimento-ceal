@@ -20,26 +20,12 @@ class HorarioController extends Controller
         . 'você pode verificar isso?',
     ];
 
-    public function loadHorarios($atividade_id)
-    {
-        return Horario::where('atividade_id', $atividade_id)->get();
-    }
-
-    public function carregarHorariosAtividadeJson(Request $request)
-    {
-        $horarios = Horario::select('horarios.id as id', 'horarios.dia_semana', 'horarios.hora_inicio', 
-            'horarios.hora_termino', 'locais.numero', 'locais.nome')
-            ->where('horarios.atividade_id', $request->atividade_id)
-            ->join('locais', 'horarios.local_id', 'locais.id')->get();
-        return response()->json($horarios, 200);
-    }
-
     public function index()
     {
         $atividade_id = Session::get('atividade_id');
         $atividade = Atividade::find($atividade_id);
 
-        $horarios = Horario::where('atividade_id', $atividade_id)->get();
+        $horarios = Horario::where('atividade_id', $atividade_id)->orderBy('dia_semana')->orderBy('hora_inicio')->get();
         return view('cadastros.horarios.index', compact('atividade', 'horarios'));
     }
 
@@ -136,6 +122,33 @@ class HorarioController extends Controller
         $dados['textoMsg'] = $msg;
 
         return response()->json($dados, 200);
+    }
+
+    public function loadHorarios($atividade_id)
+    {
+        return Horario::where('atividade_id', $atividade_id)->orderBy('dia_semana')->orderBy('hora_inicio')->get();
+    }
+
+    public function carregarHorariosAtividadeJson(Request $request)
+    {
+        $horarios = Horario::select('horarios.id as id', 'horarios.dia_semana', 'horarios.hora_inicio', 
+            'horarios.hora_termino', 'locais.numero', 'locais.nome')
+            ->where('horarios.atividade_id', $request->atividade_id)
+            ->join('locais', 'horarios.local_id', 'locais.id')->get();
+            
+        return response()->json($horarios, 200);
+    }
+
+    public function listarHorariosPorAtividade(Request $request)
+    {
+        $atividade_id = $request->atividade_id;
+        $atividade = Atividade::find($atividade_id);
+
+        $horarios = Horario::join('agendamentos', 'horarios.id', '=', 'agendamentos.horario_id')
+            ->where('horarios.atividade_id', $atividade_id)->where('horarios.situacao', 1)
+            ->where('agendamentos.data', '>=', date('Y-m-d'))->get();
+        
+        return view('cadastros.horarios.listar-horarios', compact('atividade', 'horarios'));
     }
 
 }

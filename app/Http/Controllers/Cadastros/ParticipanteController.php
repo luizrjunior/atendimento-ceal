@@ -20,14 +20,16 @@ class ParticipanteController extends Controller
 
     public function loadParticipantes($horario_id)
     {
-        return Participante::where('horario_id', $horario_id)->get();
+        return Participante::join('colaboradores', 'participantes.colaborador_id', 'colaboradores.id')
+            ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
+            ->where('participantes.horario_id', $horario_id)->orderBy('pessoas.nome')->get();
     }
 
     public function index()
     {
         Session::put('tela', 'index_participantes');
         
-        $horarios = Horario::all();
+        $horarios = Horario::orderBy('dia_semana')->orderBy('hora_inicio')->get();
         return view('cadastros.participantes.index', compact('horarios'));
     }
 
@@ -68,7 +70,9 @@ class ParticipanteController extends Controller
         Session::put('horario_id', $id);
 
         $horario = Horario::find($id);
-        $participantes = Participante::where('horario_id', $id)->get();
+        $participantes = Participante::join('colaboradores', 'participantes.colaborador_id', 'colaboradores.id')
+            ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
+            ->where('horario_id', $id)->orderBy('pessoas.nome')->get();
 
         return view('cadastros.participantes.edit', compact('horario', 'participantes'));
     }

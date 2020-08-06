@@ -1,3 +1,7 @@
+@php
+$data_agendamento = date('d/m/Y', strtotime($agendamento->data));
+@endphp
+
 @extends('layouts.app')
 
 @section('javascript')
@@ -40,6 +44,7 @@
                     @include('components.alertas')
 
                     <form method="post" action="{{ route('agendamentos.update', $agendamento->id) }}">
+                        @method('PATCH')
                         @csrf
 
                         <div class="form-group">
@@ -75,14 +80,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="data">Data</label>
-                            <div class='input-group date'>
-                                <input type='text' class="form-control @error('data') is-invalid @enderror" id="data" name="data" value="{{ $agendamento->data }}" required autocomplete="data">
-                                <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                            <label for="data_agendamento">Data</label>
+                            <input type='text' class="form-control @error('data_agendamento') is-invalid @enderror" id="data_agendamento" name="data_agendamento" value="{{ $data_agendamento }}" required autocomplete="data_agendamento">
+                            @error('data_agendamento')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
                             </span>
-                            </div>
-                            @error('data')
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="numero_vagas_distancia">Número Vagas à Distância</label>
+                            <input id="numero_vagas_distancia" type="text" class="form-control @error('numero_vagas_distancia') is-invalid @enderror" name="numero_vagas_distancia" value="{{ $agendamento->numero_vagas_distancia }}" required autocomplete="numero_vagas_distancia">
+                            @error('numero_vagas_distancia')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

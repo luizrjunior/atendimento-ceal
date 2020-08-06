@@ -1,3 +1,8 @@
+function validar() {
+    $('#carregando').show();
+    $("#forma").prop('disabled', false);
+}
+
 function carregarSelectHorarios() {
     var formURL = top.routeCarregarHorarios;
     $.ajax({
@@ -28,8 +33,8 @@ function carregarSelectHorarios() {
 }
 
 $(document).ready(function () {
-    $("#data_agendamento").mask("99/99/9999");
-    $('#data_agendamento').datepicker({	
+    $("#data").mask("99/99/9999");
+    $('#data').datepicker({	
         format: "dd/mm/yyyy",	
         language: "pt-BR"
     });

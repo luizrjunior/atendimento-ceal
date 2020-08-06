@@ -53,6 +53,7 @@ Route::post('locais/ativar-desativar-local', 'Cadastros\LocalController@ativarDe
 Route::resource('horarios', 'Cadastros\HorarioController');
 Route::post('horarios/ativar-desativar-horario', 'Cadastros\HorarioController@ativarDesativarHorario');
 Route::post('horarios/carregar-horarios-atividade-json', 'Cadastros\HorarioController@carregarHorariosAtividadeJson')->name('horarios.carregar-horarios-atividade-json');
+Route::post('horarios/listar-horarios-por-atividade', 'Cadastros\HorarioController@listarHorariosPorAtividade')->name('horarios.listar-horarios-por-atividade');
 
 Route::resource('motivos', 'Cadastros\MotivoController');
 Route::post('motivos/ativar-desativar-motivo', 'Cadastros\MotivoController@ativarDesativarMotivo');
@@ -72,12 +73,28 @@ Route::post('participantes/ativar-desativar-participante', 'Cadastros\Participan
 Route::resource('pessoas', 'Pessoas\PessoaController');
 Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPessoaPorCPF')->name('pessoas.carrregar-pessoa-cpf');
 
-Route::resource('colaboradores', 'Pessoas\ColaboradorController');
+/**
+ * COLABORADORES
+ */
+Route::any('colaboradores', 'Pessoas\ColaboradorController@index')->name('colaboradores.index');
+
+Route::get('colaboradores/create', 'Pessoas\ColaboradorController@create')->name('colaboradores.create');
+Route::post('colaboradores/store', 'Pessoas\ColaboradorController@store')->name('colaboradores.store');
+
+Route::get('colaboradores/{colaborador_id}/edit', 'Pessoas\ColaboradorController@edit')->name('colaboradores.edit');
+Route::patch('colaboradores/update', 'Pessoas\ColaboradorController@update')->name('colaboradores.update');
+
 Route::post('colaboradores/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');
 
 /**
- * AGENDAS
+ * AGENDAMENTOS
  */
 Route::resource('agendamentos', 'Agendas\AgendamentoController');
 Route::post('agendamentos/ativar-desativar-agendamento', 'Agendas\AgendamentoController@ativarDesativarAgendamento');
+Route::post('agendamentos/listar-agendamentos-por-horario', 'Agendas\AgendamentoController@listarAgendamentosPorHorario')->name('agendamentos.listar-agendamentos-por-horario');
 
+/**
+ * ATENDIMENTOS
+ */
+Route::resource('atendimentos', 'Agendas\AtendimentoController');
+Route::post('atendimentos/abrir-create', 'Agendas\AtendimentoController@abrirCreate')->name('atendimentos.abrir-create');

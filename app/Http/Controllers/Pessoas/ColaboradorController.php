@@ -20,15 +20,39 @@ class ColaboradorController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private function filtrosPesquisa($request)
     {
-        $colaboradores = Colaborador::all();
-        return view('pessoas.colaboradores.index', compact('colaboradores'));
+        $data = $request->except('_token');
+        if (empty($data['nome_psq'])) {
+            $data['nome_psq'] = "";
+        }
+
+        if (empty($data['situacao_psq'])) {
+            $data['situacao_psq'] = "";
+        }
+
+        $data['totalPage'] = isset($data['totalPage']) ? $data['totalPage'] : 25;
+
+        return $data;
+    }
+
+    public function index(Request $request)
+    {
+        $data = $this->filtrosPesquisa($request);
+
+        $colaboradores = Colaborador::select(
+            'colaboradores.id', 'colaboradores.situacao', 'pessoas.nome', 'pessoas.telefone', 'pessoas.bairro')
+            ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
+            ->where(function ($query) use ($data) {
+                if ($data['nome_psq'] != "") {
+                    $query->where('pessoas.nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
+                }
+                if ($data['situacao_psq'] != "") {
+                    $query->where('colaboradores.situacao', $data['situacao_psq']);
+                }
+            })->orderBy('pessoas.nome')->paginate($data['totalPage']);
+
+        return view('pessoas.colaboradores.index', compact('colaboradores', 'data'));
     }
 
     /**
