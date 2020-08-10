@@ -23,7 +23,7 @@ class AgendamentoController extends Controller
 
     public function index()
     {
-        $agendamentos = Agendamento::all();
+        $agendamentos = Agendamento::with('horario')->get();
         return view('agendas.agendamentos.index', compact('agendamentos'));
     }
 
@@ -45,21 +45,23 @@ class AgendamentoController extends Controller
                 }),
             ],
             'data_agendamento'=>'required|date_format:d/m/Y|after_or_equal:today',
-            'numero_vagas_distancia'=>'required|numeric',
             'numero_vagas_virtual'=>'required|numeric',
             'numero_vagas_presencial'=>'required|numeric',
+            'numero_vagas_distancia'=>'required|numeric',
             'numero_espera_virtual'=>'required|numeric',
-            'numero_espera_presencial'=>'required|numeric'
+            'numero_espera_presencial'=>'required|numeric',
+            'numero_espera_distancia'=>'required|numeric'
         ], self::MESSAGES_ERRORS);
   
         $agendamento = new Agendamento([
             'horario_id' => $request->get('horario_id'),
             'data' => $data,
-            'numero_vagas_distancia' => $request->get('numero_vagas_distancia'),
             'numero_vagas_virtual' => $request->get('numero_vagas_virtual'),
             'numero_vagas_presencial' => $request->get('numero_vagas_presencial'),
+            'numero_vagas_distancia' => $request->get('numero_vagas_distancia'),
             'numero_espera_virtual' => $request->get('numero_espera_virtual'),
-            'numero_espera_presencial' => $request->get('numero_espera_presencial')
+            'numero_espera_presencial' => $request->get('numero_espera_presencial'),
+            'numero_espera_distancia' => $request->get('numero_espera_distancia')
         ]);
         $agendamento->save();
 
@@ -84,21 +86,23 @@ class AgendamentoController extends Controller
                 }),
             ],
             'data_agendamento'=>'required|date_format:d/m/Y|after_or_equal:today',
-            'numero_vagas_distancia'=>'required|numeric',
             'numero_vagas_virtual'=>'required|numeric',
             'numero_vagas_presencial'=>'required|numeric',
+            'numero_vagas_distancia'=>'required|numeric',
             'numero_espera_virtual'=>'required|numeric',
-            'numero_espera_presencial'=>'required|numeric'
+            'numero_espera_presencial'=>'required|numeric',
+            'numero_espera_distancia'=>'required|numeric'
         ], self::MESSAGES_ERRORS);
   
         $agendamento = Agendamento::find($id);
         $agendamento->horario_id = $request->get('horario_id');
         $agendamento->data = $data;
-        $agendamento->numero_vagas_distancia = $request->get('numero_vagas_distancia');
         $agendamento->numero_vagas_virtual = $request->get('numero_vagas_virtual');
         $agendamento->numero_vagas_presencial = $request->get('numero_vagas_presencial');
+        $agendamento->numero_vagas_distancia = $request->get('numero_vagas_distancia');
         $agendamento->numero_espera_virtual = $request->get('numero_espera_virtual');
         $agendamento->numero_espera_presencial = $request->get('numero_espera_presencial');
+        $agendamento->numero_espera_distancia = $request->get('numero_espera_distancia');
         $agendamento->save();
   
         return redirect('/agendamentos/' . $agendamento->id . '/edit')->with('success', 'Agendamento atualizado com sucesso!');

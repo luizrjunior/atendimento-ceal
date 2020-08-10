@@ -36,12 +36,16 @@
                             Agendas <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
+                            @can('Item_Agendamentos')
                             <a class="dropdown-item" href="{{ url('agendamentos') }}">
                                 Agendamentos
                             </a>
-                            <a class="dropdown-item" href="{{ url('atendimentos') }}">
+                            @endcan
+                            @can('Item_Atendimentos')
+                            <a class="dropdown-item" href="{{ url('atendimentos-admin') }}">
                                 Atendimentos
                             </a>
+                            @endcan
                         </div>
                     </li>
                     @endcan
@@ -59,24 +63,39 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">
+                            @can('Item_Funcoes')
                             <a class="dropdown-item" href="{{ url('funcoes') }}">
                                 Funções
                             </a>
+                            @endcan
+                            @can('Item_Locais')
                             <a class="dropdown-item" href="{{ url('locais') }}">
                                 Locais
                             </a>
+                            @endcan
+                            @can('Item_Motivos')
                             <a class="dropdown-item" href="{{ url('motivos') }}">
                                 Motivos
                             </a>
+                            @endcan
+                            @can('Item_Orientacoes')
                             <a class="dropdown-item" href="{{ url('orientacoes') }}">
                                 Orientações
                             </a>
+                            @endcan
+                            @can('Item_Atividades')
                             <a class="dropdown-item" href="{{ url('atividades') }}">
                                 Atividades
                             </a>
+                            @endcan
                             @can('Item_Participantes')
                             <a class="dropdown-item" href="{{ url('participantes') }}">
                                 Participantes
+                            </a>
+                            @endcan
+                            @can('Item_Pessoas')
+                            <a class="dropdown-item" href="{{ url('pessoas') }}">
+                                Pessoas
                             </a>
                             @endcan
                         </div>

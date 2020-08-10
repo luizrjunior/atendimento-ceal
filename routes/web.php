@@ -98,3 +98,9 @@ Route::post('agendamentos/listar-agendamentos-por-horario', 'Agendas\Agendamento
  */
 Route::resource('atendimentos', 'Agendas\AtendimentoController');
 Route::post('atendimentos/abrir-create', 'Agendas\AtendimentoController@abrirCreate')->name('atendimentos.abrir-create');
+
+/**
+ * ATENDIMENTOS-ADMIN
+ */
+// Route::resource('atendimentos-admin', 'Agendas\AtendimentoAdminController');
+Route::any('atendimentos-admin', 'Agendas\AtendimentoAdminController@index')->name('atendimentos-admin.index');

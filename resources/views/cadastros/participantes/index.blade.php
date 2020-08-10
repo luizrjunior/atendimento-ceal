@@ -21,7 +21,7 @@ $arrDiaSemana = array(
 <div class="container">
     <div class="card uper">
         <div class="card-header">
-            Lista de Atividades, Horários e Locais
+            Participantes - Lista de Atividades, Horários e Locais
         </div>
         <div class="card-body">
             <table class="table table-striped">

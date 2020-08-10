@@ -1,11 +1,31 @@
 @php
+$arrDiaSemana = array(
+    '1' => "SEGUNDA-FEIRA",
+    '2' => "TERÇA-FEIRA",
+    '3' => "QUARTA-FEIRA",
+    '4' => "QUINTA-FEIRA",
+    '5' => "SEXTA-FEIRA",
+    '6' => "SÁBADO",
+    '7' => "DOMINGO",
+);
 $arrSituacao = array(
-    '1' => "ATIVADO",
-    '2' => "DESATIVADO"
+    '1' => "AGENDADO",
+    '2' => "CANCELADO",
+    '3' => "CONTINUA",
+    '4' => "LIBERADO",
+    '5' => "FILA DE ESPERA"
+);
+$arrForma = array(
+    '1' => "VIRTUAL",
+    '2' => "PRESENCIAL",
+    '3' => "À DISTÂNCIA"
 );
 $bgColor = array(
-    '1' => "success",
-    '2' => "danger"
+    '1' => "primary",
+    '2' => "danger",
+    '3' => "primary",
+    '4' => "success",
+    '5' => "default"
 );
 $nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
 $situacao_psq = $data['situacao_psq'] ? $data['situacao_psq'] : "";
@@ -16,11 +36,10 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 
 @section('javascript')
 <script>
-    top.urlListaColaboradores = "{{ url('colaboradores') }}";
-    top.urlAtivarDesativarColaborador = "{{ url('colaboradores/ativar-desativar-colaborador') }}";
-    $('#situacao_psq').val({{$situacao_psq}});
+    top.urlListaAtendimentos = "{{ url('atendimentos') }}";
+    top.urlAtivarDesativarAtendimento = "{{ url('atendimentos/ativar-desativar-atendimento') }}";
 </script>
-<script type="text/javascript" src="{{ asset('/js/pessoas/colaboradores/index-colaborador.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/agendas/atendimentos/index-atendimento.js') }}"></script>
 @endsection
 
 @section('content')
@@ -31,12 +50,9 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 </style>
 <div class="container">
 
-    <form method="post" action="{{ route('colaboradores.index') }}">
-        @csrf
-
     <div class="card uper">
         <div class="card-header">
-            Filtro de Colaboradores
+            Filtro de Atendimentos
         </div>
         <div class="card-body">
 
@@ -78,90 +94,73 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 
     <div class="card uper">
         <div class="card-header">
-            Lista de Colaboradores
-            <a href="{{ url('colaboradores/create') }}" class="float-right">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
-                    <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
-                </svg>
-                Adicionar Colaborador
-            </a>
+            Lista dos Atendimentos
         </div>
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <td><b>Cadastrado em</b></td>
-                        <td><b>Nome</b></td>
-                        <td><b>Telefone</b></td>
-                        <td><b>Bairro</b></td>
+                        <td><b>Data</b></td>
+                        <td><b>Atividade</b></td>
+                        <td><b>Dia e Horário</b></td>
+                        <td><b>Local</b></td>
+                        <td><b>Forma</b></td>
                         <td><b>Situação</b></td>
                         <td colspan="2"><b>Ações</b></td>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($colaboradores as $colaborador)
+                    @foreach($atendimentos as $atendimento)
                     <tr>
-                        <td>{{date('d/m/Y H:i:s', strtotime($colaborador->created_at))}}</td>
-                        <td>{{$colaborador->nome}}</td>
-                        <td>{{$colaborador->telefone}}</td>
-                        <td>{{$colaborador->bairro}}</td>
+                        <td>{{date('d/m/Y', strtotime($atendimento->agendamento->data))}}</td>
+                        <td>{{$atendimento->agendamento->horario->atividade->nome}}</td>
+                        <td>{{$arrDiaSemana[$atendimento->agendamento->horario->dia_semana]}} - {{substr($atendimento->agendamento->horario->hora_inicio, 0, -3)}} às {{substr($atendimento->agendamento->horario->hora_termino, 0, -3)}}</td>
+                        <td>{{$atendimento->agendamento->horario->local->numero}} - {{$atendimento->agendamento->horario->local->nome}}</td>
+                        <td>{{$arrForma[$atendimento->forma]}}</td>
                         <td>
-                            <span class="badge badge-{{$bgColor[$colaborador->situacao]}}"
-                                data-toggle="tooltip" title="{{$arrSituacao[$colaborador->situacao]}}">
-                                {{$arrSituacao[$colaborador->situacao]}}
+                            <span class="badge badge-{{$bgColor[$atendimento->situacao]}}"
+                                data-toggle="tooltip" title="{{$arrSituacao[$atendimento->situacao]}}">
+                                {{$arrSituacao[$atendimento->situacao]}}
                             </span>
                         </td>
-                        <td><a href="{{ route('colaboradores.edit', $colaborador->id) }}" class="btn btn-primary btn-sm">Visualizar</a></td>
-                        <td>
-                            @if ($colaborador->situacao == 1)
-                            <button class="btn btn-danger btn-sm" type="button" title="Desativar" 
-                                onclick="ativarDesativarColaborador({{ $colaborador->id }})"> Desativar
-                            </button>
-                            @else
-                            <button class="btn btn-success btn-sm" type="button" title="Ativar" 
-                                onclick="ativarDesativarColaborador({{ $colaborador->id }})"> Ativar
-                            </button>
-                            @endif
-                        </td>
+                        <td><a href="{{ route('atendimentos.edit', $atendimento->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                     </tr>
                     @endforeach
 
-                    @if (count($colaboradores) == 0)
+                    @if (count($atendimentos) == 0)
                     <tr>
-                        <td colspan="6">Nenhum registro encontrado!</td>
+                        <td colspan="7">Nenhum registro encontrado!</td>
                     </tr>
                     @endif
 
                     @if (isset($data))
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <input id="totalPage" name="totalPage" type="text" value="{{ $totalPage }}" 
                                 class="form-control" size="10" style="text-align: right;">
                                 Registros por página
                         </td>
-                        <td colspan="6">
-                            {{  $colaboradores->appends($data)->links() }}
+                        <td colspan="5">
+                            {{  $atendimentos->appends($data)->links() }}
                         </td>
                     </tr>
                     @else
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <input id="totalPage" name="totalPage" type="text" value="{{ $totalPage }}" 
                                 class="form-control" size="10" style="text-align: right;">
                                 Registros por página
                         </td>
-                        <td colspan="6">
-                            {{ $colaboradores->links() }}
+                        <td colspan="5">
+                            {{ $atendimentos->links() }}
                         </td>
                     </tr>
                     @endif
-                    
+
                 </tbody>
             </table>
         <div>
     <div>
-    </form>
 
 <div>
 @endsection

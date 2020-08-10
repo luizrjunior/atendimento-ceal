@@ -9,11 +9,12 @@ class Agendamento extends Model
     protected $fillable = [
         'data',
         'situacao',
-        'numero_vagas_distancia',
         'numero_vagas_virtual',
         'numero_vagas_presencial',
+        'numero_vagas_distancia',
         'numero_espera_virtual',
         'numero_espera_presencial',
+        'numero_espera_distancia',
         'horario_id'
     ];
 

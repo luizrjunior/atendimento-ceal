@@ -85,16 +85,6 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="numero_vagas_distancia">Número Vagas à Distância</label>
-                            <input id="numero_vagas_distancia" type="text" class="form-control @error('numero_vagas_distancia') is-invalid @enderror" name="numero_vagas_distancia" value="{{ old('numero_vagas_distancia') }}" required autocomplete="numero_vagas_distancia">
-                            @error('numero_vagas_distancia')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        
-                        <div class="form-group">
                             <label for="numero_vagas_virtual">Número Vagas Virtual</label>
                             <input id="numero_vagas_virtual" type="text" class="form-control @error('numero_vagas_virtual') is-invalid @enderror" name="numero_vagas_virtual" value="{{ old('numero_vagas_virtual') }}" required autocomplete="numero_vagas_virtual">
                             @error('numero_vagas_virtual')
@@ -115,6 +105,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="numero_vagas_distancia">Número Vagas à Distância</label>
+                            <input id="numero_vagas_distancia" type="text" class="form-control @error('numero_vagas_distancia') is-invalid @enderror" name="numero_vagas_distancia" value="{{ old('numero_vagas_distancia') }}" required autocomplete="numero_vagas_distancia">
+                            @error('numero_vagas_distancia')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="numero_espera_virtual">Número Lista de Espera Virtual</label>
                             <input id="numero_espera_virtual" type="text" class="form-control @error('numero_espera_virtual') is-invalid @enderror" name="numero_espera_virtual" value="{{ old('numero_espera_virtual') }}" required autocomplete="numero_espera_virtual">
                             @error('numero_espera_virtual')
@@ -128,6 +128,16 @@
                             <label for="numero_espera_presencial">Número Lista de Espera Presencial</label>
                             <input id="numero_espera_presencial" type="text" class="form-control @error('numero_espera_presencial') is-invalid @enderror" name="numero_espera_presencial" value="{{ old('numero_espera_presencial') }}" required autocomplete="numero_espera_presencial">
                             @error('numero_espera_presencial')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero_espera_distancia">Número Lista de Espera à Distância</label>
+                            <input id="numero_espera_distancia" type="text" class="form-control @error('numero_espera_distancia') is-invalid @enderror" name="numero_espera_distancia" value="{{ old('numero_espera_distancia') }}" required autocomplete="numero_espera_distancia">
+                            @error('numero_espera_distancia')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

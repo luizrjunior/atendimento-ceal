@@ -66,24 +66,80 @@ $arrDiaSemana = array(
                         <input type="hidden" id="situacao" name="situacao" value="">
                         <input type="hidden" id="forma" name="forma" value="">
 
+                        @php
+                        $atendimentoController = new \App\Http\Controllers\Agendas\AtendimentoController();
+                        @endphp
+
                         @foreach($agendamentos as $agendamento)
 
                             @if ($agendamento->numero_vagas_virtual > 0)
+
+                                @php
+                                $atendimentosVirtuais = $atendimentoController->numeroVagasAtendimento($agendamento->id, 1, 1);
+                                $atendimentosVirtuaisFila = $atendimentoController->numeroVagasAtendimento($agendamento->id, 1, 5);
+                                @endphp
+
+                                @if ($atendimentosVirtuais < $agendamento->numero_vagas_virtual)
+
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAtendimento({{$agendamento->id}}, 1, 1)">
-                            Atendimento Virtual - Vagas Disponíveis: {{str_pad($agendamento->numero_vagas_virtual, 2, 0, STR_PAD_LEFT)}}
+                            Atendimento Virtual - Vagas Disponíveis: {{str_pad(($agendamento->numero_vagas_virtual - $atendimentosVirtuais), 2, 0, STR_PAD_LEFT)}}
                         </button>
+
+                                @else
+
+                                    @if ($atendimentosVirtuaisFila < $agendamento->numero_espera_virtual)
+
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAtendimento({{$agendamento->id}}, 5, 1)">
+                            Atendimento Virtual - Vagas Disponíveis: {{str_pad(($agendamento->numero_espera_virtual - $atendimentosVirtuais), 2, 0, STR_PAD_LEFT)}} (FILA DE ESPERA)
+                        </button>
+
+                                    @endif
+   
+                                @endif
+
                             @endif
 
                             @if ($agendamento->numero_vagas_presencial > 0)
+
+                                @php
+                                $atendimentosPresenciais = $atendimentoController->numeroVagasAtendimento($agendamento->id, 2, 1);
+                                $atendimentosPresenciaisFila = $atendimentoController->numeroVagasAtendimento($agendamento->id, 2, 5);
+                                @endphp
+
+                                @if ($atendimentosPresenciais < $agendamento->numero_vagas_virtual)
+
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAtendimento({{$agendamento->id}}, 1, 2)">
-                            Atendimento Presencial - Vagas Disponíveis: {{str_pad($agendamento->numero_vagas_presencial, 2, 0, STR_PAD_LEFT)}}
+                            Atendimento Presencial - Vagas Disponíveis: {{str_pad(($agendamento->numero_vagas_presencial - $atendimentosPresenciais), 2, 0, STR_PAD_LEFT)}}
                         </button>
+
+                                @else
+
+                                    @if ($atendimentosPresenciaisFila < $agendamento->numero_espera_presencial)
+
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAtendimento({{$agendamento->id}}, 1, 2)">
+                            Atendimento Presencial - Vagas Disponíveis: {{str_pad(($agendamento->numero_espera_presencial - $atendimentosPresenciaisFila), 2, 0, STR_PAD_LEFT)}} (FILA DE ESPERA)
+                        </button>
+
+                                    @endif
+
+                                @endif
+
                             @endif
 
                             @if ($agendamento->numero_vagas_distancia > 0)
+
+                                @php
+                                $atendimentosDistancia = $atendimentoController->numeroVagasAtendimento($agendamento->id, 3, 1);
+                                @endphp
+
+                                @if ($atendimentosDistancia < $agendamento->numero_vagas_virtual)
+
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAtendimento({{$agendamento->id}}, 1, 3)">
-                            Atendimento à Distância - Vagas Disponíveis: {{str_pad($agendamento->numero_vagas_distancia, 2, 0, STR_PAD_LEFT)}}
+                            Atendimento à Distância - Vagas Disponíveis: {{str_pad(($agendamento->numero_vagas_distancia - $atendimentosDistancia), 2, 0, STR_PAD_LEFT)}}
                         </button>
+
+                                @endif
+
                             @endif
 
                         @endforeach

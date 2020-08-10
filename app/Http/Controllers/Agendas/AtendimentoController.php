@@ -26,8 +26,14 @@ class AtendimentoController extends Controller
 
     public function index()
     {
-        $agendamentos = Agendamento::all();
-        return view('agendas.atendimentos.index', compact('agendamentos'));
+        $atendimentos = Atendimento::where('pessoa_id', Session::get('pessoa_id'))->get();
+        return view('agendas.atendimentos.index', compact('atendimentos'));
+    }
+
+    public function indexAdmin()
+    {
+        $atendimentos = Agendamento::all();
+        return view('agendas.atendimentos.index', compact('atendimentos'));
     }
 
     public function abrirCreate(Request $request)
@@ -51,6 +57,20 @@ class AtendimentoController extends Controller
         $pessoa = Pessoa::find($pessoa_id);
         
         return view('agendas.atendimentos.create', compact('agendamento', 'situacao', 'forma', 'pessoa'));
+    }
+
+    public function createAdmin()
+    {
+        $agendamento_id = Session::get('agendamento_id');
+        $agendamento = Agendamento::find($agendamento_id);
+
+        $situacao = Session::get('situacao');
+        $forma = Session::get('forma');
+        
+        $pessoa_id = Session::get('pessoa_id');
+        $pessoa = Pessoa::find($pessoa_id);
+        
+        return view('agendas.atendimentos.create-admin', compact('agendamento', 'situacao', 'forma', 'pessoa'));
     }
 
     public function store(Request $request)
@@ -79,6 +99,15 @@ class AtendimentoController extends Controller
     }
 
     public function edit($id)
+    {
+        $atendimento = Atendimento::find($id);
+        $agendamento = Agendamento::find($atendimento->agendamento_id);
+        $pessoa = Pessoa::find($atendimento->pessoa_id);
+
+        return view('agendas.atendimentos.edit', compact('agendamento', 'pessoa', 'atendimento'));
+    }
+
+    public function editAdmin($id)
     {
         $atendimento = Atendimento::find($id);
         $agendamento = Agendamento::find($atendimento->agendamento_id);
@@ -141,6 +170,13 @@ class AtendimentoController extends Controller
         $agendamentos = Agendamento::where('horario_id', $horario_id)->where('situacao', 1)->get();
 
         return view('agendas.atendimentos.listar-agendamentos', compact('horario', 'agendamentos'));
+    }
+
+    public function numeroVagasAtendimento($agendamento_id, $forma, $situacao)
+    {
+        $atendimentos = Atendimento::where('agendamento_id', $agendamento_id)
+            ->where('forma', $forma)->where('situacao', $situacao)->get();
+        return count($atendimentos);
     }
 
 }

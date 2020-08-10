@@ -1,7 +1,7 @@
 @php
 $arrSituacao = array(
-    '1' => "Ativado",
-    '2' => "Desativado"
+    '1' => "ATIVADO",
+    '2' => "DESATIVADO"
 );
 $bgColor = array(
     '1' => "success",
