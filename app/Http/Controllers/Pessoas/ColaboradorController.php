@@ -41,7 +41,8 @@ class ColaboradorController extends Controller
         $data = $this->filtrosPesquisa($request);
 
         $colaboradores = Colaborador::select(
-            'colaboradores.id', 'colaboradores.situacao', 'pessoas.nome', 'pessoas.telefone', 'pessoas.bairro')
+                'colaboradores.id', 'colaboradores.situacao', 
+                'pessoas.nome', 'pessoas.telefone', 'pessoas.bairro')
             ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
             ->where(function ($query) use ($data) {
                 if ($data['nome_psq'] != "") {

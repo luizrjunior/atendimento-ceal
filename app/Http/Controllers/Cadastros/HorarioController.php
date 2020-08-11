@@ -133,7 +133,7 @@ class HorarioController extends Controller
     {
         $horarios = Horario::select('horarios.id as id', 'horarios.dia_semana', 'horarios.hora_inicio', 
             'horarios.hora_termino', 'locais.numero', 'locais.nome')
-            ->where('horarios.atividade_id', $request->atividade_id)
+            ->where('horarios.atividade_id', $request->atividade_id)->where('horarios.situacao', 1)
             ->join('locais', 'horarios.local_id', 'locais.id')->get();
             
         return response()->json($horarios, 200);

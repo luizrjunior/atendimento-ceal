@@ -102,5 +102,12 @@ Route::post('atendimentos/abrir-create', 'Agendas\AtendimentoController@abrirCre
 /**
  * ATENDIMENTOS-ADMIN
  */
-// Route::resource('atendimentos-admin', 'Agendas\AtendimentoAdminController');
 Route::any('atendimentos-admin', 'Agendas\AtendimentoAdminController@index')->name('atendimentos-admin.index');
+
+Route::get('atendimentos-admin/create', 'Agendas\AtendimentoAdminController@create')->name('atendimentos-admin.create');
+Route::post('atendimentos-admin/store', 'Agendas\AtendimentoAdminController@store')->name('atendimentos-admin.store');
+
+Route::get('atendimentos-admin/{atendimento_id}/edit', 'Agendas\AtendimentoAdminController@edit')->name('atendimentos-admin.edit');
+Route::patch('atendimentos-admin/update', 'Agendas\AtendimentoAdminController@update')->name('atendimentos-admin.update');
+
+Route::post('atendimentos-admin/ativar-desativar-colaborador', 'Agendas\AtendimentoAdminController@ativarDesativarColaborador');

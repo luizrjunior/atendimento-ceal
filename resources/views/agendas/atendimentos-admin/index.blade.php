@@ -27,8 +27,13 @@ $bgColor = array(
     '4' => "success",
     '5' => "default"
 );
+
+$data_inicio_psq = $data['data_inicio_psq'] ? $data['data_inicio_psq'] : "";
+$data_termino_psq = $data['data_termino_psq'] ? $data['data_termino_psq'] : "";
+
 $nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
 $situacao_psq = $data['situacao_psq'] ? $data['situacao_psq'] : "";
+
 $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 @endphp
                     
@@ -36,10 +41,17 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 
 @section('javascript')
 <script>
-    top.urlListaAtendimentos = "{{ url('atendimentos') }}";
-    top.urlAtivarDesativarAtendimento = "{{ url('atendimentos/ativar-desativar-atendimento') }}";
+    top.urlListaAtendimentos = "{{ url('atendimentos-admin') }}";
+    top.urlAtivarDesativarAtendimento = "{{ url('atendimentos-admin/ativar-desativar-atendimento') }}";
+    top.routeCarregarHorarios = '{{ route('horarios.carregar-horarios-atividade-json') }}';
+    top.valorSelectAtividade = '{{ old('atividade_id') }}';
+    top.valorSelectHorario = '{{ old('horario_id') }}';
+
+    $('#atividade_id').val(top.valorSelectAtividade);
 </script>
-<script type="text/javascript" src="{{ asset('/js/agendas/atendimentos/index-atendimento.js') }}"></script>
+<script type="text/javascript" 
+    src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/agendas/atendimentos-admin/index-atendimento-admin.js') }}"></script>
 @endsection
 
 @section('content')
@@ -50,44 +62,98 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 </style>
 <div class="container">
 
+    <form method="post" action="{{ route('atendimentos-admin.index') }}">
+        @csrf
+
     <div class="card uper">
         <div class="card-header">
             Filtro de Atendimentos
         </div>
         <div class="card-body">
 
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="nome_psq">{{ __('Name') }}</label>
-                        <input id="nome_psq" type="text" class="form-control @error('nome_psq') is-invalid @enderror maiuscula" name="nome_psq" value="{{ $nome_psq }}" autocomplete="nome_psq">
-                        @error('nome_psq')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="situacao_psq">Situação</label>
-                        <select class="form-control @error('situacao_psq') is-invalid @enderror" id="situacao_psq" name="situacao_psq">
-                            <option value=""> - - SELECIONE - - </option>
-                            <option value="1">ATIVO</option>
-                            <option value="2">DESATIVADO</option>
-                        </select>
-                        @error('situacao_psq')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="data_inicio_psq">Periodo de</label>
+                    <input type='text' class="form-control" id="data_inicio_psq" name="data_inicio_psq" value="{{ $data_inicio_psq }}" autocomplete="data_inicio_psq">
                 </div>
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-primary">
-                            Pesquisar
-                        </button>
-                    </div>
+                <div class="form-group col-md-6">
+                    <label for="data_termino_psq">Até</label>
+                    <input type='text' class="form-control" id="data_termino_psq" name="data_termino_psq" value="{{ $data_termino_psq }}" autocomplete="data_termino_psq">
                 </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="atividade_id_psq">Atividade</label>
+                    <select class="form-control" id="atividade_id_psq" name="atividade_id_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                        @php
+                        $atividadeController = new \App\Http\Controllers\Cadastros\AtividadeController();
+                        $atividades = $atividadeController->carregarComboAtividades();
+                        @endphp
+
+                        @foreach ($atividades as $atividade)
+                        <option value="{{$atividade->id}}">{{$atividade->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="horario_id_psq">Horário e Local</label>
+                    <select class="form-control" id="horario_id_psq" name="horario_id_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="situacao_psq">Forma de Atendimento</label>
+                    <select class="form-control" id="situacao_psq" name="situacao_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                        @foreach ($arrForma as $key => $value)
+                        <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="situacao_psq">Situação</label>
+                    <select class="form-control" id="situacao_psq" name="situacao_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                        @foreach ($arrSituacao as $key => $value)
+                        <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="colaborador_id_psq">Colaborador</label>
+                    <select class="form-control" id="colaborador_id_psq" name="colaborador_id_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                        @php
+                        $colaboradorController = new \App\Http\Controllers\Pessoas\ColaboradorController();
+                        $colaboradores = $colaboradorController->carregarComboColaboradores();
+                        @endphp
+
+                        @foreach ($colaboradores as $colaborador)
+                        <option value="{{$colaborador->id}}">{{$colaborador->pessoa->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="nome_psq">{{ __('Name') }} do Atendido</label>
+                    <input id="nome_psq" type="text" class="form-control maiuscula" name="nome_psq" value="{{ $nome_psq }}" autocomplete="nome_psq">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary">
+                        Pesquisar
+                    </button>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -161,6 +227,7 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
             </table>
         <div>
     <div>
+    </form>
 
 <div>
 @endsection

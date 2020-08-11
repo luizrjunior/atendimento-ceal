@@ -18,6 +18,16 @@ class AtendimentoAdminController extends Controller
     private function filtrosPesquisa($request)
     {
         $data = $request->except('_token');
+
+        if (empty($data['data_inicio_psq'])) {
+            $timestamp = strtotime("-15 days");
+            $data['data_inicio_psq'] = \DateTime::createFromFormat('d/m/Y', date('d/m/Y', $timestamp))->format('d/m/Y');
+        }
+
+        if (empty($data['data_termino_psq'])) {
+            $data['data_termino_psq'] = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'))->format('d/m/Y');
+        }
+
         if (empty($data['nome_psq'])) {
             $data['nome_psq'] = "";
         }
