@@ -31,8 +31,14 @@ $bgColor = array(
 $data_inicio_psq = $data['data_inicio_psq'] ? $data['data_inicio_psq'] : "";
 $data_termino_psq = $data['data_termino_psq'] ? $data['data_termino_psq'] : "";
 
-$nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
+$atividade_id_psq = $data['atividade_id_psq'] ? $data['atividade_id_psq'] : "";
+$horario_id_psq = $data['horario_id_psq'] ? $data['horario_id_psq'] : "";
+
+$forma_psq = $data['forma_psq'] ? $data['forma_psq'] : "";
 $situacao_psq = $data['situacao_psq'] ? $data['situacao_psq'] : "";
+
+$colaborador_id_psq = $data['colaborador_id_psq'] ? $data['colaborador_id_psq'] : "";
+$nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
 
 $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 @endphp
@@ -44,10 +50,21 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
     top.urlListaAtendimentos = "{{ url('atendimentos-admin') }}";
     top.urlAtivarDesativarAtendimento = "{{ url('atendimentos-admin/ativar-desativar-atendimento') }}";
     top.routeCarregarHorarios = '{{ route('horarios.carregar-horarios-atividade-json') }}';
-    top.valorSelectAtividade = '{{ old('atividade_id') }}';
-    top.valorSelectHorario = '{{ old('horario_id') }}';
 
-    $('#atividade_id').val(top.valorSelectAtividade);
+    top.valorSelectAtividade = '{{ $atividade_id_psq }}';
+    top.valorSelectHorario = '{{ $horario_id_psq }}';
+
+    top.valorSelectForma = '{{ $forma_psq }}';
+    top.valorSelectSituacao = '{{ $situacao_psq }}';
+
+    top.valorSelectColaborador = '{{ $colaborador_id_psq }}';
+
+    $('#atividade_id_psq').val(top.valorSelectAtividade);
+
+    $('#forma_psq').val(top.valorSelectForma);
+    $('#situacao_psq').val(top.valorSelectSituacao);
+
+    $('#colaborador_id_psq').val(top.valorSelectColaborador);
 </script>
 <script type="text/javascript" 
     src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
@@ -107,8 +124,8 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
             
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="situacao_psq">Forma de Atendimento</label>
-                    <select class="form-control" id="situacao_psq" name="situacao_psq">
+                    <label for="forma_psq">Forma de Atendimento</label>
+                    <select class="form-control" id="forma_psq" name="forma_psq">
                         <option value=""> - - SELECIONE - - </option>
                         @foreach ($arrForma as $key => $value)
                         <option value="{{$key}}">{{$value}}</option>
@@ -171,6 +188,7 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                         <td><b>Dia e Horário</b></td>
                         <td><b>Local</b></td>
                         <td><b>Forma</b></td>
+                        <td><b>Atendido(a)</b></td>
                         <td><b>Situação</b></td>
                         <td colspan="2"><b>Ações</b></td>
                     </tr>
@@ -178,18 +196,19 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                 <tbody>
                     @foreach($atendimentos as $atendimento)
                     <tr>
-                        <td>{{date('d/m/Y', strtotime($atendimento->agendamento->data))}}</td>
-                        <td>{{$atendimento->agendamento->horario->atividade->nome}}</td>
-                        <td>{{$arrDiaSemana[$atendimento->agendamento->horario->dia_semana]}} - {{substr($atendimento->agendamento->horario->hora_inicio, 0, -3)}} às {{substr($atendimento->agendamento->horario->hora_termino, 0, -3)}}</td>
-                        <td>{{$atendimento->agendamento->horario->local->numero}} - {{$atendimento->agendamento->horario->local->nome}}</td>
+                        <td>{{date('d/m/Y', strtotime($atendimento->dataAgendamento))}}</td>
+                        <td>{{$atendimento->nomeAtividade}}</td>
+                        <td>{{$arrDiaSemana[$atendimento->diaSemana]}} - {{substr($atendimento->horaInicio, 0, -3)}} às {{substr($atendimento->horaTermino, 0, -3)}}</td>
+                        <td>{{$atendimento->numeroLocal}} - {{$atendimento->nomeLocal}}</td>
                         <td>{{$arrForma[$atendimento->forma]}}</td>
+                        <td>{{$atendimento->nomeAtendido}}</td>
                         <td>
                             <span class="badge badge-{{$bgColor[$atendimento->situacao]}}"
                                 data-toggle="tooltip" title="{{$arrSituacao[$atendimento->situacao]}}">
                                 {{$arrSituacao[$atendimento->situacao]}}
                             </span>
                         </td>
-                        <td><a href="{{ route('atendimentos.edit', $atendimento->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a href="{{ route('atendimentos-admin.edit', $atendimento->id) }}" class="btn btn-primary btn-sm">Editar</a></td>
                     </tr>
                     @endforeach
 

@@ -37,21 +37,13 @@ $data = date('d/m/Y', strtotime($agendamento->data));
             <div class="card uper">
                 <div class="card-header">
                     Visualizar Atendimento
-                    <a href="{{ url('atendimentos') }}" class="float-right">
+                    <a href="{{ url('atendimentos-admin') }}" class="float-right">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                             <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
                             <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
                         </svg>
-                        Meus Atendimentos
-                    </a>
-                    <span class="float-right">&nbsp;|&nbsp;</span>
-                    <a href="{{ url('home') }}" class="float-right">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
-                            <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                        </svg>
-                        Home
+                        Voltar
                     </a>
                 </div>
                 <div class="card-body">
@@ -113,7 +105,7 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                         
                         <div class="form-group">
                             <label for="situacao">Situação Atendimento</label>
-                            <select class="form-control @error('situacao') is-invalid @enderror" id="situacao" name="situacao" disabled>
+                            <select class="form-control @error('situacao') is-invalid @enderror" id="situacao" name="situacao">
                                 <option value="1"> AGENDADO </option>
                                 <option value="2"> CANCELADO </option>
                                 <option value="3"> CONTINUA </option>
@@ -143,7 +135,7 @@ $data = date('d/m/Y', strtotime($agendamento->data));
 
                         <div class="form-group">
                             <label for="colaborador_id">Colaborador Responsável</label>
-                            <select class="form-control @error('colaborador_id') is-invalid @enderror" id="colaborador_id" name="colaborador_id" required disabled>
+                            <select class="form-control @error('colaborador_id') is-invalid @enderror" id="colaborador_id" name="colaborador_id" required>
                                 <option value=""> - - NENHUM - - </option>
                                 @php
                                 $colaboradorController = new \App\Http\Controllers\Pessoas\ColaboradorController();
@@ -178,8 +170,8 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                         
                         @if ($atendimento->situacao == 1)
                         <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-danger" onclick="return validar();">
-                                Cancelar Atendimento
+                            <button type="submit" class="btn btn-primary" onclick="return validar();">
+                                Atualizar
                             </button>
                         </div>
                         @endif

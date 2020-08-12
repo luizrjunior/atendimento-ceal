@@ -59,20 +59,6 @@ class AtendimentoController extends Controller
         return view('agendas.atendimentos.create', compact('agendamento', 'situacao', 'forma', 'pessoa'));
     }
 
-    public function createAdmin()
-    {
-        $agendamento_id = Session::get('agendamento_id');
-        $agendamento = Agendamento::find($agendamento_id);
-
-        $situacao = Session::get('situacao');
-        $forma = Session::get('forma');
-        
-        $pessoa_id = Session::get('pessoa_id');
-        $pessoa = Pessoa::find($pessoa_id);
-        
-        return view('agendas.atendimentos.create-admin', compact('agendamento', 'situacao', 'forma', 'pessoa'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([

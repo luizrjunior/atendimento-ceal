@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Atendimento;
+use App\Models\Agendamento;
+use App\Models\Pessoa;
 
 class AtendimentoAdminController extends Controller
 {
@@ -20,20 +22,36 @@ class AtendimentoAdminController extends Controller
         $data = $request->except('_token');
 
         if (empty($data['data_inicio_psq'])) {
-            $timestamp = strtotime("-15 days");
-            $data['data_inicio_psq'] = \DateTime::createFromFormat('d/m/Y', date('d/m/Y', $timestamp))->format('d/m/Y');
+            $data['data_inicio_psq'] = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'))->format('d/m/Y');
         }
 
         if (empty($data['data_termino_psq'])) {
-            $data['data_termino_psq'] = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'))->format('d/m/Y');
+            $timestamp = strtotime("15 days");
+            $data['data_termino_psq'] = \DateTime::createFromFormat('d/m/Y', date('d/m/Y', $timestamp))->format('d/m/Y');
         }
 
-        if (empty($data['nome_psq'])) {
-            $data['nome_psq'] = "";
+        if (empty($data['atividade_id_psq'])) {
+            $data['atividade_id_psq'] = "";
+        }
+
+        if (empty($data['horario_id_psq'])) {
+            $data['horario_id_psq'] = "";
+        }
+
+        if (empty($data['forma_psq'])) {
+            $data['forma_psq'] = "";
         }
 
         if (empty($data['situacao_psq'])) {
             $data['situacao_psq'] = "";
+        }
+
+        if (empty($data['colaborador_id_psq'])) {
+            $data['colaborador_id_psq'] = "";
+        }
+
+        if (empty($data['nome_psq'])) {
+            $data['nome_psq'] = "";
         }
 
         $data['totalPage'] = isset($data['totalPage']) ? $data['totalPage'] : 25;
@@ -44,8 +62,53 @@ class AtendimentoAdminController extends Controller
     public function index(Request $request)
     {
         $data = $this->filtrosPesquisa($request);
+        $atendimentos = Atendimento::select(
+                'atendimentos.id as id', 'atendimentos.situacao as situacao', 'atendimentos.forma as forma', 'agendamentos.data as dataAgendamento', 
+                'atividades.nome as nomeAtividade', 'horarios.dia_semana as diaSemana', 
+                'horarios.hora_inicio as horaInicio', 'horarios.hora_termino as horaTermino', 
+                'locais.numero as numeroLocal', 'locais.nome as nomeLocal', 
+                'pessoas.nome as nomeAtendido')
+            ->join('agendamentos', 'atendimentos.agendamento_id', 'agendamentos.id')
+            ->join('horarios', 'agendamentos.horario_id', 'horarios.id')
+            ->join('atividades', 'horarios.atividade_id', 'atividades.id')
+            ->join('locais', 'horarios.local_id', 'locais.id')
+            ->join('pessoas', 'atendimentos.pessoa_id', 'pessoas.id')
+            ->where(function ($query) use ($data) {
+                $data['data_inicio_psq'] = \DateTime::createFromFormat('d/m/Y', $data['data_inicio_psq'])->format('Y-m-d');
+                $data['data_termino_psq'] = \DateTime::createFromFormat('d/m/Y', $data['data_termino_psq'])->format('Y-m-d');
 
-        $atendimentos = Atendimento::paginate($data['totalPage']);
+                if ($data['data_inicio_psq'] != "") {
+                    $query->where('agendamentos.data', '>=', $data['data_inicio_psq'] . ' 00:00:00');
+                }
+                if ($data['data_termino_psq'] != "") {
+                    $query->where('agendamentos.data', '<=', $data['data_termino_psq'] . ' 23:59:59');
+                }
+        
+                if ($data['atividade_id_psq'] != "") {
+                    $query->where('horarios.atividade_id', $data['atividade_id_psq']);
+                }
+                if ($data['horario_id_psq'] != "") {
+                    $query->where('agendamentos.horario_id', $data['horario_id_psq']);
+                }
+
+                if ($data['forma_psq'] != "") {
+                    $query->where('atendimentos.situacao', $data['forma_psq']);
+                }
+                if ($data['situacao_psq'] != "") {
+                    $query->where('atendimentos.situacao', $data['situacao_psq']);
+                }
+
+                if ($data['colaborador_id_psq'] != "") {
+                    $query->where('atendimentos.colaborador_id', $data['colaborador_id_psq']);
+                }
+                if ($data['nome_psq'] != "") {
+                    $query->where('pessoas.nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
+                }
+            })->orderBy('pessoas.nome')->paginate($data['totalPage']);
+            // })->orderBy('pessoas.nome')->toSql();
+
+            // dd($atendimentos);
+
         return view('agendas.atendimentos-admin.index', compact('data', 'atendimentos'));
     }
 
@@ -71,17 +134,6 @@ class AtendimentoAdminController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -89,7 +141,11 @@ class AtendimentoAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $atendimento = Atendimento::find($id);
+        $agendamento = Agendamento::find($atendimento->agendamento_id);
+        $pessoa = Pessoa::find($atendimento->pessoa_id);
+
+        return view('agendas.atendimentos-admin.edit', compact('agendamento', 'pessoa', 'atendimento'));
     }
 
     /**
