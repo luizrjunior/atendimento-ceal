@@ -15,7 +15,7 @@ class AtendimentoHasOrientacao extends Model
     protected $primaryKey = null;
 
     protected $fillable = [
-        'atendimento_id',
+        'atendiment_id',
         'orientacao_id'
     ];
     

@@ -5,81 +5,39 @@ namespace App\Http\Controllers\Agendas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\AtendimentoHasOrientacao;
+
 class AtendimentoHasOrientacaoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function loadOrientacoesAtendimento($atendimento_id)
     {
-        //
+        return AtendimentoHasOrientacao::select('orientacao_id')->where('atendiment_id', $atendimento_id)->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function loadOrientacoesAtendimentoJson(Request $request)
     {
-        //
+        $atendimentos_has_orientacoes = AtendimentoHasOrientacao::select('orientacoes.descricao')->where('atendimentos_has_orientacoes.atendiment_id', $request->atendimento_id)
+            ->join('orientacoes', 'atendimentos_has_orientacoes.orientacao_id', 'orientacoes.id')->get();
+        return response()->json($atendimentos_has_orientacoes, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        AtendimentoHasOrientacao::where('atendiment_id', $request->atendimento_id)->delete();
+        $orientacoes = isset($request->orientacao_id) ? $request->orientacao_id : [];
+        if (count($orientacoes) > 0) {
+            $i = 0;
+            $atendimento_has_orientacao = [];
+            foreach ($orientacoes as $orientacao) {
+                $atendimento_has_orientacao[$i] = new AtendimentoHasOrientacao([
+                    'atendiment_id' => $request->get('atendimento_id'),
+                    'orientacao_id'=> $orientacao
+                ]);
+                $atendimento_has_orientacao[$i]->save();
+            }
+        }
+        return redirect('/atendimentos-admin/' . $request->atendimento_id . '/edit')->with('success', 'Orientacões associadas/removidas com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agendas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\Models\Atendimento;
 use App\Models\Agendamento;
@@ -112,33 +113,16 @@ class AtendimentoAdminController extends Controller
         return view('agendas.atendimentos-admin.index', compact('data', 'atendimentos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $atendimento = Atendimento::find($id);
@@ -148,26 +132,30 @@ class AtendimentoAdminController extends Controller
         return view('agendas.atendimentos-admin.edit', compact('agendamento', 'pessoa', 'atendimento'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'agendamento_id'=>'required',
+            'situacao'=>'required',
+            'forma'=>'required',
+            'colaborador_id'=>'required',
+            'pessoa_id'=>[
+                'required',
+                Rule::unique('atendimentos')->where(function ($query) use ($request, $id) {
+                    $query->where('id', "<>", $id)->where('agendamento_id', "=", $request->agendamento_id);
+                }),
+            ]
+        ]);
+
+        $atendimento = Atendimento::find($id);
+        $atendimento->agendamento_id = $request->get('agendamento_id');
+        $atendimento->situacao = $request->get('situacao');
+        $atendimento->forma = $request->get('forma');
+        $atendimento->colaborador_id = $request->get('colaborador_id');
+        $atendimento->pessoa_id = $request->get('pessoa_id');
+        $atendimento->save();
+  
+        return redirect('/atendimentos-admin/' . $atendimento->id . '/edit')->with('success', 'Atendimento atualizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

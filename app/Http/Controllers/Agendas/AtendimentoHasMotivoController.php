@@ -5,81 +5,38 @@ namespace App\Http\Controllers\Agendas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\AtendimentoHasMotivo;
+
 class AtendimentoHasMotivoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function loadMotivosAtendimento($atendimento_id)
     {
-        //
+        return AtendimentoHasMotivo::select('motivo_id')->where('atendimento_id', $atendimento_id)->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function loadMotivosAtendimentoJson(Request $request)
     {
-        //
+        $atendimentos_has_motivos = AtendimentoHasMotivo::select('motivos.descricao')->where('atendimentos_has_motivos.atendimento_id', $request->atendimento_id)
+            ->join('motivos', 'atendimentos_has_motivos.motivo_id', 'motivos.id')->get();
+        return response()->json($atendimentos_has_motivos, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        AtendimentoHasMotivo::where('atendimento_id', $request->atendimento_id)->delete();
+        $motivos = isset($request->motivo_id) ? $request->motivo_id : [];
+        if (count($motivos) > 0) {
+            $i = 0;
+            $atendimento_has_motivo = [];
+            foreach ($motivos as $motivo) {
+                $atendimento_has_motivo[$i] = new AtendimentoHasMotivo([
+                    'atendimento_id' => $request->get('atendimento_id'),
+                    'motivo_id'=> $motivo
+                ]);
+                $atendimento_has_motivo[$i]->save();
+            }
+        }
+        return redirect('/atendimentos-admin/' . $request->atendimento_id . '/edit')->with('success', 'Motivos associadas/removidas com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

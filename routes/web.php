@@ -35,7 +35,6 @@ Route::delete('user-has-role/destroy', 'Acl\UserHasRoleController@destroy')->nam
 
 Route::post('role-has-permission/store', 'Acl\RoleHasPermissionController@store')->name('roles.store-role-has-permission');
 Route::post('role-has-permission/load-permissions-role-json', 'Acl\RoleHasPermissionController@loadPermissionsRoleJson')->name('roles.load-permissions-role-json');
-Route::delete('role-has-permission/destroy', 'Acl\RoleHasPermissionController@destroy')->name('roles.destroy-role-has-permission');
 
 Route::get('/my-profile', 'Acl\MyProfileController@edit')->name('my-profile');
 Route::post('/my-profile/update', 'Acl\MyProfileController@update')->name('my-profile.update');
@@ -108,6 +107,10 @@ Route::get('atendimentos-admin/create', 'Agendas\AtendimentoAdminController@crea
 Route::post('atendimentos-admin/store', 'Agendas\AtendimentoAdminController@store')->name('atendimentos-admin.store');
 
 Route::get('atendimentos-admin/{atendimento_id}/edit', 'Agendas\AtendimentoAdminController@edit')->name('atendimentos-admin.edit');
-Route::patch('atendimentos-admin/update', 'Agendas\AtendimentoAdminController@update')->name('atendimentos-admin.update');
+Route::patch('atendimentos-admin/{atendimento_id}', 'Agendas\AtendimentoAdminController@update')->name('atendimentos-admin.update');
 
-Route::post('atendimentos-admin/ativar-desativar-colaborador', 'Agendas\AtendimentoAdminController@ativarDesativarColaborador');
+Route::post('atendimento-has-motivo/store', 'Agendas\AtendimentoHasMotivoController@store')->name('atendimentos.store-atendimento-has-motivo');
+Route::post('atendimento-has-motivo/load-motivos-atendimento-json', 'Agendas\AtendimentoHasMotivoController@loadMotivosAtendimentoJson')->name('atendimentos.load-motivos-atendimento-json');
+
+Route::post('atendimento-has-orientacao/store', 'Agendas\AtendimentoHasOrientacaoController@store')->name('atendimentos.store-atendimento-has-orientacao');
+Route::post('atendimento-has-orientacao/load-orientacoes-atendimento-json', 'Agendas\AtendimentoHasOrientacaoController@loadOrientacoesAtendimentoJson')->name('atendimentos.load-orientacoes-atendimento-json');

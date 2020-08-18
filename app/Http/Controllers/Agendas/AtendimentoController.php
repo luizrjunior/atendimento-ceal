@@ -104,26 +104,26 @@ class AtendimentoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'agendamento_id'=>'required',
-            'situacao'=>'required',
-            'forma'=>'required',
-            'pessoa_id'=>[
-                'required',
-                Rule::unique('atendimentos')->where(function ($query) use ($request, $id) {
-                    $query->where('id', "<>", $id)->where('agendamento_id', "=", $request->agendamento_id);
-                }),
-            ]
-        ]);
-  
-        $atendimento = Atendimento::find($id);
-        $atendimento->agendamento_id = $request->get('agendamento_id');
-        $atendimento->situacao = $request->get('situacao');
-        $atendimento->forma = $request->get('forma');
-        $atendimento->pessoa_id = $request->get('pessoa_id');
-        $atendimento->save();
-  
-        return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento atualizado com sucesso!');
+            $request->validate([
+                'agendamento_id'=>'required',
+                'situacao'=>'required',
+                'forma'=>'required',
+                'pessoa_id'=>[
+                    'required',
+                    Rule::unique('atendimentos')->where(function ($query) use ($request, $id) {
+                        $query->where('id', "<>", $id)->where('agendamento_id', "=", $request->agendamento_id);
+                    }),
+                ]
+            ]);
+    
+            $atendimento = Atendimento::find($id);
+            $atendimento->agendamento_id = $request->get('agendamento_id');
+            $atendimento->situacao = $request->get('situacao');
+            $atendimento->forma = $request->get('forma');
+            $atendimento->pessoa_id = $request->get('pessoa_id');
+            $atendimento->save();
+    
+            return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento atualizado com sucesso!');
     }
 
     public function ativarDesativarAtendimento(Request $request) {

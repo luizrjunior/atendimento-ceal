@@ -21,7 +21,7 @@ $data = date('d/m/Y', strtotime($agendamento->data));
 <script type="text/javascript" 
     src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
 <script type="text/javascript" 
-    src="{{ asset('/js/agendas/atendimentos/create-edit-atendimento.js') }}"></script>
+    src="{{ asset('/js/agendas/atendimentos-admin/create-edit-atendimento-admin.js') }}"></script>
 @endsection
 
 @section('content')
@@ -36,7 +36,7 @@ $data = date('d/m/Y', strtotime($agendamento->data));
             
             <div class="card uper">
                 <div class="card-header">
-                    Visualizar Atendimento
+                    Editar Atendimento
                     <a href="{{ url('atendimentos-admin') }}" class="float-right">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -50,7 +50,8 @@ $data = date('d/m/Y', strtotime($agendamento->data));
 
                     @include('components.alertas')
 
-                    <form method="post" action="{{ route('atendimentos.store') }}">
+                    <form method="post" action="{{ route('atendimentos-admin.update', $atendimento->id) }}">
+                        @method('PATCH')
                         @csrf
 
                         <input type="hidden" id="agendamento_id" name="agendamento_id" value="{{$agendamento->id}}">
@@ -175,6 +176,163 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                             </button>
                         </div>
                         @endif
+
+                    </form>
+
+                </div>
+            </div>
+
+            <br />
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a id="linkAba1" class="nav-link active" href="#" onclick="abrirAbas('0')">Motivos</a>
+                </li>
+                <li class="nav-item">
+                    <a id="linkAba2" class="nav-link" href="#" onclick="abrirAbas('1')">Orientações</a>
+                </li>
+            </ul>
+
+            <div id="divMotivos" class="card uper">
+                <div class="card-header">
+                    Motivos do Atendimento
+                </div>
+                <div class="card-body">
+
+                    <form method="post" action="{{ route('atendimentos.store-atendimento-has-motivo') }}">
+                        @csrf
+
+                        <input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
+
+                        <div class="DocumentList">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td><input type="checkbox" id="checkTodos" name="checkTodos"></td>
+                                        <td><b>Descrição do Motivo</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @php
+                                    $motivoController = new \App\Http\Controllers\Cadastros\MotivoController();
+                                    $motivos = $motivoController->carregarMotivos();
+
+                                    $atendimentoHasMotivoController = new \App\Http\Controllers\Agendas\AtendimentoHasMotivoController();
+                                    $atendimentosHasMotivos = $atendimentoHasMotivoController->loadMotivosAtendimento($atendimento->id);
+
+                                    $arrMotivosId = [];
+                                    foreach ($atendimentosHasMotivos as $atendimentoHasMotivo) {
+                                        $arrMotivosId[] = $atendimentoHasMotivo->motivo_id;
+                                    }
+                                    @endphp
+
+                                    @foreach($motivos as $motivo)
+                                        @php
+                                        $checked = "";
+                                        @endphp
+                                        @if (count($atendimentosHasMotivos) > 0)
+                                            @if (in_array($motivo->id, $arrMotivosId))
+                                                @php
+                                                $checked = "checked";
+                                                @endphp
+                                            @endif
+                                        @endif
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="permissao" value="{{ $motivo->id }}" name="motivo_id[]" {{ $checked }}>
+                                        </td>
+                                        <td>{{$motivo->descricao}}</td>
+                                    </tr>
+                                    @endforeach
+                
+                                    @if (count($motivos) == 0)
+                                    <tr>
+                                        <td colspan="2">Nenhum registro encontrado!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                Salvar  
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        
+            <div id="divOrientacoes" class="card uper" style="display: none;">
+                <div class="card-header">
+                    Orientações do Atendimento
+                </div>
+                <div class="card-body">
+
+                    <form method="post" action="{{ route('atendimentos.store-atendimento-has-orientacao') }}">
+                        @csrf
+
+                        <input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
+
+                        <div class="DocumentList">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td><input type="checkbox" id="checkTodos2" name="checkTodos2"></td>
+                                        <td><b>Descrição da Orientações</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @php
+                                    $orientacaoController = new \App\Http\Controllers\Cadastros\OrientacaoController();
+                                    $orientacoes = $orientacaoController->carregarOrientacoes();
+
+                                    $atendimentoHasOrientacaoController = new \App\Http\Controllers\Agendas\AtendimentoHasOrientacaoController();
+                                    $atendimentosHasOrientacoes = $atendimentoHasOrientacaoController->loadOrientacoesAtendimento($atendimento->id);
+
+                                    $arrOrientacoesId = [];
+                                    foreach ($atendimentosHasOrientacoes as $atendimentoHasOrientacao) {
+                                        $arrOrientacoesId[] = $atendimentoHasOrientacao->orientacao_id;
+                                    }
+                                    @endphp
+
+                                    @foreach($orientacoes as $orientacao)
+                                        @php
+                                        $checked = "";
+                                        @endphp
+                                        @if (count($atendimentosHasOrientacoes) > 0)
+                                            @if (in_array($orientacao->id, $arrOrientacoesId))
+                                                @php
+                                                $checked = "checked";
+                                                @endphp
+                                            @endif
+                                        @endif
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="permissao2" value="{{ $orientacao->id }}" name="orientacao_id[]" {{ $checked }}>
+                                        </td>
+                                        <td>{{$orientacao->descricao}}</td>
+                                    </tr>
+                                    @endforeach
+                
+                                    @if (count($orientacoes) == 0)
+                                    <tr>
+                                        <td colspan="2">Nenhum registro encontrado!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                Salvar  
+                            </button>
+                        </div>
 
                     </form>
 

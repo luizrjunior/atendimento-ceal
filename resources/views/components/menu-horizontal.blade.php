@@ -33,7 +33,7 @@
                     @can('Menu_Agendas')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Agendas <span class="caret"></span>
+                            Agenda <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
                             @can('Item_Agendamentos')

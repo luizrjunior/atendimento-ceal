@@ -23,7 +23,7 @@ $arrForma = array(
 $bgColor = array(
     '1' => "primary",
     '2' => "danger",
-    '3' => "primary",
+    '3' => "warning",
     '4' => "success",
     '5' => "default"
 );
@@ -214,7 +214,7 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 
                     @if (count($atendimentos) == 0)
                     <tr>
-                        <td colspan="7">Nenhum registro encontrado!</td>
+                        <td colspan="8">Nenhum registro encontrado!</td>
                     </tr>
                     @endif
 
@@ -225,7 +225,7 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                                 class="form-control" size="10" style="text-align: right;">
                                 Registros por página
                         </td>
-                        <td colspan="5">
+                        <td colspan="6">
                             {{  $atendimentos->appends($data)->links() }}
                         </td>
                     </tr>
@@ -236,7 +236,7 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                                 class="form-control" size="10" style="text-align: right;">
                                 Registros por página
                         </td>
-                        <td colspan="5">
+                        <td colspan="6">
                             {{ $atendimentos->links() }}
                         </td>
                     </tr>
