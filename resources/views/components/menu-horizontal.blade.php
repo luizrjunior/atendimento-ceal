@@ -38,12 +38,12 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
                             @can('Item_Agendamentos')
                             <a class="dropdown-item" href="{{ url('agendamentos') }}">
-                                Agendamentos
+                                Agendar Atividades
                             </a>
                             @endcan
                             @can('Item_Atendimentos')
                             <a class="dropdown-item" href="{{ url('atendimentos-admin') }}">
-                                Atendimentos
+                                Atendimentos Agendados
                             </a>
                             @endcan
                         </div>
