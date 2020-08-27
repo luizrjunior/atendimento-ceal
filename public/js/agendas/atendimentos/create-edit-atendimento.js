@@ -33,6 +33,22 @@ function carregarSelectHorarios() {
     });
 }
 
+function abrirAbas(expr) {
+    $('#divMotivos').show();
+    $('#divOrientacoes').hide();
+
+    $('#linkAba1').addClass('active');
+    $('#linkAba2').removeClass('active');
+
+    if (expr == '1') {
+        $('#divMotivos').hide();
+        $('#divOrientacoes').show();
+
+        $('#linkAba2').addClass('active');
+        $('#linkAba1').removeClass('active');
+    }
+}
+
 $(document).ready(function () {
     $("#data").mask("99/99/9999");
     $('#data').datepicker({	
