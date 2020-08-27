@@ -59,7 +59,7 @@ $arrDiaSemana = array(
 
                         @foreach($horarios as $horario)
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAgendamentos({{$horario->id}})">
-                            {{$horario->id}} - {{date('d/m/Y', strtotime($horario->data))}} - {{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}}
+                            {{date('d/m/Y', strtotime($horario->data))}} - {{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}}
                         </button>
                         @endforeach
 

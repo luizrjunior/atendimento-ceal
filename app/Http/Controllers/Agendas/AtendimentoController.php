@@ -26,7 +26,7 @@ class AtendimentoController extends Controller
 
     public function index()
     {
-        $atendimentos = Atendimento::where('pessoa_id', Session::get('pessoa_id'))->get();
+        $atendimentos = Atendimento::where('pessoa_id', Session::get('pessoa_id'))->orderBy('id', 'DESC')->get();
         return view('agendas.atendimentos.index', compact('atendimentos'));
     }
 
@@ -102,28 +102,35 @@ class AtendimentoController extends Controller
         return view('agendas.atendimentos.edit', compact('agendamento', 'pessoa', 'atendimento'));
     }
 
+    /**
+     * Este metodo de update serve apenas para Cancelar o Atendimento
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
-            $request->validate([
-                'agendamento_id'=>'required',
-                'situacao'=>'required',
-                'forma'=>'required',
-                'pessoa_id'=>[
-                    'required',
-                    Rule::unique('atendimentos')->where(function ($query) use ($request, $id) {
-                        $query->where('id', "<>", $id)->where('agendamento_id', "=", $request->agendamento_id);
-                    }),
-                ]
-            ]);
-    
-            $atendimento = Atendimento::find($id);
-            $atendimento->agendamento_id = $request->get('agendamento_id');
-            $atendimento->situacao = $request->get('situacao');
-            $atendimento->forma = $request->get('forma');
-            $atendimento->pessoa_id = $request->get('pessoa_id');
-            $atendimento->save();
-    
-            return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento atualizado com sucesso!');
+        $request->validate([
+            'agendamento_id'=>'required',
+            'situacao'=>'required',
+            'forma'=>'required',
+            'pessoa_id'=>[
+                'required',
+                Rule::unique('atendimentos')->where(function ($query) use ($request, $id) {
+                    $query->where('id', "<>", $id)->where('agendamento_id', "=", $request->agendamento_id);
+                }),
+            ]
+        ]);
+
+        $atendimento = Atendimento::find($id);
+        $atendimento->agendamento_id = $request->get('agendamento_id');
+        $atendimento->situacao = 2;
+        $atendimento->forma = $request->get('forma');
+        $atendimento->pessoa_id = $request->get('pessoa_id');
+        $atendimento->save();
+
+        return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento cancelado com sucesso!');
     }
 
     public function ativarDesativarAtendimento(Request $request) {

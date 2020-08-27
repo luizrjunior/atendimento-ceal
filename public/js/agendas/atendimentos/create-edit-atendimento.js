@@ -1,5 +1,6 @@
 function validar() {
     $('#carregando').show();
+    $("#situacao").prop('disabled', false);
     $("#forma").prop('disabled', false);
 }
 

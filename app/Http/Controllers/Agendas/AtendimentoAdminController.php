@@ -105,7 +105,7 @@ class AtendimentoAdminController extends Controller
                 if ($data['nome_psq'] != "") {
                     $query->where('pessoas.nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
                 }
-            })->orderBy('pessoas.nome')->paginate($data['totalPage']);
+            })->orderBy('agendamentos.data', 'DESC')->orderBy('pessoas.nome')->paginate($data['totalPage']);
             // })->orderBy('pessoas.nome')->toSql();
 
             // dd($atendimentos);
