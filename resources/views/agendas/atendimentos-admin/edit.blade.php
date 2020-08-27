@@ -169,13 +169,11 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                             @enderror
                         </div>
                         
-                        @if ($atendimento->situacao == 1)
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary" onclick="return validar();">
                                 Atualizar
                             </button>
                         </div>
-                        @endif
 
                     </form>
 
