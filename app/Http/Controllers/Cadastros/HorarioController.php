@@ -144,11 +144,11 @@ class HorarioController extends Controller
         $atividade_id = $request->atividade_id;
         $atividade = Atividade::find($atividade_id);
 
-        $horarios = Horario::join('agendamentos', 'horarios.id', '=', 'agendamentos.horario_id')
+        $horarios = Horario::select('horarios.*', 'agendamentos.data')->join('agendamentos', 'horarios.id', '=', 'agendamentos.horario_id')
             ->where('horarios.atividade_id', $atividade_id)
             ->where('horarios.situacao', 1)->where('agendamentos.situacao', 1)
             ->where('agendamentos.data', '>=', date('Y-m-d'))->get();
-        
+
         return view('cadastros.horarios.listar-horarios', compact('atividade', 'horarios'));
     }
 

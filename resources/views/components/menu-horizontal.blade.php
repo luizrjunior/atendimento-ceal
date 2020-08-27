@@ -36,14 +36,14 @@
                             Agenda <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
-                            @can('Item_Agendamentos')
-                            <a class="dropdown-item" href="{{ url('agendamentos') }}">
-                                Agendar Atividades
-                            </a>
-                            @endcan
                             @can('Item_Atendimentos')
                             <a class="dropdown-item" href="{{ url('atendimentos-admin') }}">
                                 Atendimentos Agendados
+                            </a>
+                            @endcan
+                            @can('Item_Agendamentos')
+                            <a class="dropdown-item" href="{{ url('agendamentos') }}">
+                                Agendar Atividades
                             </a>
                             @endcan
                         </div>
