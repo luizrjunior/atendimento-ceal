@@ -56,9 +56,10 @@ $arrDiaSemana = array(
                     <form id="formListarHorarios" method="post" action="{{ route('agendamentos.listar-agendamentos-por-horario') }}">
                         @csrf
                         <input type="hidden" id="horario_id" name="horario_id" value="">
+                        <input type="hidden" id="agendamento_id" name="agendamento_id" value="">
 
                         @foreach($horarios as $horario)
-                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAgendamentos({{$horario->id}})">
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirAgendamentos({{$horario->agendamento_id}},{{$horario->id}})">
                             {{date('d/m/Y', strtotime($horario->data))}} - {{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}}
                         </button>
                         @endforeach

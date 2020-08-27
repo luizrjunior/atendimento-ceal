@@ -135,7 +135,8 @@ class AgendamentoController extends Controller
         $horario_id = $request->horario_id;
         $horario = Horario::find($horario_id);
 
-        $agendamentos = Agendamento::where('horario_id', $horario_id)->where('situacao', 1)->get();
+        $agendamento_id = $request->agendamento_id;
+        $agendamentos = Agendamento::where('id', $agendamento_id)->where('horario_id', $horario_id)->where('situacao', 1)->get();
 
         return view('agendas.agendamentos.listar-agendamentos', compact('horario', 'agendamentos'));
     }
