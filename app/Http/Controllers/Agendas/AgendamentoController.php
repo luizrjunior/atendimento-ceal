@@ -23,7 +23,7 @@ class AgendamentoController extends Controller
 
     public function index()
     {
-        $agendamentos = Agendamento::with('horario')->get();
+        $agendamentos = Agendamento::with('horario')->orderBy('data', 'DESC')->get();
         return view('agendas.agendamentos.index', compact('agendamentos'));
     }
 
