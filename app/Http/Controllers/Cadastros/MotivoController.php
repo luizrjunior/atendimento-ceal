@@ -31,9 +31,11 @@ class MotivoController extends Controller
         $request->validate([
             'descricao'=>'required|string|max:255|unique:motivos'
         ]);
+
+        $encoding = mb_internal_encoding();
   
         $motivo = new Motivo([
-            'descricao' => strtoupper($request->get('descricao'))
+            'descricao' => mb_strtoupper($request->get('descricao'), $encoding)
         ]);
         $motivo->save();
 
@@ -51,9 +53,11 @@ class MotivoController extends Controller
         $request->validate([
             'descricao'=>'required|string|max:255|unique:motivos,descricao,' . $id . ',id'
         ]);
+
+        $encoding = mb_internal_encoding();
   
         $motivo = Motivo::find($id);
-        $motivo->descricao = strtoupper($request->get('descricao'));
+        $motivo->descricao = mb_strtoupper($request->get('descricao'), $encoding);
         $motivo->save();
   
         return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo atualizado com sucesso!');

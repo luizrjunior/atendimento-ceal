@@ -43,6 +43,7 @@ $bgColor = array(
                     <tr>
                         <td><b>Cadastrado em</b></td>
                         <td><b>Nome</b></td>
+                        <td><b>Tipo</b></td>
                         <td><b>Situação</b></td>
                         <td colspan="2"><b>Ações</b></td>
                     </tr>
@@ -52,6 +53,7 @@ $bgColor = array(
                     <tr>
                         <td>{{date('d/m/Y H:i:s', strtotime($atividade->created_at))}}</td>
                         <td>{{$atividade->nome}}</td>
+                        <td>{{$atividade->somente_colaborador == 1 ? 'PÚBLICO' : 'COLABORADORES'}}</td>
                         <td>
                             <span class="badge badge-{{$bgColor[$atividade->situacao]}}"
                                 data-toggle="tooltip" title="{{$arrSituacao[$atividade->situacao]}}">

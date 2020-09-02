@@ -16,6 +16,7 @@ class CreateAtividadesTable extends Migration
         Schema::create('atividades', function (Blueprint $table) {
             $table->id();
             $table->integer('situacao')->default(1);
+            $table->integer('somente_colaborador')->default(2);
             $table->string('nome');
             $table->timestamps();
         });

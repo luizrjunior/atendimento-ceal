@@ -8,6 +8,8 @@ $arrDiaSemana = array(
     '6' => "SÁBADO",
     '7' => "DOMINGO",
 );
+$nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
+$funcao_id_psq = $data['funcao_id_psq'] ? $data['funcao_id_psq'] : "";
 
 $urlVoltar = url('participantes');
 if (Session::get('tela') == 'edit_horario') {
@@ -38,6 +40,60 @@ if (Session::get('tela') == 'edit_horario') {
         </svg>
         {{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}} - {{$horario->local->numero}} - {{$horario->local->nome}}
     </h4>
+    {{-- <form method="post" action="{{ route('participantes.search') }}">
+        @csrf
+
+    <input type="hidden" name="horario_id" id="horario_id" value="{{$horario->id}}"> --}}
+
+    <div class="card uper">
+        <div class="card-header">
+            Filtro de Participantes
+        </div>
+        <div class="card-body">
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nome_psq">{{ __('Name') }}</label>
+                    <input id="nome_psq" type="text" class="form-control @error('nome_psq') is-invalid @enderror maiuscula" name="nome_psq" value="{{ $nome_psq }}" autocomplete="nome_psq">
+                    @error('nome_psq')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="funcao_id_psq">Função</label>
+                    <select class="form-control @error('funcao_id_psq') is-invalid @enderror" id="funcao_id_psq" name="funcao_id_psq">
+                        <option value=""> - - SELECIONE - - </option>
+                        @php
+                        $funcaoController = new \App\Http\Controllers\Cadastros\FuncaoController();
+                        $funcoes = $funcaoController->carregarComboFuncoes();
+                        @endphp
+
+                        @foreach ($funcoes as $funcao)
+                        <option value="{{$funcao->id}}">{{strtoupper($funcao->nome)}}</option>
+                        @endforeach
+                    </select>
+                    @error('funcao_id_psq')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary">
+                        Pesquisar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
     <div class="card uper">
         <div class="card-header">
             Lista de Participantes
@@ -83,14 +139,18 @@ if (Session::get('tela') == 'edit_horario') {
                         </td>
                     </tr>
                     @endforeach
+
                     @if (count($participantes) == 0)
                     <tr>
                         <td colspan="3">Nenhum registro encontrado!</td>
                     </tr>
                     @endif
+
                 </tbody>
             </table>
         </div>
     </div>
+    {{-- </form> --}}
+
 </div>
 @endsection

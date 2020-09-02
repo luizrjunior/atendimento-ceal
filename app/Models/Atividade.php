@@ -8,6 +8,7 @@ class Atividade extends Model
 {
     protected $fillable = [
       'situacao',
+      'somente_colaborador',
       'nome'
     ];
 }

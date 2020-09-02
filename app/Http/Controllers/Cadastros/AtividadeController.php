@@ -49,8 +49,12 @@ class AtividadeController extends Controller
             'nome'=>'required|string|max:255|unique:atividades'
         ]);
 
+        $encoding = mb_internal_encoding();
+        $somente_colaborador = $request->get('somente_colaborador') ? $request->get('somente_colaborador') : 1;
+
         $atividade = new Atividade([
-            'nome' => strtoupper($request->get('nome'))
+            'somente_colaborador' => $somente_colaborador,
+            'nome' => mb_strtoupper($request->get('nome'), $encoding)
         ]);
         $atividade->save();
 
@@ -83,8 +87,12 @@ class AtividadeController extends Controller
             'nome'=>'required|string|max:255|unique:atividades,nome,' . $id . ',id'
         ]);
   
+        $encoding = mb_internal_encoding();
+        $somente_colaborador = $request->get('somente_colaborador') ? $request->get('somente_colaborador') : 1;
+
         $atividade = Atividade::find($id);
-        $atividade->nome = strtoupper($request->get('nome'));
+        $atividade->somente_colaborador = $somente_colaborador;
+        $atividade->nome = mb_strtoupper($request->get('nome'), $encoding);
         $atividade->save();
   
         return redirect('/atividades/' . $atividade->id . '/edit')->with('success', 'Atividade atualizada com sucesso!');

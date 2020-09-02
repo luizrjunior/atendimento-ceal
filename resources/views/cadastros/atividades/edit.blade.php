@@ -8,6 +8,7 @@ $arrDiaSemana = array(
     '6' => "SÁBADO",
     '7' => "DOMINGO",
 );
+$checked = $atividade->somente_colaborador == "2" ? "checked" : "";
 @endphp
 
 @extends('layouts.app')
@@ -58,6 +59,15 @@ $arrDiaSemana = array(
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="2" id="somente_colaborador" name="somente_colaborador" {{ $checked }}>
+                                <label class="form-check-label" for="somente_colaborador">
+                                    Somente Colaboradores
+                                </label>
+                            </div>
                         </div>
 
                         <div class="form-group">

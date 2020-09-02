@@ -48,8 +48,10 @@ class FuncaoController extends Controller
             'nome'=>'required|string|max:255|unique:funcoes'
         ]);
 
+        $encoding = mb_internal_encoding();
+
         $funcao = new Funcao([
-        'nome' => strtoupper($request->get('nome'))
+            'nome' => mb_strtoupper($request->get('nome'), $encoding)
         ]);
         $funcao->save();
 
@@ -81,8 +83,10 @@ class FuncaoController extends Controller
             'nome'=>'required|string|max:255|unique:funcoes,nome,' . $id . ',id'
         ]);
   
+        $encoding = mb_internal_encoding();
+
         $funcao = Funcao::find($id);
-        $funcao->nome = strtoupper($request->get('nome'));
+        $funcao->nome = mb_strtoupper($request->get('nome'), $encoding);
         $funcao->save();
   
         return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função atualizada com sucesso!');

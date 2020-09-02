@@ -49,9 +49,11 @@ class LocalController extends Controller
             'numero'=>'required|string|max:255'
         ]);
 
+        $encoding = mb_internal_encoding();
+
         $local = new Local([
-            'nome' => strtoupper($request->get('nome')),
-            'numero' => strtoupper($request->get('numero'))
+            'nome' => mb_strtoupper($request->get('nome'), $encoding),
+            'numero' => mb_strtoupper($request->get('numero'), $encoding)
         ]);
         $local->save();
 
@@ -83,10 +85,12 @@ class LocalController extends Controller
             'nome'=>'required|string|max:255|unique:locais,nome,' . $id . ',id',
             'numero'=>'required|string|max:255'
         ]);
+
+        $encoding = mb_internal_encoding();
   
         $local = Local::find($id);
-        $local->nome = strtoupper($request->get('nome'));
-        $local->numero = strtoupper($request->get('numero'));
+        $local->nome = mb_strtoupper($request->get('nome'), $encoding);
+        $local->numero = mb_strtoupper($request->get('numero'), $encoding);
         $local->save();
   
         return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local atualizado com sucesso!');

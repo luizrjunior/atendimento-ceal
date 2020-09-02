@@ -66,6 +66,8 @@ Route::post('atividades/ativar-desativar-atividade', 'Cadastros\AtividadeControl
 Route::resource('participantes', 'Cadastros\ParticipanteController');
 Route::post('participantes/ativar-desativar-participante', 'Cadastros\ParticipanteController@ativarDesativarParticipante');
 
+// Route::post('participantes', 'Cadastros\ParticipanteController@search')->name('participantes.search');
+
 /**
  * PESSOAS
  */

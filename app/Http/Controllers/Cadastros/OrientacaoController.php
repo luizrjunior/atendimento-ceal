@@ -31,9 +31,11 @@ class OrientacaoController extends Controller
         $request->validate([
             'descricao'=>'required|string|max:255|unique:orientacoes'
         ]);
+
+        $encoding = mb_internal_encoding();
   
         $orientacao = new Orientacao([
-            'descricao' => strtoupper($request->get('descricao'))
+            'descricao' => mb_strtoupper($request->get('descricao'), $encoding)
         ]);
         $orientacao->save();
 
@@ -51,9 +53,11 @@ class OrientacaoController extends Controller
         $request->validate([
             'descricao'=>'required|string|max:255|unique:orientacoes,descricao,' . $id . ',id'
         ]);
+
+        $encoding = mb_internal_encoding();
   
         $orientacao = Orientacao::find($id);
-        $orientacao->descricao = strtoupper($request->get('descricao'));
+        $orientacao->descricao = mb_strtoupper($request->get('descricao'), $encoding);
         $orientacao->save();
   
         return redirect('/orientacoes/' . $orientacao->id . '/edit')->with('success', 'Orientação atualizada com sucesso!');

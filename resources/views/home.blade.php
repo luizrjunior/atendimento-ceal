@@ -45,9 +45,19 @@
                         @foreach ($agendamentos as $agendamento)
 
                         @if ($agendamento->horario->atividade->id != $atividade_id_old)
+
+                            @if ($agendamento->horario->atividade->somente_colaborador == 1)
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirHorarios({{$agendamento->horario->atividade->id}})">
                             {{$agendamento->horario->atividade->nome}}
                         </button>
+                            @else
+                                @if (Session::get('colaborador_id'))
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirHorarios({{$agendamento->horario->atividade->id}})">
+                            {{$agendamento->horario->atividade->nome}}
+                        </button>
+                                @endif
+                            @endif
+
                         @endif
 
                         @php

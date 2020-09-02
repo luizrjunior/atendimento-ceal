@@ -56,17 +56,18 @@ class PessoaController extends Controller
             'bairro'=>'required|string|max:255'
         ]);
 
+        $encoding = mb_internal_encoding();
         $nascimento = \DateTime::createFromFormat('d/m/Y', $request->nascimento)->format('Y-m-d');
 
         $pessoa = new Pessoa([
             'cpf' => $request->get('cpf'),
-            'nome' => strtoupper($request->get('nome')),
+            'nome' => mb_strtoupper($request->get('nome'), $encoding),
             'nascimento' => $nascimento,
             'sexo' => $request->get('sexo'),
             'telefone' => $request->get('telefone'),
-            'profissao' => strtoupper($request->get('profissao')),
+            'profissao' => mb_strtoupper($request->get('profissao'), $encoding),
             'socio' => $request->get('socio'),
-            'bairro' => strtoupper($request->get('bairro')),
+            'bairro' => mb_strtoupper($request->get('bairro'), $encoding),
             'user_id' => Auth::id()
             ]);
         $pessoa->save();
@@ -106,17 +107,18 @@ class PessoaController extends Controller
             'bairro'=>'required|string|max:255'
         ]);
 
+        $encoding = mb_internal_encoding();
         $nascimento = \DateTime::createFromFormat('d/m/Y', $request->nascimento)->format('Y-m-d');
   
         $pessoa = Pessoa::find($id);
         $pessoa->cpf = $request->get('cpf');
-        $pessoa->nome = strtoupper($request->get('nome'));
+        $pessoa->nome = mb_strtoupper($request->get('nome'), $encoding);
         $pessoa->nascimento = $nascimento;
         $pessoa->sexo = $request->get('sexo');
         $pessoa->telefone = $request->get('telefone');
-        $pessoa->profissao = strtoupper($request->get('profissao'));
+        $pessoa->profissao = mb_strtoupper($request->get('profissao'), $encoding);
         $pessoa->socio = $request->get('socio');
-        $pessoa->bairro = strtoupper($request->get('bairro'));
+        $pessoa->bairro = mb_strtoupper($request->get('bairro'), $encoding);
         $pessoa->save();
   
         return redirect('/pessoas/' . $pessoa->id . '/edit')->with('success', 'Dados Cadastrais atualizado com sucesso!');

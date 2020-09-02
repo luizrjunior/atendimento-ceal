@@ -1,3 +1,7 @@
+@php
+$checked = old('somente_colaborador') == "1" ? "checked" : "";
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -36,6 +40,15 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="2" id="somente_colaborador" name="somente_colaborador" {{ $checked }}>
+                                <label class="form-check-label" for="somente_colaborador">
+                                  Somente Colaboradores
+                                </label>
+                            </div>
                         </div>
 
                         <div class="form-group mb-0">
