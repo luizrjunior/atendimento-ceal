@@ -66,6 +66,24 @@ class ParticipanteController extends Controller
         return redirect('/participantes/' . $request->horario_id . '/edit')->with('success', $msg);
     }
 
+    public function edit($id)
+    {
+        Session::put('horario_id', $id);
+
+        return redirect('/participantes/search');
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        // dd($request->all(), $id);
+
+        $id = $request->horario_id;
+
+        Participante::where('horario_id', $request->horario_id)->where('colaborador_id', $request->partic_colaborador_id)->delete();
+
+        return redirect('/participantes/' . $id . '/edit')->with('success', 'Participante removido com sucesso!');
+    }
+
     private function filtrosPesquisa($request)
     {
         $data = $request->except('_token');
@@ -82,44 +100,25 @@ class ParticipanteController extends Controller
         return $data;
     }
 
-    // public function search(Request $request)
-    // {
-    //     Session::put('horario_id', $request->horario_id);
-
-    //     $data = $this->filtrosPesquisa($request);
-    //     $horario = Horario::find($request->horario_id);
-    //     $participantes = Participante::join('colaboradores', 'participantes.colaborador_id', 'colaboradores.id')
-    //         ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
-    //         ->where('horario_id', $request->horario_id)
-    //         ->where(function ($query) use ($data) {
-    //             if ($data['nome_psq'] != "") {
-    //                 $query->where('pessoas.nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
-    //             }
-    //             if ($data['funcao_id_psq'] != "") {
-    //                 $query->where('participantes.funcao_id', $data['funcao_id_psq']);
-    //             }
-    //         })->orderBy('pessoas.nome')->get($data['totalPage']);
-
-    //     return view('cadastros.participantes.edit', compact('horario', 'participantes', 'data'));
-    // }
-
-    public function edit($id, Request $request)
+    public function search(Request $request)
     {
-        Session::put('horario_id', $id);
+        $horario_id = Session::get('horario_id');
 
         $data = $this->filtrosPesquisa($request);
-        $horario = Horario::find($id);
+        $horario = Horario::find($horario_id);
         $participantes = Participante::join('colaboradores', 'participantes.colaborador_id', 'colaboradores.id')
             ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
-            ->where('horario_id', $id)->orderBy('pessoas.nome')->get();
+            ->where('horario_id', $horario_id)
+            ->where(function ($query) use ($data) {
+                if ($data['nome_psq'] != "") {
+                    $query->where('pessoas.nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
+                }
+                if ($data['funcao_id_psq'] != "") {
+                    $query->where('participantes.funcao_id', $data['funcao_id_psq']);
+                }
+            })->orderBy('pessoas.nome')->paginate($data['totalPage']);
 
         return view('cadastros.participantes.edit', compact('horario', 'participantes', 'data'));
-    }
-
-    public function destroy(Request $request, $id)
-    {
-        Participante::where('horario_id', $id)->where('colaborador_id', $request->partic_colaborador_id)->delete();
-        return redirect('/participantes/' . $id . '/edit')->with('success', 'Colaborador removido com sucesso!');
     }
 
 }

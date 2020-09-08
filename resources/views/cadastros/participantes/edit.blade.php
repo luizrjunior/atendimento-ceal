@@ -10,6 +10,7 @@ $arrDiaSemana = array(
 );
 $nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
 $funcao_id_psq = $data['funcao_id_psq'] ? $data['funcao_id_psq'] : "";
+$totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 
 $urlVoltar = url('participantes');
 if (Session::get('tela') == 'edit_horario') {
@@ -40,10 +41,10 @@ if (Session::get('tela') == 'edit_horario') {
         </svg>
         {{$arrDiaSemana[$horario->dia_semana]}} - De {{substr($horario->hora_inicio, 0, -3)}} às {{substr($horario->hora_termino, 0, -3)}} - {{$horario->local->numero}} - {{$horario->local->nome}}
     </h4>
-    {{-- <form method="post" action="{{ route('participantes.search') }}">
+    <form method="post" action="{{ route('participantes.search') }}">
         @csrf
 
-    <input type="hidden" name="horario_id" id="horario_id" value="{{$horario->id}}"> --}}
+    <input type="hidden" name="horario_id" id="horario_id" value="{{$horario->id}}">
 
     <div class="card uper">
         <div class="card-header">
@@ -146,11 +147,35 @@ if (Session::get('tela') == 'edit_horario') {
                     </tr>
                     @endif
 
+                    @if (isset($data))
+                    <tr>
+                        <td>
+                            <input id="totalPage" name="totalPage" type="text" value="{{$totalPage}}" 
+                                class="form-control" size="10" style="text-align: right;">
+                                Registros por página
+                        </td>
+                        <td colspan="6">
+                            {{$participantes->appends($data)->links()}}
+                        </td>
+                    </tr>
+                    @else
+                    <tr>
+                        <td>
+                            <input id="totalPage" name="totalPage" type="text" value="{{$totalPage}}" 
+                                class="form-control" size="10" style="text-align: right;">
+                                Registros por página
+                        </td>
+                        <td colspan="6">
+                            {{$participantes->links()}}
+                        </td>
+                    </tr>
+                    @endif
+
                 </tbody>
             </table>
         </div>
     </div>
-    {{-- </form> --}}
+    </form>
 
 </div>
 @endsection
