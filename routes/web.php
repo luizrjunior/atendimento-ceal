@@ -75,6 +75,14 @@ Route::resource('pessoas', 'Pessoas\PessoaController');
 Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPessoaPorCPF')->name('pessoas.carrregar-pessoa-cpf');
 
 /**
+ * PESSOAS-ADMIN
+ */
+Route::any('pessoas-admin', 'Pessoas\PessoaAdminController@index')->name('pessoas.admin.index');
+
+Route::get('pessoas-admin/{pessoa_id}/edit', 'Pessoas\PessoaAdminController@edit')->name('pessoas.admin.edit');
+Route::patch('pessoas-admin/{pessoa_id}', 'Pessoas\PessoaAdminController@update')->name('pessoas.admin.update');
+
+/**
  * COLABORADORES
  */
 Route::any('colaboradores', 'Pessoas\ColaboradorController@index')->name('colaboradores.index');

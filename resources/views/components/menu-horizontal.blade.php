@@ -94,7 +94,7 @@
                             </a>
                             @endcan
                             @can('Item_Pessoas')
-                            <a class="dropdown-item" href="{{ url('pessoas') }}">
+                            <a class="dropdown-item" href="{{ url('pessoas-admin') }}">
                                 Pessoas
                             </a>
                             @endcan
