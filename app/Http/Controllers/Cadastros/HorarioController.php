@@ -14,7 +14,7 @@ use App\Models\Horario;
 class HorarioController extends Controller
 {
     const MESSAGES_ERRORS = [
-        'dia_semana.unique' => 'Já existe horário registrado para este dia da semana. Por favor, '
+        'dia_semana.unique' => 'Este Horário ou Local já está sendo utilizado neste dia da semana. Por favor, '
             . 'você pode verificar isso?',
         'hora_termino.after' => 'Hora Término precisa ser uma hora posterior a Hora de Início. Por favor, '
         . 'você pode verificar isso?',
