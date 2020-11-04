@@ -16,7 +16,7 @@ Procedimentos para instalação do sistema:
 
 1. Clonar o repositório do projeto no GitHub:
 ```
-git clone https://github.com/luizrjunior/app-laravel.git
+git clone https://github.com/luizrjunior/atendimento-ceal.git
 ```
 2. Criar o schema <i>"applaravel_db_desenv"</i> no banco de dados (MySQL);
 3. Criar o arquivo .env baseado no arquivo .env.example e configurar a conexão com banco de dados:
