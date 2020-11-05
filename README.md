@@ -55,27 +55,31 @@ DB_DATABASE=ceal
 DB_USERNAME=ceal
 DB_PASSWORD=qwerty321
 ```
-5. Instalar as dependencias
+5. Gerar a chave identificadora da Aplicação
+```
+php artisan key:generate
+```
+6. Instalar as dependencias
 ```
 composer install
 ```
-6. Gerar as Tabelas do Banco de Dados
+7. Gerar as Tabelas do Banco de Dados
 ``` 
 php artisan migrate
 ```
-7. Popular as primeiras tabelas do sistema
+8. Popular as primeiras tabelas do sistema
 ```
 composer dump-autoload
 ```
 ```
 php artisan db:seed
 ```
-8. Criar o storage link para mapear o armazenamento dos arquivos:
+9. Criar o storage link para mapear o armazenamento dos arquivos:
 ```
 php artisan storage:link
 ```
-9. Descomentar o trecho de código descrito no item 4
-10. Login e Senha:
+10. Descomentar o trecho de código descrito no item 4
+11. Login e Senha:
 ```
 Login: luizrjunior@gmail.com
 Senha: 947bc251
