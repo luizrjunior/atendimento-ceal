@@ -45,15 +45,15 @@ git clone https://github.com/luizrjunior/atendimento-ceal.git
         });
     }
 ```
-3. Criar o schema <i>"applaravel_db_desenv"</i> no banco de dados (MySQL);
+3. Criar o schema <i>"ceal"</i> no banco de dados (MySQL);
 4. Criar o arquivo .env baseado no arquivo .env.example e configurar a conexão com banco de dados:
 ```
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
+DB_HOST=easy.brasiliarfid.com.br
 DB_PORT=3306
-DB_DATABASE=applaravel_db_desenv
-DB_USERNAME=root
-DB_PASSWORD=
+DB_DATABASE=ceal
+DB_USERNAME=ceal
+DB_PASSWORD=qwerty321
 ```
 5. Instalar as dependencias
 ```
@@ -75,30 +75,8 @@ php artisan db:seed
 php artisan storage:link
 ```
 9. Descomentar o trecho de código descrito no item 4
-
-10. Criar alias ou vhost da aplicação apontando para o diretório:
+10. Login e Senha:
 ```
-/public
-```
-Exemplo vhost:
-```
-<VirtualHost 127.0.0.2:80>
-    DocumentRoot "C:/xampp/htdocs/projects/app-laravel/public"
-    DirectoryIndex index.php      
-    <Directory "C:/xampp/htdocs/projects/app-laravel/public">
-        Options All
-        AllowOverride All
-        Order Allow,Deny
-        Allow from all
-    </Directory>
-</VirtualHost>
-```
-11. Acessar a aplicação:
-```
-http://alias-aplicacao/
-```
-12. Login e Senha:
-```
-Login: admin@applaravel.com
-Senha: abc123
+Login: luizrjunior@gmail.com
+Senha: 947bc251
 ```
