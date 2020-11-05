@@ -18,17 +18,7 @@ Procedimentos para instalação do sistema:
 ```
 git clone https://github.com/luizrjunior/atendimento-ceal.git
 ```
-2. Criar o schema <i>"applaravel_db_desenv"</i> no banco de dados (MySQL);
-3. Criar o arquivo .env baseado no arquivo .env.example e configurar a conexão com banco de dados:
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=applaravel_db_desenv
-DB_USERNAME=root
-DB_PASSWORD=
-```
-4. Comentar o trecho abaixo no arquivo \app\Provides\AuthServiceProvider.php
+2. Comentar o trecho abaixo no arquivo \app\Provides\AuthServiceProvider.php
 ```
     public function boot(GateContract $gate)
     {
@@ -54,6 +44,16 @@ DB_PASSWORD=
             }
         });
     }
+```
+3. Criar o schema <i>"applaravel_db_desenv"</i> no banco de dados (MySQL);
+4. Criar o arquivo .env baseado no arquivo .env.example e configurar a conexão com banco de dados:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=applaravel_db_desenv
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 5. Instalar as dependencias
 ```
