@@ -1,18 +1,5 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
-
-# AppLaravel - Application Laravel
-
-O AppLaravel é uma aplicação PHP orientado a objeto utilizando Framework Laravel. Este sistema é tipo um ERP onde existem vários módulos como por exemplo: <b>Recursos Humanos</b>, <b>Financeiro</b>, <b>Reservas de Quartos de Hotel</b>, <b>Reservas de Brinquedos</b>, <b>Frente de Caixa</b>, <b>Controle de Estoque</b> e etc.
-
-## Instalação do AppLaravel
-Procedimentos para instalação do sistema:
+## Instalação do Atendimento CEAL
+Procedimentos para instalação da Aplicação:
 
 1. Clonar o repositório do projeto no GitHub:
 ```
