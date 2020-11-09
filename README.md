@@ -42,13 +42,13 @@ DB_DATABASE=ceal
 DB_USERNAME=ceal
 DB_PASSWORD=qwerty321
 ```
-5. Gerar a chave identificadora da Aplicação
-```
-php artisan key:generate
-```
-6. Instalar as dependencias
+5. Instalar as dependencias
 ```
 composer install
+```
+6. Gerar a chave identificadora da Aplicação
+```
+php artisan key:generate
 ```
 7. Gerar as Tabelas do Banco de Dados
 ``` 
