@@ -30,7 +30,7 @@
                         </div>
                     @endif
 
-                    {{ __('Agende seu atendimento clincando na atividade desejada!') }}
+                    {{ __('Agende seu atendimento clicando na atividade desejada!') }}
 
                     <br />&nbsp;
 
