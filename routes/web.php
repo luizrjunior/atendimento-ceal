@@ -72,9 +72,7 @@ Route::get('participantes/create', 'Cadastros\ParticipanteController@create')->n
 Route::post('participantes/store', 'Cadastros\ParticipanteController@store')->name('participantes.store');
 
 Route::get('participantes/{horario_id}/edit', 'Cadastros\ParticipanteController@edit')->name('participantes.edit');
-Route::delete('participantes/{horario_id}', 'Cadastros\ParticipanteController@destroy')->name('participantes.destroy');
-
-Route::post('participantes/ativar-desativar-participante', 'Cadastros\ParticipanteController@ativarDesativarParticipante');
+Route::post('participantes/remover-participante', 'Cadastros\ParticipanteController@destroy')->name('participantes.destroy');
 
 Route::any('participantes/search', 'Cadastros\ParticipanteController@search')->name('participantes.search');
 

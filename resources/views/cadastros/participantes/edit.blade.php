@@ -20,6 +20,18 @@ if (Session::get('tela') == 'edit_horario') {
                     
 @extends('layouts.app')
 
+@section('javascript')
+<script>
+    $('#colaborador_id').val('{{old('colaborador_id')}}');
+    $('#funcao_id').val('{{old('funcao_id')}}');
+</script>
+<script>
+    top.urlListaParticipantes = "{{ url('participantes/search') }}";
+    top.urlAtivarDesativarParticipante = "{{ url('participantes/remover-participante') }}";
+</script>
+<script type="text/javascript" src="{{ asset('/js/cadastros/participantes/create-edit-participante.js') }}"></script>
+@endsection
+
 @section('content')
 <style>
   .uper {
@@ -94,6 +106,7 @@ if (Session::get('tela') == 'edit_horario') {
         </div>
     </div>
 
+    </form>
 
     <div class="card uper">
         <div class="card-header">
@@ -131,12 +144,14 @@ if (Session::get('tela') == 'edit_horario') {
                         <td>{{$participante->colaborador->pessoa->nome}}</td>
                         <td>{{$participante->funcao->nome}}</td>
                         <td>
-                            <form action="{{ route('participantes.destroy', $horario->id) }}" method="post">
+                            {{-- <form action="{{ route('participantes.destroy', $horario->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" id="partic_colaborador_id" name="partic_colaborador_id" value="{{ $participante->colaborador->id }}">
                                 <button class="btn btn-danger btn-sm" type="submit">Remover</button>
-                              </form>
+                            
+                            </form> --}}
+                            <button class="btn btn-danger btn-sm" type="button" onclick="ativarDesativarParticipante({{ $participante->colaborador->id }}, {{ $horario->id }})">Remover</button>
                         </td>
                     </tr>
                     @endforeach
@@ -175,7 +190,6 @@ if (Session::get('tela') == 'edit_horario') {
             </table>
         </div>
     </div>
-    </form>
 
 </div>
 @endsection

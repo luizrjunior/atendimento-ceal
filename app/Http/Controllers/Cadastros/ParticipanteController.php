@@ -73,15 +73,16 @@ class ParticipanteController extends Controller
         return redirect('/participantes/search');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request)
     {
-        // dd($request->all(), $id);
-
-        $id = $request->horario_id;
-
         Participante::where('horario_id', $request->horario_id)->where('colaborador_id', $request->partic_colaborador_id)->delete();
 
-        return redirect('/participantes/' . $id . '/edit')->with('success', 'Participante removido com sucesso!');
+        $msg = "Participante removido com sucesso!";
+
+        $dados = array();
+        $dados['textoMsg'] = $msg;
+
+        return response()->json($dados, 200);
     }
 
     private function filtrosPesquisa($request)
