@@ -50,7 +50,7 @@
                     </li>
                     @endcan
                     
-                    @can('Menu_Colaboradors')
+                    @can('Menu_Colaboradores')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('colaboradores') }}">Colaboradores</a>
                     </li>
