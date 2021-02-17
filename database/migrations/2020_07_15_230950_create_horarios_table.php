@@ -19,6 +19,8 @@ class CreateHorariosTable extends Migration
             $table->integer('dia_semana');
             $table->time('hora_inicio');
             $table->time('hora_termino');
+            $table->integer('numero_vagas')->default(0);
+            $table->integer('numero_vagas_espera')->default(0);
             $table->unsignedBigInteger('atividade_id');
             $table->foreign('atividade_id')->references('id')->on('atividades')->onDelete('cascade');
             $table->unsignedBigInteger('local_id');

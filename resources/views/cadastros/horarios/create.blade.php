@@ -16,15 +16,16 @@
   }
 </style>
 <div class="container">
-    <h4 class="text-primary">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
-            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
-        </svg>
-        {{$atividade->nome}}
-    </h4>
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <h4>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
+                </svg>
+                {{$atividade->nome}}
+            </h4>
+        
             <div class="card uper">
                 <div class="card-header">
                     Adicionar Horário
@@ -79,7 +80,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="local_id">Local</label>
+                            <label for="local_id">Local de Atendimento</label>
                             <select class="form-control @error('local_id') is-invalid @enderror" id="local_id" name="local_id" required>
                                 <option value=""> - - SELECIONE - - </option>
                                 @php
@@ -97,6 +98,27 @@
                             </span>
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <label for="numero_vagas">Número Vagas Disponíveis</label>
+                            <input id="numero_vagas" type="text" class="form-control @error('numero_vagas') is-invalid @enderror" name="numero_vagas" value="{{ old('numero_vagas') }}" required autocomplete="numero_vagas">
+                            @error('numero_vagas')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero_vagas_espera">Número Vagas Em espera</label>
+                            <input id="numero_vagas_espera" type="text" class="form-control @error('numero_vagas_espera') is-invalid @enderror" name="numero_vagas_espera" value="{{ old('numero_vagas_espera') }}" required autocomplete="numero_vagas_espera">
+                            @error('numero_vagas_espera')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary">
                                 Adicionar

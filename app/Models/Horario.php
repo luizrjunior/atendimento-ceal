@@ -10,6 +10,8 @@ class Horario extends Model
         'dia_semana',
         'hora_inicio',
         'hora_termino',
+        'numero_vagas',
+        'numero_vagas_espera',
         'local_id',
         'atividade_id'
     ];

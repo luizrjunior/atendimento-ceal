@@ -1,5 +1,14 @@
 @php
-$data = date('d/m/Y', strtotime($agendamento->data));
+$arrDiaSemana = array(
+    '1' => "Segunda-feira",
+    '2' => "Terça-feira",
+    '3' => "Quarta-feira",
+    '4' => "Quinta-feira",
+    '5' => "Sexta-feira",
+    '6' => "Sábado",
+    '7' => "Domingo",
+);
+$data = date('d/m/Y', strtotime($data_atendimento));
 @endphp
 
 @extends('layouts.app')
@@ -7,17 +16,15 @@ $data = date('d/m/Y', strtotime($agendamento->data));
 @section('javascript')
 <script>
     top.routeCarregarHorarios = '{{ route('horarios.carregar-horarios-atividade-json') }}';
-    top.valorSelectAtividade = '{{ $agendamento->horario->atividade_id }}';
-    top.valorSelectHorario = '{{ $agendamento->horario_id }}';
-    top.valorSelectForma = '{{ $forma }}';
+    top.valorSelectAtividade = '{{ $horario->atividade_id }}';
+    top.valorSelectHorario = '{{ $horario->id }}';
 
     $('#atividade_id').val(top.valorSelectAtividade);
-    $('#forma').val(top.valorSelectForma);
 </script>
 <script type="text/javascript" 
     src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
 <script type="text/javascript" 
-    src="{{ asset('/js/agendas/atendimentos/create-edit-atendimento.js') }}"></script>
+    src="{{ asset('/js/atendimentos/create-edit-atendimento.js') }}"></script>
 @endsection
 
 @section('content')
@@ -29,6 +36,43 @@ $data = date('d/m/Y', strtotime($agendamento->data));
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            <h4>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
+                </svg>
+                {{$horario->atividade->nome}}
+            </h4>
+            <h5>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z"/>
+                </svg>
+                Data: {{$data_atendimento}}
+            </h5>
+            <h5>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z"/>
+                </svg>
+                Dia: {{$arrDiaSemana[$horario->dia_semana]}}
+            </h5>
+            <h5>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z"/>
+                </svg>
+                De {{substr($horario->hora_inicio, 0, -3)}} horas às {{substr($horario->hora_termino, 0, -3)}} horas
+            </h5>
+            <h5>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z"/>
+                </svg>
+                Local: {{$horario->local->nome}} - {{$horario->local->numero}}
+            </h5>
+
             <div class="card uper">
                 <div class="card-header">
                     Adicionar Atendimento
@@ -48,8 +92,8 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                     <form method="post" action="{{ route('atendimentos.store') }}">
                         @csrf
 
-                        <input type="hidden" id="agendamento_id" name="agendamento_id" value="{{$agendamento->id}}">
-                        <input type="hidden" id="pessoa_id" name="pessoa_id" value="{{$pessoa->id}}">
+                        <input type="hidden" id="atendimento_id" name="atendimento_id" value="">
+                        <input type="hidden" id="paciente_id" name="paciente_id" value="{{$paciente->id}}">
 
                         <div class="form-group">
                             <label for="atividade_id">Atividade</label>
@@ -72,21 +116,9 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                         </div>
 
                         <div class="form-group">
-                            <label for="horario_id">Horário e Local</label>
-                            <select class="form-control @error('horario_id') is-invalid @enderror" id="horario_id" name="horario_id" disabled>
-                                <option value=""> - - SELECIONE - - </option>
-                            </select>
-                            @error('horario_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
                             <label for="data">Data Atendimento</label>
                             <div class='input-group date'>
-                                <input type='text' class="form-control @error('data') is-invalid @enderror" id="data" name="data" value="{{ $data }}" disabled autocomplete="data">
+                                <input type='text' class="form-control @error('data_atendimento') is-invalid @enderror" id="data_atendimento" name="data_atendimento" value="{{ $data_atendimento }}" disabled autocomplete="data_atendimento">
                                 <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -98,11 +130,23 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                             @enderror
                         </div>
                         
+                        <div class="form-group">
+                            <label for="horario_id">Dia, Horário e Local</label>
+                            <select class="form-control @error('horario_id') is-invalid @enderror" id="horario_id" name="horario_id" disabled>
+                                <option value=""> - - SELECIONE - - </option>
+                            </select>
+                            @error('horario_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
                         <div class="form-group" style="display: none">
                             <label for="situacao">Situação</label>
                             <select class="form-control @error('situacao') is-invalid @enderror" id="situacao" name="situacao">
-                                <option value="1"> EM AGENDAMENTO </option>
-                                <option value="5"> FILA DE ESPERA </option>
+                                <option value="1"> AGENDADO </option>
+                                <option value="2"> FILA DE ESPERA </option>
                             </select>
                             @error('situacao')
                             <span class="invalid-feedback" role="alert">
@@ -111,9 +155,10 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label for="forma">Forma de Atendimento</label>
-                            <select class="form-control @error('forma') is-invalid @enderror" id="forma" name="forma" disabled>
+                            <select class="form-control @error('forma') is-invalid @enderror" id="forma" name="forma">
+                                <option value="0"> INDEFINIDO </option>
                                 <option value="1"> ATENDIMENTO VIRTUAL </option>
                                 <option value="2"> ATENDIMENTO PRESENCIAL </option>
                                 <option value="3"> ATENDIMENTO A DISTÂNCIA </option>
@@ -128,7 +173,7 @@ $data = date('d/m/Y', strtotime($agendamento->data));
                         <div class="form-group">
                             <label for="nome">Nome Atendido</label>
                             <div class='input-group date'>
-                                <input type='text' class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ $pessoa->nome }}" disabled autocomplete="nome">
+                                <input type='text' class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ $paciente->nome }}" disabled autocomplete="nome">
                                 <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

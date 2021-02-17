@@ -76,7 +76,7 @@ $bgColor = array(
                     @endforeach
                     @if (count($atividades) == 0)
                     <tr>
-                        <td colspan="4">Nenhum registro encontrado!</td>
+                        <td colspan="6">Nenhum registro encontrado!</td>
                     </tr>
                     @endif
                 </tbody>

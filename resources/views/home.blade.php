@@ -30,10 +30,6 @@
                         </div>
                     @endif
 
-                    {{ __('Agende seu atendimento clicando na atividade desejada!') }}
-
-                    <br />&nbsp;
-
                     <form id="formListarAtividades" method="post" action="{{ route('horarios.listar-horarios-por-atividade') }}">
                         @csrf
                         <input type="hidden" id="atividade_id" name="atividade_id" value="">
@@ -42,18 +38,18 @@
                         $atividade_id_old = null;
                         @endphp
 
-                        @foreach ($agendamentos as $agendamento)
+                        @foreach ($horarios as $horario)
 
-                        @if ($agendamento->horario->atividade->id != $atividade_id_old)
+                        @if ($horario->atividade_id != $atividade_id_old)
 
-                            @if ($agendamento->horario->atividade->somente_colaborador == 1)
-                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirHorarios({{$agendamento->horario->atividade->id}})">
-                            {{$agendamento->horario->atividade->nome}}
+                            @if ($horario->atividade->somente_colaborador == 1)
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirHorarios({{$horario->atividade_id}})">
+                            {{$horario->atividade->nome}}
                         </button>
                             @else
                                 @if (Session::get('colaborador_id'))
-                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirHorarios({{$agendamento->horario->atividade->id}})">
-                            {{$agendamento->horario->atividade->nome}}
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="abrirHorarios({{$horario->atividade_id}})">
+                            {{$horario->atividade->nome}}
                         </button>
                                 @endif
                             @endif
@@ -61,12 +57,12 @@
                         @endif
 
                         @php
-                        $atividade_id_old = $agendamento->horario->atividade->id;
+                        $atividade_id_old = $horario->atividade_id;
                         @endphp
 
                         @endforeach
 
-                        @if (count($agendamentos) == 0)
+                        @if (count($horarios) == 0)
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block">
                             NENHUMA ATIVIDADE DISPONÍVEL NO MOMENTO
                         </button>
