@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Models\Pessoa;
 use App\Models\Colaborador;
-use App\Models\Agendamento;
+use App\Models\Horario;
 
 class HomeController extends Controller
 {
@@ -42,8 +42,8 @@ class HomeController extends Controller
             }
         }
 
-        $agendamentos = Agendamento::where('situacao', 1)->where('data', '>=', date('Y-m-d'))->get();
+        $horarios = Horario::distinct()->where('situacao', 1)->orderBy('atividade_id')->get();
 
-        return view('home', compact('agendamentos'));
+        return view('home', compact('horarios'));
     }
 }

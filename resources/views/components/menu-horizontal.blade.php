@@ -31,22 +31,8 @@
                     </li>
 
                     @can('Menu_Agendas')
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Agenda <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1">
-                            @can('Item_Atendimentos')
-                            <a class="dropdown-item" href="{{ url('atendimentos-admin') }}">
-                                Atendimentos Marcados
-                            </a>
-                            @endcan
-                            @can('Item_Agendamentos')
-                            <a class="dropdown-item" href="{{ url('agendamentos') }}">
-                                Agendamentos Atividades
-                            </a>
-                            @endcan
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('atendimentos-admin') }}">Atendimentos</a>
                     </li>
                     @endcan
                     

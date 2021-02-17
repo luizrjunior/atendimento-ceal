@@ -15,17 +15,20 @@ class CreateAtendimentosTable extends Migration
     {
         Schema::create('atendimentos', function (Blueprint $table) {
             $table->id();
-            $table->integer('situacao')->default(1); // 1=Agendado;2=Cancelado;3=Continua;4=Liberado
-            $table->integer('forma')->default(1); // 1=Virtual;2=Presencial;3=A distancia
+            $table->integer('situacao')->default(1); // 1=Agendado;2-Em Fila de Espera;3=Cancelado;4=Concluído;5=Liberado
+            $table->integer('forma')->default(0); // 0=Indefinito;1=Virtual;2=Presencial;3=A distancia
 
-            $table->unsignedBigInteger('agendamento_id');
-            $table->foreign('agendamento_id')->references('id')->on('agendamentos')->onDelete('cascade');
+            $table->unsignedBigInteger('horario_id');
+            $table->foreign('horario_id')->references('id')->on('horarios')->onDelete('cascade');
 
-            $table->unsignedBigInteger('pessoa_id');
-            $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete('cascade');
+            $table->unsignedBigInteger('paciente_id');
+            $table->foreign('paciente_id')->references('id')->on('pessoas')->onDelete('cascade');
 
-            $table->unsignedBigInteger('colaborador_id')->nullable();
-            $table->foreign('colaborador_id')->references('id')->on('colaboradores')->onDelete('cascade');
+            $table->unsignedBigInteger('atendente_id')->nullable();
+            $table->foreign('atendente_id')->references('id')->on('pessoas')->onDelete('cascade');
+
+            $table->date('data_atendimento');
+            $table->string('observacoes')->nullable();
 
             $table->timestamps();
         });

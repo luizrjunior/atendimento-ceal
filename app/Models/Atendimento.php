@@ -9,24 +9,32 @@ class Atendimento extends Model
     protected $fillable = [
         'forma',
         'situacao',
-        'agendamento_id',
-        'pessoa_id',
-        'colaborador_id'
+        'observacoes',
+        'numero_vagas_virtual',
+        'numero_vagas_presencial',
+        'numero_vagas_distancia',
+        'numero_espera_virtual',
+        'numero_espera_presencial',
+        'numero_espera_distancia',
+        'horario_id',
+        'paciente_id',
+        'atendente_id',
+        'data_atendimento',
     ];
 
-    public function agendamento()
+    public function horario()
     {
-        return $this->belongsTo(\App\Models\Agendamento::class, 'agendamento_id');
+        return $this->belongsTo(\App\Models\Horario::class, 'horario_id');
     }
 
-    public function pessoa()
+    public function paciente()
     {
-        return $this->belongsTo(\App\Models\Pessoa::class, 'pessoa_id');
+        return $this->belongsTo(\App\Models\Pessoa::class, 'paciente_id');
     }
 
-    public function colaborador()
+    public function atendente()
     {
-        return $this->belongsTo(\App\Models\Colaborador::class, 'colaborador_id');
+        return $this->belongsTo(\App\Models\Pessoa::class, 'atendente_id');
     }
     
 }

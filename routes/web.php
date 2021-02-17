@@ -43,17 +43,36 @@ Route::post('/my-profile/update-password', 'Acl\MyProfileController@updatePasswo
 /**
  * CADASTROS
  */
+
+/**
+ * FUNCOES
+ */
 Route::resource('funcoes', 'Cadastros\FuncaoController');
 Route::post('funcoes/ativar-desativar-funcao', 'Cadastros\FuncaoController@ativarDesativarFuncao');
 
+/**
+ * LOCAIS
+ */
 Route::resource('locais', 'Cadastros\LocalController');
 Route::post('locais/ativar-desativar-local', 'Cadastros\LocalController@ativarDesativarLocal');
 
+/**
+ * HORARIOS
+ */
 Route::resource('horarios', 'Cadastros\HorarioController');
 Route::post('horarios/ativar-desativar-horario', 'Cadastros\HorarioController@ativarDesativarHorario');
 Route::post('horarios/carregar-horarios-atividade-json', 'Cadastros\HorarioController@carregarHorariosAtividadeJson')->name('horarios.carregar-horarios-atividade-json');
-Route::post('horarios/listar-horarios-por-atividade', 'Cadastros\HorarioController@listarHorariosPorAtividade')->name('horarios.listar-horarios-por-atividade');
 
+/**
+ * ROTAS DO CADASTRO DE HORARIOS QUE SERVEM NA HORA DE REGISTRAR UM ATENDIMENTO
+ */
+Route::post('horarios/listar-horarios-por-atividade', 'Cadastros\HorarioController@listarHorariosPorAtividade')->name('horarios.listar-horarios-por-atividade');
+Route::post('horarios/listar-datas-por-horario', 'Cadastros\HorarioController@listarDatasPorHorario')->name('horarios.listar-datas-por-horario');
+Route::post('horarios/listar-vagas-disponiveis-por-horario', 'Cadastros\HorarioController@listarVagasDisponiveisPorHorario')->name('horarios.listar-vagas-disponiveis-por-horario');
+
+/**
+ * MOTIVOS
+ */
 Route::resource('motivos', 'Cadastros\MotivoController');
 Route::post('motivos/ativar-desativar-motivo', 'Cadastros\MotivoController@ativarDesativarMotivo');
 
@@ -113,22 +132,26 @@ Route::post('agendamentos/listar-agendamentos-por-horario', 'Agendas\Agendamento
 /**
  * ATENDIMENTOS
  */
-Route::resource('atendimentos', 'Agendas\AtendimentoController');
-Route::post('atendimentos/abrir-create', 'Agendas\AtendimentoController@abrirCreate')->name('atendimentos.abrir-create');
+Route::resource('atendimentos', 'Atendimentos\AtendimentoController');
+Route::post('atendimentos/abrir-create', 'Atendimentos\AtendimentoController@abrirCreate')->name('atendimentos.abrir-create');
 
 /**
  * ATENDIMENTOS-ADMIN
  */
-Route::any('atendimentos-admin', 'Agendas\AtendimentoAdminController@index')->name('atendimentos-admin.index');
+Route::any('atendimentos-admin', 'Atendimentos\AtendimentoAdminController@index')->name('atendimentos-admin.index');
 
-Route::get('atendimentos-admin/create', 'Agendas\AtendimentoAdminController@create')->name('atendimentos-admin.create');
-Route::post('atendimentos-admin/store', 'Agendas\AtendimentoAdminController@store')->name('atendimentos-admin.store');
+Route::get('atendimentos-admin/create', 'Atendimentos\AtendimentoAdminController@create')->name('atendimentos-admin.create');
+Route::post('atendimentos-admin/store', 'Atendimentos\AtendimentoAdminController@store')->name('atendimentos-admin.store');
 
-Route::get('atendimentos-admin/{atendimento_id}/edit', 'Agendas\AtendimentoAdminController@edit')->name('atendimentos-admin.edit');
-Route::patch('atendimentos-admin/{atendimento_id}', 'Agendas\AtendimentoAdminController@update')->name('atendimentos-admin.update');
+Route::get('atendimentos-admin/{atendimento_id}/edit', 'Atendimentos\AtendimentoAdminController@edit')->name('atendimentos-admin.edit');
+Route::patch('atendimentos-admin/{atendimento_id}', 'Atendimentos\AtendimentoAdminController@update')->name('atendimentos-admin.update');
 
-Route::post('atendimento-has-motivo/store', 'Agendas\AtendimentoHasMotivoController@store')->name('atendimentos.store-atendimento-has-motivo');
-Route::post('atendimento-has-motivo/load-motivos-atendimento-json', 'Agendas\AtendimentoHasMotivoController@loadMotivosAtendimentoJson')->name('atendimentos.load-motivos-atendimento-json');
+Route::post('atendimento-has-motivo/store', 'Atendimentos\AtendimentoHasMotivoController@store')->name('atendimentos.store-atendimento-has-motivo');
+Route::post('atendimento-has-motivo/load-motivos-atendimento-json', 'Atendimentos\AtendimentoHasMotivoController@loadMotivosAtendimentoJson')->name('atendimentos.load-motivos-atendimento-json');
 
-Route::post('atendimento-has-orientacao/store', 'Agendas\AtendimentoHasOrientacaoController@store')->name('atendimentos.store-atendimento-has-orientacao');
-Route::post('atendimento-has-orientacao/load-orientacoes-atendimento-json', 'Agendas\AtendimentoHasOrientacaoController@loadOrientacoesAtendimentoJson')->name('atendimentos.load-orientacoes-atendimento-json');
+Route::post('atendimento-has-orientacao/store', 'Atendimentos\AtendimentoHasOrientacaoController@store')->name('atendimentos.store-atendimento-has-orientacao');
+Route::post('atendimento-has-orientacao/load-orientacoes-atendimento-json', 'Atendimentos\AtendimentoHasOrientacaoController@loadOrientacoesAtendimentoJson')->name('atendimentos.load-orientacoes-atendimento-json');
+
+Route::post('atendimentos-admin/salvar-orientacoes-atendimento', 'Atendimentos\AtendimentoAdminController@salvarObservacoesAtendimento')->name('atendimentos-admin.salvar-observacoes-atendimento');
+
+Route::post('atendimentos-admin/marcar-novo-atendimento', 'Atendimentos\AtendimentoAdminController@marcarNovoAtendimento')->name('atendimentos-admin.marcar-novo-atendimento');

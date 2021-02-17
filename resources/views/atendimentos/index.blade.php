@@ -10,12 +10,13 @@ $arrDiaSemana = array(
 );
 $arrSituacao = array(
     '1' => "AGENDADO",
-    '2' => "CANCELADO",
-    '3' => "CONTINUA",
-    '4' => "LIBERADO",
-    '5' => "FILA DE ESPERA"
+    '2' => "FILA DE ESPERA",
+    '3' => "CANCELADO",
+    '4' => "CONCLUÍDO",
+    '5' => "LIBERADO"
 );
 $arrForma = array(
+    '0' => "INDEFINIDO",
     '1' => "VIRTUAL",
     '2' => "PRESENCIAL",
     '3' => "À DISTÂNCIA"
@@ -73,10 +74,10 @@ $bgColor = array(
                 <tbody>
                     @foreach($atendimentos as $atendimento)
                     <tr>
-                        <td>{{date('d/m/Y', strtotime($atendimento->agendamento->data))}}</td>
-                        <td>{{$atendimento->agendamento->horario->atividade->nome}}</td>
-                        <td>{{$arrDiaSemana[$atendimento->agendamento->horario->dia_semana]}} - {{substr($atendimento->agendamento->horario->hora_inicio, 0, -3)}} às {{substr($atendimento->agendamento->horario->hora_termino, 0, -3)}}</td>
-                        <td>{{$atendimento->agendamento->horario->local->numero}} - {{$atendimento->agendamento->horario->local->nome}}</td>
+                        <td>{{date('d/m/Y', strtotime($atendimento->data_atendimento))}}</td>
+                        <td>{{$atendimento->horario->atividade->nome}}</td>
+                        <td>{{$arrDiaSemana[$atendimento->horario->dia_semana]}} - {{substr($atendimento->horario->hora_inicio, 0, -3)}} às {{substr($atendimento->horario->hora_termino, 0, -3)}}</td>
+                        <td>{{$atendimento->horario->local->nome}} - {{$atendimento->horario->local->numero}}</td>
                         <td>{{$arrForma[$atendimento->forma]}}</td>
                         <td>
                             <span class="badge badge-{{$bgColor[$atendimento->situacao]}}"

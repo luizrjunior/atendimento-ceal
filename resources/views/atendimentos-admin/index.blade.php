@@ -10,12 +10,13 @@ $arrDiaSemana = array(
 );
 $arrSituacao = array(
     '1' => "AGENDADO",
-    '2' => "CANCELADO",
-    '3' => "CONTINUA",
-    '4' => "LIBERADO",
-    '5' => "FILA DE ESPERA"
+    '2' => "FILA DE ESPERA",
+    '3' => "CANCELADO",
+    '4' => "CONCLUÍDO",
+    '5' => "LIBERADO"
 );
 $arrForma = array(
+    '0' => "INDEFINIDO",
     '1' => "VIRTUAL",
     '2' => "PRESENCIAL",
     '3' => "À DISTÂNCIA"
@@ -37,8 +38,8 @@ $horario_id_psq = $data['horario_id_psq'] ? $data['horario_id_psq'] : "";
 $forma_psq = $data['forma_psq'] ? $data['forma_psq'] : "";
 $situacao_psq = $data['situacao_psq'] ? $data['situacao_psq'] : "";
 
-$colaborador_id_psq = $data['colaborador_id_psq'] ? $data['colaborador_id_psq'] : "";
-$nome_psq = $data['nome_psq'] ? $data['nome_psq'] : "";
+$atendente_id_psq = $data['atendente_id_psq'] ? $data['atendente_id_psq'] : "";
+$nome_paciente_psq = $data['nome_paciente_psq'] ? $data['nome_paciente_psq'] : "";
 
 $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
 @endphp
@@ -57,18 +58,18 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
     top.valorSelectForma = '{{ $forma_psq }}';
     top.valorSelectSituacao = '{{ $situacao_psq }}';
 
-    top.valorSelectColaborador = '{{ $colaborador_id_psq }}';
+    top.valorSelectColaborador = '{{ $atendente_id_psq }}';
 
     $('#atividade_id_psq').val(top.valorSelectAtividade);
 
     $('#forma_psq').val(top.valorSelectForma);
     $('#situacao_psq').val(top.valorSelectSituacao);
 
-    $('#colaborador_id_psq').val(top.valorSelectColaborador);
+    $('#atendente_id_psq').val(top.valorSelectColaborador);
 </script>
 <script type="text/javascript" 
     src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/agendas/atendimentos-admin/index-atendimento-admin.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/atendimentos-admin/index-atendimento-admin.js') }}"></script>
 @endsection
 
 @section('content')
@@ -145,22 +146,22 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
             
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="colaborador_id_psq">Colaborador</label>
-                    <select class="form-control" id="colaborador_id_psq" name="colaborador_id_psq">
+                    <label for="atendente_id_psq">Atendente</label>
+                    <select class="form-control" id="atendente_id_psq" name="atendente_id_psq">
                         <option value=""> - - SELECIONE - - </option>
                         @php
-                        $colaboradorController = new \App\Http\Controllers\Pessoas\ColaboradorController();
-                        $colaboradores = $colaboradorController->carregarComboColaboradores();
+                        $atendenteController = new \App\Http\Controllers\Pessoas\ColaboradorController();
+                        $atendentes = $atendenteController->carregarComboColaboradores();
                         @endphp
 
-                        @foreach ($colaboradores as $colaborador)
-                        <option value="{{$colaborador->id}}">{{$colaborador->pessoa->nome}}</option>
+                        @foreach ($atendentes as $atendente)
+                        <option value="{{$atendente->pessoa_id}}">{{$atendente->pessoa->nome}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="nome_psq">{{ __('Name') }} do Atendido</label>
-                    <input id="nome_psq" type="text" class="form-control maiuscula" name="nome_psq" value="{{ $nome_psq }}" autocomplete="nome_psq">
+                    <label for="nome_paciente_psq">{{ __('Name') }} do Paciente</label>
+                    <input id="nome_paciente_psq" type="text" class="form-control maiuscula" name="nome_paciente_psq" value="{{ $nome_paciente_psq }}" autocomplete="nome_paciente_psq">
                 </div>
             </div>
             
@@ -186,9 +187,9 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                         <td><b>Data</b></td>
                         <td><b>Atividade</b></td>
                         <td><b>Dia e Horário</b></td>
-                        <td><b>Local</b></td>
-                        <td><b>Forma</b></td>
-                        <td><b>Atendido(a)</b></td>
+                        {{-- <td><b>Local</b></td>
+                        <td><b>Forma</b></td> --}}
+                        <td><b>Paciente</b></td>
                         <td><b>Situação</b></td>
                         <td colspan="2"><b>Ações</b></td>
                     </tr>
@@ -196,12 +197,12 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                 <tbody>
                     @foreach($atendimentos as $atendimento)
                     <tr>
-                        <td>{{date('d/m/Y', strtotime($atendimento->dataAgendamento))}}</td>
+                        <td>{{date('d/m/Y', strtotime($atendimento->dataAtendimento))}}</td>
                         <td>{{$atendimento->nomeAtividade}}</td>
                         <td>{{$arrDiaSemana[$atendimento->diaSemana]}} - {{substr($atendimento->horaInicio, 0, -3)}} às {{substr($atendimento->horaTermino, 0, -3)}}</td>
-                        <td>{{$atendimento->numeroLocal}} - {{$atendimento->nomeLocal}}</td>
-                        <td>{{$arrForma[$atendimento->forma]}}</td>
-                        <td>{{$atendimento->nomeAtendido}}</td>
+                        {{-- <td>{{$atendimento->nomeLocal}} - {{$atendimento->numeroLocal}}</td>
+                        <td>{{$arrForma[$atendimento->forma]}}</td> --}}
+                        <td>{{$atendimento->nomePaciente}}</td>
                         <td>
                             <span class="badge badge-{{$bgColor[$atendimento->situacao]}}"
                                 data-toggle="tooltip" title="{{$arrSituacao[$atendimento->situacao]}}">
