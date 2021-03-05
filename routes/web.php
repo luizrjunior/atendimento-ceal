@@ -67,8 +67,6 @@ Route::post('horarios/carregar-horarios-atividade-json', 'Cadastros\HorarioContr
  * ROTAS DO CADASTRO DE HORARIOS QUE SERVEM NA HORA DE REGISTRAR UM ATENDIMENTO
  */
 Route::post('horarios/listar-horarios-por-atividade', 'Cadastros\HorarioController@listarHorariosPorAtividade')->name('horarios.listar-horarios-por-atividade');
-Route::post('horarios/listar-datas-por-horario', 'Cadastros\HorarioController@listarDatasPorHorario')->name('horarios.listar-datas-por-horario');
-Route::post('horarios/listar-vagas-disponiveis-por-horario', 'Cadastros\HorarioController@listarVagasDisponiveisPorHorario')->name('horarios.listar-vagas-disponiveis-por-horario');
 
 /**
  * MOTIVOS
@@ -123,13 +121,6 @@ Route::patch('colaboradores/update', 'Pessoas\ColaboradorController@update')->na
 Route::post('colaboradores/ativar-desativar-colaborador', 'Pessoas\ColaboradorController@ativarDesativarColaborador');
 
 /**
- * AGENDAMENTOS
- */
-Route::resource('agendamentos', 'Agendas\AgendamentoController');
-Route::post('agendamentos/ativar-desativar-agendamento', 'Agendas\AgendamentoController@ativarDesativarAgendamento');
-Route::post('agendamentos/listar-agendamentos-por-horario', 'Agendas\AgendamentoController@listarAgendamentosPorHorario')->name('agendamentos.listar-agendamentos-por-horario');
-
-/**
  * ATENDIMENTOS
  */
 Route::resource('atendimentos', 'Atendimentos\AtendimentoController');
@@ -155,3 +146,5 @@ Route::post('atendimento-has-orientacao/load-orientacoes-atendimento-json', 'Ate
 Route::post('atendimentos-admin/salvar-orientacoes-atendimento', 'Atendimentos\AtendimentoAdminController@salvarObservacoesAtendimento')->name('atendimentos-admin.salvar-observacoes-atendimento');
 
 Route::post('atendimentos-admin/marcar-novo-atendimento', 'Atendimentos\AtendimentoAdminController@marcarNovoAtendimento')->name('atendimentos-admin.marcar-novo-atendimento');
+
+Route::post('atendimentos-admin/cancelar-atendimento', 'Atendimentos\AtendimentoAdminController@cancelarAtendimento')->name('atendimentos-admin.cancelar-atendimento');

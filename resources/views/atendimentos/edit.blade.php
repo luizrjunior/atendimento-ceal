@@ -302,7 +302,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
                                         @endif
                                     @endforeach
                 
-                                    @if (count($motivos) == 0)
+                                    @if (count($motivos) == 0 || $motivos == null)
                                     <tr>
                                         <td colspan="2">Nenhum registro encontrado!</td>
                                     </tr>

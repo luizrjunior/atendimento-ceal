@@ -1,7 +1,8 @@
-function abrirVagasDisponiveisPorHorario(data_atendimento, horario_id) 
+function abrirAtendimento(horario_id, situacao, data_atendimento)
 {
     $('#carregando').show();
     $('#horario_id').val(horario_id);
+    $('#situacao').val(situacao);
     $('#data_atendimento').val(data_atendimento);
     $("#formListarDatasPorHorario").submit();
 }

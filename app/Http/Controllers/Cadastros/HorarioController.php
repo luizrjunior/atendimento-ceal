@@ -55,7 +55,7 @@ class HorarioController extends Controller
             'numero_vagas'=>'required|numeric',
             'numero_vagas_espera'=>'required|numeric',
         ], self::MESSAGES_ERRORS);
-  
+
         $horario = new Horario([
             'atividade_id' => $request->get('atividade_id'),
             'dia_semana'=> $request->get('dia_semana'),
@@ -75,10 +75,10 @@ class HorarioController extends Controller
     {
         Session::put('tela', 'edit_horario');
         Session::put('horario_id', $id);
-        
+
         $atividade_id = Session::get('atividade_id');
         $atividade = Atividade::find($atividade_id);
-        
+
         $horario = Horario::find($id);
         return view('cadastros.horarios.edit', compact('atividade', 'horario'));
     }
@@ -102,7 +102,7 @@ class HorarioController extends Controller
             'numero_vagas'=>'required|numeric',
             'numero_vagas_espera'=>'required|numeric',
         ], self::MESSAGES_ERRORS);
-  
+
         $horario = Horario::find($id);
         $horario->dia_semana = $request->get('dia_semana');
         $horario->hora_inicio = $request->get('hora_inicio');
@@ -140,11 +140,11 @@ class HorarioController extends Controller
 
     public function carregarHorariosAtividadeJson(Request $request)
     {
-        $horarios = Horario::select('horarios.id as id', 'horarios.dia_semana', 'horarios.hora_inicio', 
+        $horarios = Horario::select('horarios.id as id', 'horarios.dia_semana', 'horarios.hora_inicio',
             'horarios.hora_termino', 'locais.numero', 'locais.nome')
             ->where('horarios.atividade_id', $request->atividade_id)->where('horarios.situacao', 1)
             ->join('locais', 'horarios.local_id', 'locais.id')->get();
-            
+
         return response()->json($horarios, 200);
     }
 
@@ -159,7 +159,7 @@ class HorarioController extends Controller
             '6' => "SÁBADO",
             '7' => "DOMINGO",
         );
-        
+
         $atividade_id = $request->atividade_id;
         $atividade = Atividade::find($atividade_id);
 
@@ -181,19 +181,17 @@ class HorarioController extends Controller
         $datas = array();
         $i = 0;
         while ($dateStart <= $dateEnd) {
-            $dateRanges[] = $dateStart->format('D d/m');
-            if ($i != 0) {
-                $dateStart = $dateStart->modify('+1day');
-            }
-
             $dateWeed = $dateStart->format('D');
             $horario = $this->selecionarHorarioPorAtividadePorDiaSemana($atividade_id, $dateWeed);
+
             if (count($horario) > 0) {
-                $texto1 = $dateStart->format('d/m/Y') . ' - ' . $arrDiaSemana[$horario[0]->dia_semana];
+                $texto1 = 'Dia ' . $dateStart->format('d/m/Y') . ' - ' . $arrDiaSemana[$horario[0]->dia_semana];
                 $texto2 = 'De ' . substr($horario[0]->hora_inicio, 0, -3) . ' horas até ' . substr($horario[0]->hora_termino, 0, -3) . ' horas';
                 $texto3 = 'Local: ' . $horario[0]->local->nome . ' - ' . $horario[0]->local->numero;
                 $datas[$i]['horario_id'] = $horario[0]->id;
                 $datas[$i]['data_atendimento'] = $dateStart->format('d/m/Y');
+                $datas[$i]['numero_vagas'] = $horario[0]->numero_vagas;
+                $datas[$i]['numero_vagas_espera'] = $horario[0]->numero_vagas_espera;
                 if ($horario[0]->dia_semana == 1 && $dateWeed == 'Mon') {
                     $datas[$i]['texto1'] = $texto1;
                     $datas[$i]['texto2'] = $texto2;
@@ -230,14 +228,15 @@ class HorarioController extends Controller
                     $datas[$i]['texto3'] = $texto3;
                 }
                 $i++;
-    
             }
+            $dateRanges[] = $dateStart->format('D d/m');
+            $dateStart = $dateStart->modify('+1day');
         }
 
         return view('cadastros.horarios.listar-horarios-por-atividade', compact('atividade', 'datas'));
     }
 
-    private function selecionarHorarioPorAtividadePorDiaSemana($atividade_id, $dia_semana) 
+    private function selecionarHorarioPorAtividadePorDiaSemana($atividade_id, $dia_semana)
     {
         switch ($dia_semana) {
             case 'Mon':
@@ -269,19 +268,6 @@ class HorarioController extends Controller
             ->where('horarios.dia_semana', $dia_semana)->where('horarios.situacao', 1)
             ->orderBy('horarios.hora_inicio')->orderBy('horarios.dia_semana')->get();
         return $horarios;
-    }
-
-    public function listarVagasDisponiveisPorHorario(Request $request)
-    {
-        $horario_id = $request->horario_id;
-        $horario = Horario::find($horario_id);
-
-        $atividade_id = $horario->atividade_id;
-        $atividade = Atividade::find($atividade_id);
-
-        $data_atendimento = $request->data_atendimento;
-
-        return view('cadastros.horarios.listar-vagas-disponiveis-por-horario', compact('horario', 'atividade', 'data_atendimento'));
     }
 
     /**
