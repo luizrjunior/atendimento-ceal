@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Atividade extends Model
 {
-    protected $fillable = [
-      'situacao',
-      'somente_colaborador',
-      'nome'
-    ];
+	protected $fillable = [
+		'situacao',
+		'somente_colaborador',
+		'nome'
+	];
 }

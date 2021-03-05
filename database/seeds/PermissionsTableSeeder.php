@@ -35,10 +35,10 @@ class PermissionsTableSeeder extends Seeder {
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        $this->command->info('4 - Inserindo Permissao: Menu_Agendas');
+        $this->command->info('4 - Inserindo Permissao: Menu_Atendimentos');
         DB::table('permissions')->insert([
-            'name' => 'Menu_Agendas',
-            'description' => 'Permissão para o menu Agendas.',
+            'name' => 'Menu_Atendimentos',
+            'description' => 'Permissão para o menu Atendimentos.',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
@@ -99,18 +99,10 @@ class PermissionsTableSeeder extends Seeder {
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        $this->command->info('12 - Inserindo Permissao: Item_Agendamentos');
+        $this->command->info('12 - Inserindo Permissao: Item_Bloqueios');
         DB::table('permissions')->insert([
-            'name' => 'Item_Agendamentos',
-            'description' => 'Permissão para o item Agendamentos.',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-
-        $this->command->info('13 - Inserindo Permissao: Item_Atendimentos');
-        DB::table('permissions')->insert([
-            'name' => 'Item_Atendimentos',
-            'description' => 'Permissão para o item Atendimentos.',
+            'name' => 'Item_Bloqueios',
+            'description' => 'Permissão para o item Bloqueios.',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

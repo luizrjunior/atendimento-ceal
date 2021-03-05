@@ -55,7 +55,7 @@ class AtendimentoController extends Controller
 
         $situacao = Session::get('situacao');
         $data_atendimento = Session::get('data_atendimento');
-        
+
         $paciente_id = Session::get('pessoa_id');
         if (Session::get('tela') == 'edit_atendimento_admin') {
             $paciente_id = Session::get('paciente_id_atendimento_admin');

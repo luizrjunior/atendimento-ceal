@@ -50,9 +50,9 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
     $('#forma').val(top.valorSelectForma);
     $('#atendente_id').val(top.valorSelectColaborador);
 </script>
-<script type="text/javascript" 
+<script type="text/javascript"
     src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
-<script type="text/javascript" 
+<script type="text/javascript"
     src="{{ asset('/js/atendimentos-admin/create-edit-atendimento-admin.js') }}"></script>
 @endsection
 
@@ -68,7 +68,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
 
             @include('atendimentos-components.dados-atendimento')
 
-            
+
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a id="linkAba1" class="nav-link active" href="#" onclick="abrirAbas('1')">Atendimento</a>
@@ -102,7 +102,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
                 <div class="card-body">
 
                     @include('components.alertas')
-                    
+
                     <div id="divAlertErrorEditAtendimento" class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" id="btnCloseAlertErrorEditAtendimento">&times;</button>
                         <strong>Ops!</strong> Houve alguns problemas com seus campos.<br/>
@@ -163,7 +163,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
                             </span>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="situacao">Situação Atendimento</label>
                             <select class="form-control @error('situacao') is-invalid @enderror" id="situacao" name="situacao">
@@ -232,13 +232,16 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
                             </span>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary" onclick="return validar();">
                                 Atualizar
                             </button>
                             <button type="button" class="btn btn-info" onclick="marcarNovoAtendimento();">
                                 Marcar Novo Atendimento
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="cancelarAtendimento();">
+                                Cancelar Atendimento
                             </button>
                         </div>
 
@@ -307,8 +310,8 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
                                         <td>{{$motivo->descricao}}</td>
                                     </tr>
                                     @endforeach
-                
-                                    @if (count($motivos) == 0)
+
+                                    @if (count($motivos) == 0 || $motivos == null)
                                     <tr>
                                         <td colspan="2">Nenhum registro encontrado!</td>
                                     </tr>
@@ -319,7 +322,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
-                                Salvar  
+                                Salvar
                             </button>
                         </div>
 
@@ -327,7 +330,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
 
                 </div>
             </div>
-        
+
             <div id="divOrientacoes" class="card uper" style="display: none;">
                 <div class="card-header">
                     Orientações do Atendimento
@@ -388,7 +391,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
                                         <td>{{$orientacao->descricao}}</td>
                                     </tr>
                                     @endforeach
-                
+
                                     @if (count($orientacoes) == 0)
                                     <tr>
                                         <td colspan="2">Nenhum registro encontrado!</td>
@@ -400,7 +403,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
-                                Salvar  
+                                Salvar
                             </button>
                         </div>
 
@@ -435,7 +438,7 @@ $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
 
                           <div class="form-group">
                             <button type="submit" class="btn btn-primary">
-                                Salvar  
+                                Salvar
                             </button>
                         </div>
 

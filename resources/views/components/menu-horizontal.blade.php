@@ -79,6 +79,11 @@
                                 Participantes
                             </a>
                             @endcan
+                            @can('Item_Bloqueios')
+                            <a class="dropdown-item" href="{{ url('bloqueios') }}">
+                                Bloqueios
+                            </a>
+                            @endcan
                             @can('Item_Pessoas')
                             <a class="dropdown-item" href="{{ url('pessoas-admin') }}">
                                 Pessoas
