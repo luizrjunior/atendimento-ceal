@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  db:
+    image: mariadb
+    container_name: mysql_atendimento_ceal
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: atendimento_ceal
+
+  apps-custom:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atendimento-ceal
+    volumes:
+      - C:/Development/Projects/atendimento-ceal/:/var/www/html
+      - C:/Development/Projects/atendimento-ceal/storage:/var/www/html/storage
+    ports:
+      - "80:80"
+    privileged: true
+    links:
+      - "db:database"
