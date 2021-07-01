@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  db:
+  db-atendimento-ceal:
     image: mariadb
     container_name: mysql_atendimento_ceal
     ports:
@@ -23,4 +23,4 @@ services:
       - "80:80"
     privileged: true
     links:
-      - "db:database"
+      - "db-atendimento-ceal:database"
