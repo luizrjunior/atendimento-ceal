@@ -4,11 +4,10 @@
 /storage/*.key
 /vendor
 /.idea
-/db
-.env
-.env.backup
-.phpunit.result.cache
+/.vagrant
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.env
+db/*

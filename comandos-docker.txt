@@ -1,0 +1,54 @@
+- Criar um Migrate
+php artisan make:migration $NOME_MIGRATE
+
+- Criar um Model com Migrate
+php artisan make:model Models\$NOME_MODEL -m
+
+- Criar um Controller com Recusros
+php artisan make:controller APP\$NOME_CONTROLLER --resource
+
+- Levantar o ambiente com Docker
+docker-compose up -d
+
+- Parar o ambiente
+docker-compose stop
+
+- Matar os containers do projeto
+docker-compose down
+
+- Entrar no Container:
+docker exec -ti atendimento-ceal bash
+
+- Instalar dependencias do Composer:
+docker exec -ti atendimento-ceal sh -c "composer install"
+
+- Gerar chave do App:
+docker exec -ti atendimento-ceal sh -c "php artisan key:generate"
+
+- Executa as migrations
+docker exec -ti atendimento-ceal sh -c "php artisan migrate"
+
+- Gerar autoload da aplicação
+docker exec -ti atendimento-ceal sh -c "composer dump-autoload"
+
+- Popular as primeiras tabelas do sistema
+docker exec -ti atendimento-ceal sh -c "php artisan db:seed"
+
+- Atualizar as Migrations e popular as primeiras tabelas
+docker exec -ti atendimento-ceal sh -c "php artisan migrate:refresh --seed"
+
+- Criar storage link para armazenar os arquivos anexos
+docker exec -ti atendimento-ceal sh -c "php artisan storage:link"
+
+- Remover storage link
+docker exec -ti atendimento-ceal sh -c "rmd storage"
+
+- Limpar cache de configuração
+docker exec -ti atendimento-ceal sh -c "php artisan config:clear"
+
+- Apresentar a versão do Framework (Laravel)
+docker exec -ti atendimento-ceal sh -c "php artisan --version"
+
+- Listar Rotas do sistema
+docker exec -ti atendimento-ceal sh -c "php artisan route:list"
+
