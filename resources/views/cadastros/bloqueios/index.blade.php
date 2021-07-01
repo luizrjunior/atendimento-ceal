@@ -23,9 +23,9 @@ $bgColor = array(
 @section('javascript')
 <script>
     top.urlListaBloqueios = "{{ url('bloqueios') }}";
-    top.urlAtivarDesativarBloqueio = "{{ url('bloqueios/ativar-desativar-local') }}";
+    top.urlAtivarDesativarBloqueio = "{{ url('bloqueios/ativar-desativar-bloqueio') }}";
 </script>
-<script type="text/javascript" src="{{ asset('/js/cadastros/bloqueios/index-local.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/cadastros/bloqueios/index-bloqueio.js') }}"></script>
 @endsection
 
 @section('content')
@@ -51,8 +51,10 @@ $bgColor = array(
                 <thead>
                     <tr>
                         <td><b>Cadastrado em</b></td>
+                        <td><b>Bloqueio</b></td>
                         <td><b>Atividade</b></td>
                         <td><b>Horário</b></td>
+                        <td><b>Local</b></td>
                         <td><b>Inicio</b></td>
                         <td><b>Fim</b></td>
                         <td><b>Situação</b></td>
@@ -63,9 +65,12 @@ $bgColor = array(
                     @foreach($bloqueios as $bloqueio)
                     <tr>
                         <td>{{date('d/m/Y H:i:s', strtotime($bloqueio->created_at))}}</td>
+                        <td>{{$bloqueio->nome}}</td>
                         <td>{{$bloqueio->horario->atividade->nome}}</td>
                         <td>{{$arrDiaSemana[$bloqueio->horario->dia_semana]}} - {{substr($bloqueio->horario->hora_inicio, 0, -3)}} às {{substr($bloqueio->horario->hora_termino, 0, -3)}}</td>
                         <td>{{$bloqueio->horario->local->nome}} - {{$bloqueio->horario->local->numero}}</td>
+                        <td>{{date('d/m/Y', strtotime($bloqueio->data_inicio))}}</td>
+                        <td>{{date('d/m/Y', strtotime($bloqueio->data_fim))}}</td>
                         <td>
                             <span class="badge badge-{{$bgColor[$bloqueio->situacao]}}"
                                 data-toggle="tooltip" title="{{$arrSituacao[$bloqueio->situacao]}}">
@@ -88,7 +93,7 @@ $bgColor = array(
                     @endforeach
                     @if (count($bloqueios) == 0)
                     <tr>
-                        <td colspan="5">Nenhum registro encontrado!</td>
+                        <td colspan="9">Nenhum registro encontrado!</td>
                     </tr>
                     @endif
                 </tbody>
