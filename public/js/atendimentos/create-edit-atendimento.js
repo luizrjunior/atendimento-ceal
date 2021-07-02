@@ -100,6 +100,38 @@ function abrirAbas(expr) {
     }
 }
 
+function buscarPessoaAtendimento() {
+    var formURL = top.routeBuscarPessoaAtendimento;
+    $.ajax({
+        type: 'POST',
+        url: formURL,
+        data: {
+            _token: $("input[name='_token']").val(),
+            nome: $("#nome").val()
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            if (data.qtde_pessoas == '1') {
+                $("#paciente_id").val(data.id);
+                $("#nome").val(data.nome);
+            }
+            if (data.qtde_pessoas != '1') {
+                //CHAMAR O CADASTRO DE PESSOAS AQUI NESTA PARTE
+                alert('fadsfasd');
+                abrirCadastroPessoas();
+            }
+        }
+    });
+}
+
+function abrirCadastroPessoas() {
+    // $('input:hidden[name=_method]').val('');
+    $("#nome_psq").val($("#nome").val());
+    $('#formAtendimentosCreate').attr('action', top.routeAbrirCadastroPessoas);
+    $("#formAtendimentosCreate").submit();
+}
+
 $(document).ready(function () {
     $("#data_atendimento").mask("99/99/9999");
     $('#data_atendimento').datepicker({	

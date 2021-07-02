@@ -45,6 +45,12 @@ Route::post('/my-profile/update-password', 'Acl\MyProfileController@updatePasswo
  */
 
 /**
+ * BLOQUEIOS
+ */
+Route::resource('bloqueios', 'Cadastros\BloqueioController');
+Route::post('bloqueios/ativar-desativar-bloqueio', 'Cadastros\BloqueioController@ativarDesativarBloqueio');
+
+/**
  * FUNCOES
  */
 Route::resource('funcoes', 'Cadastros\FuncaoController');
@@ -98,6 +104,7 @@ Route::any('participantes/search', 'Cadastros\ParticipanteController@search')->n
  */
 Route::resource('pessoas', 'Pessoas\PessoaController');
 Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPessoaPorCPF')->name('pessoas.carrregar-pessoa-cpf');
+Route::post('pessoas/buscar-pessoa-atendimento', 'Pessoas\PessoaController@buscarPessoaAtendimento')->name('pessoas.buscar-pessoa-atendimento-json');
 
 /**
  * PESSOAS-ADMIN

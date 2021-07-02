@@ -126,7 +126,8 @@ class AtendimentoAdminController extends Controller
 
     public function create()
     {
-        //
+        Session::put('tela', 'create_atendimento_admin');
+        return redirect('/home')->with('success', 'Por gentileza, selecione a Atividade do Atendimento!');
     }
 
     public function store(Request $request)
