@@ -1,29 +1,13 @@
-@php
-    $pessoa = isset($pessoa) ? $pessoa : null;
-    $cpf = $pessoa->cpf;
-    $nome = $pessoa->nome;
-    $nascimento = date('d/m/Y', strtotime($pessoa->nascimento));
-    $sexo = $pessoa->sexo;
-    $telefone = $pessoa->telefone;
-    $profissao = $pessoa->profissao;
-    $socio = $pessoa->socio;
-    $bairro = $pessoa->bairro;
-@endphp
-
 @extends('layouts.app')
 
 @section('javascript')
     <script>
-        top.routeSelecionarPessoaAtendimento = '{{ url('/pessoas-admin/' . $pessoa->id . '/selecionar') }}';
+        top.routeCarregarPessoaCPF = "{{ route('pessoas.carrregar-pessoa-cpf') }}";
     </script>
     <script type="text/javascript"
             src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
     <script type="text/javascript"
-            src="{{ asset('/js/pessoas/admin/create-edit-pessoa.js') }}"></script>
-    <script>
-        $('#sexo').val('{{ $sexo }}');
-        $('#socio').val('{{ $socio }}');
-    </script>
+            src="{{ asset('/js/pessoas/create-edit-pessoa.js') }}"></script>
 @endsection
 
 @section('content')
@@ -35,10 +19,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+
                 <div class="card uper">
                     <div class="card-header">
-                        Editar Dados Cadastrais
-                        <a href="{{ url('pessoas-admin') }}" class="float-right">
+                        Adicionar Pessoa
+                        <a href="{{ url('/atendimentos-admin') }}" class="float-right">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square"
                                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -55,32 +40,24 @@
 
                         @include('components.alertas')
 
-                        <form id="formPessoaEdit" method="post"
-                              action="{{ route('pessoas.admin.update', $pessoa->id) }}">
-                            @method('PATCH')
+                        <form method="post" action="{{ route('pessoas-admin.store') }}">
                             @csrf
-                            <input type="hidden" id="paciente_id" name="paciente_id" value="{{ $pessoa->id }}">
 
-                            @include('pessoas.partials.edit-pessoa')
+                            <input type="hidden" id="pessoa_id" name="pessoa_id" value="">
 
-                            <div class="form-group">
+                            @include('pessoas.partials.create-pessoa')
+
+                            <div class="form-group mb-0">
                                 <button type="submit" class="btn btn-primary">
-                                    Atualizar Dados da Pessoa
+                                    Adicionar
                                 </button>
-                                @if (Session::get('tela') == 'create_atendimento_admin' && Session::get('horario_id') != '' && Session::get('situacao') != '' && Session::get('data_atendimento') != '')
-                                    <button id="btnSelecionarPessoa" type="button" class="btn btn-primary"
-                                            onclick="selecionarPessoaParaAtendimento();">
-                                        Selecionar Pessoa Para Atendimento
-                                    </button>
-                                @endif
                             </div>
                         </form>
 
                     </div>
-
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
 @endsection

@@ -23,7 +23,7 @@ class CreatePessoasTable extends Migration
             $table->string('profissao');
             $table->string('socio', 1);
             $table->string('bairro');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

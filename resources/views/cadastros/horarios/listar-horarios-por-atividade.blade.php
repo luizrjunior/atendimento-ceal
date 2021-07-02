@@ -64,7 +64,7 @@ $arrDiaSemana = array(
                             $atendimentoController[$horario_id] = new \App\Http\Controllers\Atendimentos\AtendimentoController();
 
                             $atendimentos = $atendimentoController[$horario_id]->numeroVagasAtendimento($data['horario_id'], 1, $data['data_atendimento']);
-                            $atendimentoFila = $atendimentoController[$horario_id]->numeroVagasAtendimento($data['horario_id'], 2, $data['data_atendimento']);
+                            $atendimentosFila = $atendimentoController[$horario_id]->numeroVagasAtendimento($data['horario_id'], 2, $data['data_atendimento']);
                             @endphp
 
                             @if ($data['numero_vagas'] > 0)
@@ -72,6 +72,7 @@ $arrDiaSemana = array(
 
                                     @php
                                     $descricaoVaga = str_pad(($data['numero_vagas'] - $atendimentos), 2, 0, STR_PAD_LEFT) . " Vagas Disponíveis";
+                                    $descricaoVaga2 = "";
                                     $situacaoVaga = 1;
                                     @endphp
 
@@ -79,7 +80,8 @@ $arrDiaSemana = array(
                                 @else
                                     @if ($atendimentosFila < $data['numero_vagas_espera'])
                                         @php
-                                        $descricaoVaga = str_pad(($data['numero_vagas_espera'] - $atendimentosFila), 2, 0, STR_PAD_LEFT) . " Vagas Em Espera Disponíveis <br />* Vagas Em Espera ficam aguardando o cancelamento ou desistência de algum atendimento no dia.";
+                                        $descricaoVaga = str_pad(($data['numero_vagas_espera'] - $atendimentosFila), 2, 0, STR_PAD_LEFT) . " Vagas Disponíveis Em Espera";
+                                        $descricaoVaga2 = "* Vagas Em Espera ficam aguardando o cancelamento ou desistência de algum atendimento no dia.";
                                         $situacaoVaga = 2;
                                         @endphp
 
@@ -107,6 +109,9 @@ $arrDiaSemana = array(
                             <div>{{$data['texto2']}}</div>
                             <div>{{$data['texto3']}}</div>
                             <div>{{$descricaoVaga}}</div>
+                            @if ($descricaoVaga2 != "")
+                            <div>{{$descricaoVaga2}}</div>
+                            @endif
                         </button>
                         @endforeach
 

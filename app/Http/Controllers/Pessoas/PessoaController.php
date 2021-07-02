@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Pessoa;
+use Illuminate\Support\Facades\Session;
 
 class PessoaController extends Controller
 {
@@ -102,11 +103,20 @@ class PessoaController extends Controller
     public function buscarPessoaAtendimento(Request $request)
     {
         $pessoa = null;
-        $pessoa_request = Pessoa::where('cpf', $request->nome)->orWhere('nome', 'LIKE', "%" . strtoupper($request->nome) . "%")->get();
+        $pessoa_request = Pessoa::where(function ($query) use ($request) {
+            if ($request->nome_psq != "") {
+                $query->where('nome', 'LIKE', "%" . strtoupper($request->nome_psq) . "%");
+            }
+            if ($request->cpf_psq != "") {
+                $query->where('cpf', $request->cpf_psq);
+            }
+        })->orderBy('nome')->get();
+
         if (count($pessoa_request) == 1) {
             $pessoa = $pessoa_request[0];
         }
         $pessoa['qtde_pessoas'] = count($pessoa_request);
+
         return response()->json($pessoa, 200);
     }
 

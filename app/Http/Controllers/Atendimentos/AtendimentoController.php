@@ -59,7 +59,7 @@ class AtendimentoController extends Controller
         $situacao = Session::get('situacao');
         $data_atendimento = Session::get('data_atendimento');
 
-        $paciente_id = Session::get('pessoa_id');
+        $paciente_id = Session::get('paciente_id');
         if (Session::get('tela') == 'edit_atendimento_admin') {
             $paciente_id = Session::get('paciente_id_atendimento_admin');
         }
@@ -95,6 +95,10 @@ class AtendimentoController extends Controller
             'paciente_id' => $request->get('paciente_id')
         ]);
         $atendimento->save();
+
+        Session::put('horario_id', $request->horario_id);
+        Session::put('situacao', $request->situacao);
+        Session::put('data_atendimento', $request->data_atendimento);
 
         return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento adicionado com sucesso!');
     }

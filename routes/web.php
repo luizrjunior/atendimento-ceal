@@ -111,8 +111,13 @@ Route::post('pessoas/buscar-pessoa-atendimento', 'Pessoas\PessoaController@busca
  */
 Route::any('pessoas-admin', 'Pessoas\PessoaAdminController@index')->name('pessoas.admin.index');
 
+Route::get('pessoas-admin/create', 'Pessoas\PessoaAdminController@create')->name('pessoas-admin.create');
+Route::post('pessoas-admin/store', 'Pessoas\PessoaAdminController@store')->name('pessoas-admin.store');
+
 Route::get('pessoas-admin/{pessoa_id}/edit', 'Pessoas\PessoaAdminController@edit')->name('pessoas.admin.edit');
 Route::patch('pessoas-admin/{pessoa_id}', 'Pessoas\PessoaAdminController@update')->name('pessoas.admin.update');
+
+Route::get('pessoas-admin/{pessoa_id}/selecionar', 'Pessoas\PessoaAdminController@selecionar');
 
 /**
  * COLABORADORES
