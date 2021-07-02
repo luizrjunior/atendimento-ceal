@@ -75,7 +75,8 @@ class AtendimentoAdminController extends Controller
     {
         $data = $this->filtrosPesquisa($request);
         $atendimentos = Atendimento::select(
-                'atendimentos.id as id', 'atendimentos.situacao as situacao', 'atendimentos.forma as forma', 'atendimentos.data_atendimento as dataAtendimento', 
+                'atendimentos.id as id', 'atendimentos.situacao as situacao', 'atendimentos.forma as forma',
+                'atendimentos.data_atendimento as dataAtendimento',
                 'atividades.nome as nomeAtividade', 'horarios.dia_semana as diaSemana', 
                 'horarios.hora_inicio as horaInicio', 'horarios.hora_termino as horaTermino', 
                 'locais.numero as numeroLocal', 'locais.nome as nomeLocal', 
@@ -128,11 +129,6 @@ class AtendimentoAdminController extends Controller
     {
         Session::put('tela', 'create_atendimento_admin');
         return redirect('/home')->with('success', 'Por gentileza, selecione a Atividade do Atendimento!');
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function edit($id)
@@ -215,6 +211,24 @@ class AtendimentoAdminController extends Controller
         Session::put('paciente_id_atendimento_admin', $atendimento->paciente_id);
 
         $msg = "Atendimento alterado com sucesso!";
+
+        $dados = array();
+        $dados['textoMsg'] = $msg;
+
+        return response()->json($dados, 200);
+    }
+
+    public function cancelarAtendimento(Request $request)
+    {
+        $atendimento = Atendimento::find($request->atendimento_id);
+        $msg = "Atendimento ativado com sucesso!";
+        $situacao = 1;
+        if ($atendimento->situacao == 1) {
+            $msg = "Atendimento desativado com sucesso!";
+            $situacao = 2;
+        }
+        $atendimento->situacao = $situacao;
+        $atendimento->save();
 
         $dados = array();
         $dados['textoMsg'] = $msg;

@@ -1,6 +1,8 @@
 function validar() {
     $('#carregando').show();
     $("#horario_id").prop('disabled', false);
+    $("#situacao").prop('disabled', false);
+    $("#forma").prop('disabled', false);
     $("#data_atendimento").prop('disabled', false);
 }
 

@@ -19,14 +19,16 @@
         '2' => "danger",
         '3' => "warning",
         '4' => "success",
-        '5' => "default"
+        '5' => "default",
+        '6' => "default"
     );
     $arrSituacao = array(
         '1' => "AGENDADO",
         '2' => "FILA DE ESPERA",
         '3' => "CANCELADO",
         '4' => "CONCLUÍDO",
-        '5' => "LIBERADO"
+        '5' => "LIBERADO",
+        '6' => "EM ANDAMENTO",
     );
     $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
 @endphp
@@ -127,8 +129,8 @@
                                 </select>
                                 @error('atividade_id')
                                 <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
 
@@ -140,13 +142,13 @@
                                            id="data_atendimento" name="data_atendimento" value="{{ $data_atendimento }}"
                                            disabled autocomplete="data_atendimento">
                                     <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
                                 @error('data_atendimento')
                                 <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
 
@@ -158,8 +160,8 @@
                                 </select>
                                 @error('horario_id')
                                 <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
 
@@ -172,31 +174,30 @@
                                     <option value="3"> CANCELADO</option>
                                     <option value="4"> CONCLUÍDO</option>
                                     <option value="5"> LIBERADO</option>
+                                    <option value="6"> EM ANDAMENTO</option>
                                 </select>
                                 @error('situacao')
                                 <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
 
-                            @if ($atendimento->forma != 0)
-                                <div class="form-group">
-                                    <label for="forma">Forma de Atendimento</label>
-                                    <select class="form-control @error('forma') is-invalid @enderror" id="forma"
-                                            name="forma" disabled>
-                                        <option value="0"> INDEFINIDO</option>
-                                        <option value="1"> ATENDIMENTO VIRTUAL</option>
-                                        <option value="2"> ATENDIMENTO PRESENCIAL</option>
-                                        <option value="3"> ATENDIMENTO A DISTÂNCIA</option>
-                                    </select>
-                                    @error('forma')
-                                    <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                                    @enderror
-                                </div>
-                            @endif
+                            <div class="form-group">
+                                <label for="forma">Forma de Atendimento</label>
+                                <select class="form-control @error('forma') is-invalid @enderror" id="forma"
+                                        name="forma" disabled>
+                                    <option value="0"> INDEFINIDO</option>
+                                    <option value="1"> ATENDIMENTO VIRTUAL</option>
+                                    <option value="2"> ATENDIMENTO PRESENCIAL</option>
+                                    <option value="3"> ATENDIMENTO A DISTÂNCIA</option>
+                                </select>
+                                @error('forma')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
 
                             @if ($atendimento->atendente_id != null)
                                 <div class="form-group">

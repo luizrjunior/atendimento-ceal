@@ -13,7 +13,8 @@
         '2' => "FILA DE ESPERA",
         '3' => "CANCELADO",
         '4' => "CONCLUÍDO",
-        '5' => "LIBERADO"
+        '5' => "LIBERADO",
+        '6' => "EM ANDAMENTO",
     );
     $arrForma = array(
         '0' => "INDEFINIDO",
@@ -26,7 +27,8 @@
         '2' => "danger",
         '3' => "warning",
         '4' => "success",
-        '5' => "default"
+        '5' => "default",
+        '6' => "default"
     );
 @endphp
 

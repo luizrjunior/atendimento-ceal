@@ -107,6 +107,8 @@ class AtendimentoController extends Controller
         Session::put('horario_id', $request->horario_id);
         Session::put('situacao', $request->situacao);
         Session::put('data_atendimento', $request->data_atendimento);
+        Session::put('paciente_id', $request->paciente_id);
+        Session::put('tela', '');
 
         return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento adicionado com sucesso!');
     }
@@ -137,7 +139,7 @@ class AtendimentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data_atendimento = \DateTime::createFromFormat('d/m/Y', $request->data_agendamento)->format('Y-m-d');
+        $data_atendimento = \DateTime::createFromFormat('d/m/Y', $request->data_atendimento)->format('Y-m-d');
         $request->validate([
             'horario_id' => 'required',
             'situacao' => 'required',
@@ -153,7 +155,7 @@ class AtendimentoController extends Controller
 
         $atendimento = Atendimento::find($id);
         $atendimento->horario_id = $request->get('horario_id');
-        $atendimento->situacao = 2;
+        $atendimento->situacao = 3;//ATENDIMENTO CANCELADO
         $atendimento->forma = $request->get('forma');
         $atendimento->data_atendimento = $data_atendimento;
         $atendimento->paciente_id = $request->get('paciente_id');

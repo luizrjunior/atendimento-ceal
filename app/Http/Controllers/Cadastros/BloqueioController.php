@@ -57,8 +57,8 @@ class BloqueioController extends Controller
         $data_fim = \DateTime::createFromFormat('d/m/Y', $request->data_fim)->format('Y-m-d');
 
         $bloqueio = new Bloqueio([
-            'nome' => $request->nome,
-            'descricao' => mb_strtoupper($request->get('descricao'), $encoding),
+            'nome' => mb_strtoupper($request->nome, $encoding),
+            'descricao' => $request->get('descricao'),
             'horario_id' => $request->horario_id,
             'data_inicio' => $data_inicio,
             'data_fim' => $data_fim
@@ -66,17 +66,6 @@ class BloqueioController extends Controller
         $bloqueio->save();
 
         return redirect('/bloqueios/' . $bloqueio->id . '/edit')->with('success', 'Bloqueio adicionado com sucesso!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Bloqueio  $bloqueio
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Bloqueio $bloqueio)
-    {
-        //
     }
 
     /**
@@ -98,19 +87,30 @@ class BloqueioController extends Controller
      * @param  \App\Models\Bloqueio  $bloqueio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bloqueio $bloqueio)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nome' => 'required|string|max:60|unique:bloqueios,nome,' . $id . ',id',
+            'descricao' => 'nullable|string|max:255',
+            'atividade_id' => 'required',
+            'horario_id' => 'required',
+            'data_inicio' => 'required|date_format:d/m/Y',
+            'data_fim' => 'nullable|date_format:d/m/Y'
+        ]);
+
+        $encoding = mb_internal_encoding();
+        $data_inicio = \DateTime::createFromFormat('d/m/Y', $request->data_inicio)->format('Y-m-d');
+        $data_fim = \DateTime::createFromFormat('d/m/Y', $request->data_fim)->format('Y-m-d');
+
+        $bloqueio = Bloqueio::find($id);
+        $bloqueio->nome = mb_strtoupper($request->get('nome'), $encoding);
+        $bloqueio->descricao = $request->get('descricao');
+        $bloqueio->horario_id = $request->horario_id;
+        $bloqueio->data_inicio = $data_inicio;
+        $bloqueio->data_fim = $data_fim;
+        $bloqueio->save();
+
+        return redirect('/bloqueios/' . $bloqueio->id . '/edit')->with('success', 'Bloqueio alterado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Bloqueio  $bloqueio
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Bloqueio $bloqueio)
-    {
-        //
-    }
 }
