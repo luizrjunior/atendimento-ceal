@@ -18,6 +18,9 @@ class AtendimentoController extends Controller
         'forma.different' => 'O campo Forma de Atendimento precisa ser definido. '
             . 'Por favor, você pode verificar isso?',
 
+        'paciente_id.required' => 'Não encontramos a Pessoa Atendida/Paciente. Por favor, '
+            . 'você pode verificar isso? Clique em buscar.',
+
         'paciente_id.unique' => 'Permissão Negada! Já existe atendimento registrado para este dia da semana. Por favor, '
             . 'você pode verificar isso?',
     ];
@@ -61,6 +64,9 @@ class AtendimentoController extends Controller
             $paciente_id = Session::get('paciente_id_atendimento_admin');
         }
         $paciente = Pessoa::find($paciente_id);
+        if (Session::get('tela') == 'create_atendimento_admin') {
+            $paciente = new Pessoa();
+        }
 
         return view('atendimentos.create', compact('horario', 'situacao', 'data_atendimento', 'paciente'));
     }

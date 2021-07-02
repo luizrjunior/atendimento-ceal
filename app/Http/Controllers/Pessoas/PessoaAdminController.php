@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Pessoa;
+use Illuminate\Support\Facades\Session;
 
 class PessoaAdminController extends Controller
 {
@@ -41,6 +42,9 @@ class PessoaAdminController extends Controller
                 }
                 if ($data['cpf_psq'] != "") {
                     $query->where('cpf', $data['cpf_psq']);
+                }
+                if (Session::get('tela') == 'create_atendimento_admin') {
+                    $query->orWhere('cpf', $data['nome_psq']);
                 }
             })->orderBy('nome')->paginate($data['totalPage']);
 

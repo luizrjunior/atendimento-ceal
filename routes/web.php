@@ -104,6 +104,7 @@ Route::any('participantes/search', 'Cadastros\ParticipanteController@search')->n
  */
 Route::resource('pessoas', 'Pessoas\PessoaController');
 Route::post('pessoas/carregar-pessoa-cpf', 'Pessoas\PessoaController@carregarPessoaPorCPF')->name('pessoas.carrregar-pessoa-cpf');
+Route::post('pessoas/buscar-pessoa-atendimento', 'Pessoas\PessoaController@buscarPessoaAtendimento')->name('pessoas.buscar-pessoa-atendimento-json');
 
 /**
  * PESSOAS-ADMIN

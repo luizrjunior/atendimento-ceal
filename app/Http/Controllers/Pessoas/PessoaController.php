@@ -99,4 +99,15 @@ class PessoaController extends Controller
         return response()->json($pessoa, 200);
     }
 
+    public function buscarPessoaAtendimento(Request $request)
+    {
+        $pessoa = null;
+        $pessoa_request = Pessoa::where('cpf', $request->nome)->orWhere('nome', 'LIKE', "%" . strtoupper($request->nome) . "%")->get();
+        if (count($pessoa_request) == 1) {
+            $pessoa = $pessoa_request[0];
+        }
+        $pessoa['qtde_pessoas'] = count($pessoa_request);
+        return response()->json($pessoa, 200);
+    }
+
 }
