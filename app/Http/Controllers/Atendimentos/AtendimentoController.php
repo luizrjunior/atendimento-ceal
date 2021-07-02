@@ -47,6 +47,8 @@ class AtendimentoController extends Controller
         Session::put('horario_id', $request->horario_id);
         Session::put('situacao', $request->situacao);
         Session::put('data_atendimento', $request->data_atendimento);
+        Session::put('paciente_id', Session::get('pessoa_id'));
+        Session::put('create_atendimento_admin_paciente_id', '');
 
         return redirect('/atendimentos/create');
     }
@@ -54,18 +56,24 @@ class AtendimentoController extends Controller
     public function create()
     {
         $horario_id = Session::get('horario_id');
-        $horario = Horario::find($horario_id);
-
         $situacao = Session::get('situacao');
         $data_atendimento = Session::get('data_atendimento');
-
         $paciente_id = Session::get('paciente_id');
+
+        $horario = Horario::find($horario_id);
+        $paciente = Pessoa::find($paciente_id);
+
+        if (Session::get('tela') == 'create_atendimento_admin') {
+            $paciente_id = null;
+            $paciente = new Pessoa();
+            if (Session::get('create_atendimento_admin_paciente_id') != '') {
+                $paciente_id = Session::get('create_atendimento_admin_paciente_id');
+                $paciente = Pessoa::find($paciente_id);
+            }
+        }
         if (Session::get('tela') == 'edit_atendimento_admin') {
             $paciente_id = Session::get('paciente_id_atendimento_admin');
-        }
-        $paciente = Pessoa::find($paciente_id);
-        if (Session::get('tela') == 'create_atendimento_admin') {
-            $paciente = new Pessoa();
+            $paciente = Pessoa::find($paciente_id);
         }
 
         return view('atendimentos.create', compact('horario', 'situacao', 'data_atendimento', 'paciente'));
@@ -75,16 +83,16 @@ class AtendimentoController extends Controller
     {
         $data_atendimento = \DateTime::createFromFormat('d/m/Y', $request->data_atendimento)->format('Y-m-d');
         $request->validate([
-            'horario_id'=>'required',
-            'situacao'=>'required',
-            'paciente_id'=>[
+            'horario_id' => 'required',
+            'situacao' => 'required',
+            'paciente_id' => [
                 'required',
                 Rule::unique('atendimentos')->where(function ($query) use ($request, $data_atendimento) {
                     $query->where('horario_id', "=", $request->horario_id)
-                    ->where('data_atendimento', "=", $data_atendimento);
+                        ->where('data_atendimento', "=", $data_atendimento);
                 }),
             ],
-            'data_atendimento'=>'required|date_format:d/m/Y|after_or_equal:today',
+            'data_atendimento' => 'required|date_format:d/m/Y|after_or_equal:today',
         ], self::MESSAGES_ERRORS);
 
         $atendimento = new Atendimento([
@@ -123,25 +131,24 @@ class AtendimentoController extends Controller
 
     /**
      * Este metodo de update serve apenas para Cancelar o Atendimento
-     *
      * @param Request $request
-     * @param int $id
-     * @return void
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
         $data_atendimento = \DateTime::createFromFormat('d/m/Y', $request->data_agendamento)->format('Y-m-d');
         $request->validate([
-            'horario_id'=>'required',
-            'situacao'=>'required',
-            'paciente_id'=>[
+            'horario_id' => 'required',
+            'situacao' => 'required',
+            'paciente_id' => [
                 'required',
                 Rule::unique('atendimentos')->where(function ($query) use ($request, $id, $data_atendimento) {
                     $query->where('id', "<>", $id)->where('horario_id', "=", $request->horario_id)
-                    ->where('data_atendimento', "=", $data_atendimento);
+                        ->where('data_atendimento', "=", $data_atendimento);
                 }),
             ],
-            'data_atendimento'=>'required|date_format:d/m/Y|after_or_equal:today',
+            'data_atendimento' => 'required|date_format:d/m/Y|after_or_equal:today',
         ]);
 
         $atendimento = Atendimento::find($id);
@@ -155,7 +162,8 @@ class AtendimentoController extends Controller
         return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento alterado com sucesso!');
     }
 
-    public function ativarDesativarAtendimento(Request $request) {
+    public function ativarDesativarAtendimento(Request $request)
+    {
         $atendimento = Atendimento::find($request->atendimento_id);
         $msg = "Atendimento ativado com sucesso!";
         $situacao = 1;

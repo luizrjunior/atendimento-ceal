@@ -128,8 +128,7 @@ class PessoaAdminController extends Controller
 
     public function selecionar($pessoa_id)
     {
-        Session::put('pessoa_id', $pessoa_id);
-
+        Session::put('create_atendimento_admin_paciente_id', $pessoa_id);
         return redirect('/atendimentos/create');
     }
 

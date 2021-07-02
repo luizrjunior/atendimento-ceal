@@ -9,6 +9,7 @@
         '7' => "Domingo",
     );
     $data = date('d/m/Y', strtotime($data_atendimento));
+    $paciente = isset($paciente) ? $paciente : null;
 @endphp
 
 @extends('layouts.app')
