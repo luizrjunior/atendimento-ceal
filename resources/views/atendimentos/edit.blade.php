@@ -1,4 +1,8 @@
 @php
+    $urlAtendimentos = url('atendimentos');
+    if (Session::get('tela') == 'create_atendimento_admin') {
+        $urlAtendimentos = url('atendimentos-admin');
+    }
     $arrDiaSemana = array(
         '1' => "Segunda-feira",
         '2' => "Terça-feira",
@@ -62,8 +66,16 @@
         }
     </style>
     <div class="container">
+
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+
                 @include('atendimentos-components.dados-atendimento')
 
                 <ul class="nav nav-tabs">
@@ -71,15 +83,15 @@
                         <a id="linkAba1" class="nav-link active" href="#" onclick="abrirAbas('1')">Atendimento</a>
                     </li>
                     @if ($atendimento->situacao != 1 && $atendimento->situacao != 2)
-                        <li class="nav-item">
-                            <a id="linkAba2" class="nav-link" href="#" onclick="abrirAbas('2')">Motivos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="linkAba3" class="nav-link" href="#" onclick="abrirAbas('3')">Orientações</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="linkAba4" class="nav-link" href="#" onclick="abrirAbas('4')">Observações</a>
-                        </li>
+                    <li class="nav-item">
+                        <a id="linkAba2" class="nav-link" href="#" onclick="abrirAbas('2')">Motivos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="linkAba3" class="nav-link" href="#" onclick="abrirAbas('3')">Orientações</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="linkAba4" class="nav-link" href="#" onclick="abrirAbas('4')">Observações</a>
+                    </li>
                     @endif
                     <li class="nav-item">
                         <a id="linkAba5" class="nav-link" href="#" onclick="abrirAbas('5')">Histórico</a>
@@ -89,7 +101,7 @@
                 <div id="divAtendimento" class="card uper">
                     <div class="card-header">
                         Dados do Atendimento
-                        <a href="{{ url('atendimentos') }}" class="float-right">
+                        <a href="{{ $urlAtendimentos }}" class="float-right">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square"
                                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -102,10 +114,8 @@
                             Voltar
                         </a>
                     </div>
+
                     <div class="card-body">
-
-                        @include('components.alertas')
-
                         <form method="post" action="{{ route('atendimentos.update', $atendimento->id) }}">
                             @method('PATCH')
                             @csrf
@@ -439,10 +449,8 @@
                             </a>
                         </div>
                         <div class="card-body">
-
                             <form method="post" action="{{ route('atendimentos.store-atendimento-has-orientacao') }}">
                                 @csrf
-
                                 <input type="hidden" id="atendimento_id" name="atendimento_id"
                                        value="{{ $atendimento->id }}">
 
@@ -451,13 +459,13 @@
                                     <textarea class="form-control rounded-0" id="exampleFormControlTextarea2"
                                               rows="3">{{ $atendimento->observacoes }}</textarea>
                                 </div>
-
                             </form>
 
                         </div>
                     </div>
 
                 @endif
+
                 <div id="divHistorico" class="card uper" style="display: none;">
                     @include('atendimentos-components.historico-atendimentos-por-paciente')
                 </div>

@@ -1,3 +1,7 @@
+function validar() {
+    $('#carregando').show();
+}
+
 function carregarSelectHorarios() {
     var formURL = top.routeCarregarHorarios;
     $.ajax({

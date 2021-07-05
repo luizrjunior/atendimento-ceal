@@ -66,10 +66,12 @@
     </style>
     <div class="container">
         <div class="row justify-content-center">
+
+            @include('components.alertas')
+
             <div class="col-md-8">
 
                 @include('atendimentos-components.dados-atendimento')
-
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -106,8 +108,6 @@
                         </a>
                     </div>
                     <div class="card-body">
-
-                        @include('components.alertas')
 
                         <div id="divAlertErrorEditAtendimento" class="alert alert-danger alert-dismissible">
                             <button type="button" class="close" id="btnCloseAlertErrorEditAtendimento">&times;</button>

@@ -14,6 +14,7 @@
 
 @section('javascript')
     <script>
+        top.routeCarregarPessoaCPF = "{{ route('pessoas.carrregar-pessoa-cpf') }}";
         top.routeSelecionarPessoaAtendimento = '{{ url('/pessoas-admin/' . $pessoa->id . '/selecionar') }}';
     </script>
     <script type="text/javascript"
@@ -34,6 +35,9 @@
     </style>
     <div class="container">
         <div class="row justify-content-center">
+
+            @include('components.alertas')
+
             <div class="col-md-8">
                 <div class="card uper">
                     <div class="card-header">
@@ -53,8 +57,6 @@
                     </div>
                     <div class="card-body">
 
-                        @include('components.alertas')
-
                         <form id="formPessoaEdit" method="post"
                               action="{{ route('pessoas.admin.update', $pessoa->id) }}">
                             @method('PATCH')
@@ -64,11 +66,11 @@
                             @include('pessoas.partials.edit-pessoa')
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return validar();">
                                     Atualizar Dados da Pessoa
                                 </button>
                                 @if (Session::get('tela') == 'create_atendimento_admin' && Session::get('horario_id') != '' && Session::get('situacao') != '' && Session::get('data_atendimento') != '')
-                                    <button id="btnSelecionarPessoa" type="button" class="btn btn-primary"
+                                    <button id="btnSelecionarPessoa" type="button" class="btn btn-info"
                                             onclick="selecionarPessoaParaAtendimento();">
                                         Selecionar Pessoa Para Atendimento
                                     </button>

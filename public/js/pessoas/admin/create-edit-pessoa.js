@@ -1,3 +1,7 @@
+function validar() {
+    $('#carregando').show();
+}
+
 function carregarPessoaCPF() {
     if ($('#cpf').val() != "") {
         $('#carregando').show();
@@ -12,15 +16,6 @@ function carregarPessoaCPF() {
             dataType: "json",
             success: function (data) {
                 if (data.id == undefined) {
-                    $('#pessoa_id').val('');
-                    $('#cpf').val('');
-                    $('#nome').val('');
-                    $("#nascimento").val('');
-                    $("#sexo").val('');
-                    $('#telefone').val('');
-                    $('#profissao').val('');
-                    $('#socio').val('');
-                    $("#bairro").val('');
                     Componentes.modalAlerta("Nenhum registro encontrado!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", null);
                 }
                 if (data.id != undefined) {
@@ -49,7 +44,13 @@ function formatDate(data, formato) {
     }
 }
 
+function limparFormulario() {
+    $('#carregando').show();
+    location.href='create';
+}
+
 function selecionarPessoaParaAtendimento() {
+    $('#carregando').show();
     location.href=top.routeSelecionarPessoaAtendimento;
 }
 
@@ -62,7 +63,7 @@ $(document).ready(function () {
     });
     $("#telefone").mask("(99) 99999-9999");
 
-    $("#cpf").change(function () {
+    $("#cpf").blur(function () {
         carregarPessoaCPF();
     });
 });

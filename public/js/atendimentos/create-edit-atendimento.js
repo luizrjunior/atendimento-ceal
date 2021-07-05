@@ -114,6 +114,8 @@ function showProtocoloCPF() {
 }
 
 function buscarPessoaAtendimento() {
+
+    $('#carregando').show();
     var formURL = top.routeBuscarPessoaAtendimento;
     $.ajax({
         type: 'POST',
@@ -127,8 +129,15 @@ function buscarPessoaAtendimento() {
         success: function (data) {
             console.log(data);
             if (data.qtde_pessoas == '1') {
+                $('#divInputTextNome').show();
+                $('#divInputTextCPF').hide();
+                $("#cpf_psq").val('');
+
                 $("#paciente_id").val(data.id);
                 $("#nome_psq").val(data.nome);
+                $('#nome_psq').removeClass('is-invalid');
+                $('#nome_psq').addClass('is-valid');
+                $('#carregando').hide();
             }
             if (data.qtde_pessoas != '1') {
                 //CHAMAR O CADASTRO DE PESSOAS AQUI NESTA PARTE

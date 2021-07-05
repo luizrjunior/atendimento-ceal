@@ -7,7 +7,7 @@
     <script type="text/javascript"
             src="{{ asset('/js/plugins/jquery.maskedinput.js') }}"></script>
     <script type="text/javascript"
-            src="{{ asset('/js/pessoas/create-edit-pessoa.js') }}"></script>
+            src="{{ asset('/js/pessoas/admin/create-edit-pessoa.js') }}"></script>
 @endsection
 
 @section('content')
@@ -19,7 +19,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-
+                @include('components.alertas')
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
                 <div class="card uper">
                     <div class="card-header">
                         Adicionar Pessoa
@@ -38,8 +42,6 @@
                     </div>
                     <div class="card-body">
 
-                        @include('components.alertas')
-
                         <form method="post" action="{{ route('pessoas-admin.store') }}">
                             @csrf
 
@@ -48,8 +50,11 @@
                             @include('pessoas.partials.create-pessoa')
 
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="return validar();">
                                     Adicionar
+                                </button>
+                                <button type="button" class="btn btn-info" onclick="limparFormulario();">
+                                    Limpar
                                 </button>
                             </div>
                         </form>

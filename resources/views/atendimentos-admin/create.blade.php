@@ -29,6 +29,9 @@
 
     <div class="container">
         <div class="row justify-content-center">
+
+            @include('components.alertas')
+
             <div class="col-md-8">
 
                 <div class="card uper">
@@ -48,8 +51,6 @@
                         </a>
                     </div>
                     <div class="card-body">
-
-                        @include('components.alertas')
 
                         <form method="post" action="{{ route('atendimentos.store') }}">
                             @csrf

@@ -9,7 +9,11 @@
         '7' => "Domingo",
     );
     $data = date('d/m/Y', strtotime($data_atendimento));
+    $is_valid = "";
     $paciente = isset($paciente) ? $paciente : null;
+    if ($paciente->id != "") {
+        $is_valid = "is-valid";
+    }
 @endphp
 
 @extends('layouts.app')
@@ -46,9 +50,15 @@
         }
     </style>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
 
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <h4>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor"
                          xmlns="http://www.w3.org/2000/svg">
@@ -107,9 +117,8 @@
                     </div>
                     <div class="card-body">
 
-                        @include('components.alertas')
-
-                        <form method="post" action="{{ route('atendimentos.store') }}" id="formAtendimentosCreate" name="formAtendimentosCreate">
+                        <form method="post" action="{{ route('atendimentos.store') }}" id="formAtendimentosCreate"
+                              name="formAtendimentosCreate">
                             @csrf
 
                             <input type="hidden" id="atendimento_id" name="atendimento_id" value="">
@@ -171,8 +180,8 @@
                                 <label for="situacao">Situação</label>
                                 <select class="form-control @error('situacao') is-invalid @enderror" id="situacao"
                                         name="situacao">
-                                    <option value="1"> AGENDADO</option>
-                                    <option value="2"> FILA DE ESPERA</option>
+                                    <option value="1" @if($situacao == 1) selected @endif> AGENDADO</option>
+                                    <option value="2" @if($situacao == 2) selected @endif> FILA DE ESPERA</option>
                                 </select>
                                 @error('situacao')
                                 <span class="invalid-feedback" role="alert">
@@ -200,39 +209,53 @@
                             <div class="form-group">
                                 <label for="nome">Nome Completo (Pessoa Atendida/Paciente)</label>
                                 @if (Session::get('tela') != '')
-                                <a href="javascript:buscarPessoaAtendimento();" class="float-right">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                    </svg>
-                                    Buscar
-                                </a>
-                                <span class="float-right">
+                                    <a href="javascript:buscarPessoaAtendimento();" class="float-right">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                        </svg>
+                                        Buscar
+                                    </a>
+                                    <span class="float-right">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onclick="showProtocoloCPF();" checked>
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                               id="inlineRadio1" value="option1" onclick="showProtocoloCPF();" checked>
                                         <label class="form-check-label" for="inlineRadio1">Nome</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onclick="showProtocoloCPF();">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                               id="inlineRadio2" value="option2" onclick="showProtocoloCPF();">
                                         <label class="form-check-label" for="inlineRadio2">CPF</label>
                                     </div>
                                 </span>
                                 @endif
                                 <div id="divInputTextNome">
-                                <input type='text' class="form-control @error('paciente_id') is-invalid @enderror maiuscula"
-                                       id="nome_psq" name="nome_psq" value="{{ $paciente->nome }}"
-                                       placeholder="Digite Nome Completo (Pessoa Atendida/Paciente). Clique em buscar."
-                                       disabled autocomplete="nome">
-                                @error('paciente_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                    <input type='text'
+                                           class="form-control @error('paciente_id') is-invalid @enderror {{$is_valid}} maiuscula"
+                                           id="nome_psq" name="nome_psq" value="{{ $paciente->nome }}"
+                                           placeholder="Digite Nome Completo (Pessoa Atendida/Paciente). Clique em buscar."
+                                           disabled autocomplete="nome">
+                                    @error('paciente_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+
+                                    @php
+                                        $display = 'none';
+                                        if ($paciente->id != "") {
+                                            $display = 'block';
+                                        }
+                                    @endphp
+                                    <span id="divSucessoPessoa" class="valid-feedback" role="alert" style="display: {{ $display }};">
+                                        Pessoa validada com sucesso!
+                                    </span>
+
                                 </div>
                                 <div id="divInputTextCPF" style="display: none">
-                                <input type='text' class="form-control"
-                                       id="cpf_psq" name="cpf_psq" value=""
-                                       placeholder="Digite Nº CPF (Pessoa Atendida/Paciente). Clique em buscar.">
+                                    <input type='text' class="form-control"
+                                           id="cpf_psq" name="cpf_psq" value=""
+                                           placeholder="Digite Nº CPF (Pessoa Atendida/Paciente). Clique em buscar.">
                                 </div>
                             </div>
 

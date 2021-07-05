@@ -185,7 +185,7 @@ class HorarioController extends Controller
             $horario = $this->selecionarHorarioPorAtividadePorDiaSemana($atividade_id, $dateWeed);
 
             if (count($horario) > 0) {
-                $texto1 = 'Dia ' . $dateStart->format('d/m/Y') . ' - ' . $arrDiaSemana[$horario[0]->dia_semana];
+                $texto1 = $arrDiaSemana[$horario[0]->dia_semana] . ' Dia ' . $dateStart->format('d/m/Y');
                 $texto2 = 'De ' . substr($horario[0]->hora_inicio, 0, -3) . ' horas até ' . substr($horario[0]->hora_termino, 0, -3) . ' horas';
                 $texto3 = 'Local: ' . $horario[0]->local->nome . ' - ' . $horario[0]->local->numero;
                 $datas[$i]['horario_id'] = $horario[0]->id;

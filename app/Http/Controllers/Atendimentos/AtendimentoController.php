@@ -108,7 +108,6 @@ class AtendimentoController extends Controller
         Session::put('situacao', $request->situacao);
         Session::put('data_atendimento', $request->data_atendimento);
         Session::put('paciente_id', $request->paciente_id);
-        Session::put('tela', '');
 
         return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento adicionado com sucesso!');
     }
