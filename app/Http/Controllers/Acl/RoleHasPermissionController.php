@@ -31,7 +31,7 @@ class RoleHasPermissionController extends Controller
             foreach ($permissions as $permission) {
                 $role_has_permission[$i] = new RoleHasPermission([
                     'role_id' => $request->get('role_id'),
-                    'permission_id'=> $permission
+                    'permission_id' => $permission
                 ]);
                 $role_has_permission[$i]->save();
             }

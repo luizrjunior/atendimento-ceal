@@ -26,13 +26,13 @@ class PessoaController extends Controller
     {
         $request->validate([
             'cpf' => 'nullable|cpf|unique:pessoas',
-            'nome'=>'required|string|max:255',
-            'nascimento'=>'required|date_format:d/m/Y',
-            'sexo'=>'required',
-            'telefone'=>'required|max:15',
-            'profissao'=>'nullable|string|max:255',
-            'socio'=>'required',
-            'bairro'=>'required|string|max:255'
+            'nome' => 'required|string|max:255',
+            'nascimento' => 'required|date_format:d/m/Y',
+            'sexo' => 'required',
+            'telefone' => 'required|max:15',
+            'profissao' => 'nullable|string|max:255',
+            'socio' => 'required',
+            'bairro' => 'required|string|max:255'
         ]);
 
         $encoding = mb_internal_encoding();
@@ -48,9 +48,9 @@ class PessoaController extends Controller
             'socio' => $request->get('socio'),
             'bairro' => mb_strtoupper($request->get('bairro'), $encoding),
             'user_id' => Auth::id()
-            ]);
+        ]);
         $pessoa->save();
-  
+
         return redirect('/home')->with('success', 'Dados cadastrais adicionado com sucesso!');
     }
 
@@ -64,18 +64,18 @@ class PessoaController extends Controller
     {
         $request->validate([
             'cpf' => 'nullable|cpf|unique:pessoas,cpf,' . $id . ',id',
-            'nome'=>'required|string|max:255',
-            'nascimento'=>'required|date_format:d/m/Y',
-            'sexo'=>'required',
-            'telefone'=>'required|max:15',
-            'profissao'=>'nullable|string|max:255',
-            'socio'=>'required',
-            'bairro'=>'required|string|max:255'
+            'nome' => 'required|string|max:255',
+            'nascimento' => 'required|date_format:d/m/Y',
+            'sexo' => 'required',
+            'telefone' => 'required|max:15',
+            'profissao' => 'nullable|string|max:255',
+            'socio' => 'required',
+            'bairro' => 'required|string|max:255'
         ]);
 
         $encoding = mb_internal_encoding();
         $nascimento = \DateTime::createFromFormat('d/m/Y', $request->nascimento)->format('Y-m-d');
-  
+
         $pessoa = Pessoa::find($id);
         $pessoa->cpf = $request->get('cpf');
         $pessoa->nome = mb_strtoupper($request->get('nome'), $encoding);
@@ -86,7 +86,7 @@ class PessoaController extends Controller
         $pessoa->socio = $request->get('socio');
         $pessoa->bairro = mb_strtoupper($request->get('bairro'), $encoding);
         $pessoa->save();
-  
+
         return redirect('/pessoas/' . $pessoa->id . '/edit')->with('success', 'Dados Cadastrais atualizado com sucesso!');
     }
 

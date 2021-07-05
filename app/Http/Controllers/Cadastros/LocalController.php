@@ -39,14 +39,14 @@ class LocalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:locais',
-            'numero'=>'required|string|max:255'
+            'nome' => 'required|string|max:255|unique:locais',
+            'numero' => 'required|string|max:255'
         ]);
 
         $encoding = mb_internal_encoding();
@@ -63,7 +63,7 @@ class LocalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -75,28 +75,29 @@ class LocalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:locais,nome,' . $id . ',id',
-            'numero'=>'required|string|max:255'
+            'nome' => 'required|string|max:255|unique:locais,nome,' . $id . ',id',
+            'numero' => 'required|string|max:255'
         ]);
 
         $encoding = mb_internal_encoding();
-  
+
         $local = Local::find($id);
         $local->nome = mb_strtoupper($request->get('nome'), $encoding);
         $local->numero = mb_strtoupper($request->get('numero'), $encoding);
         $local->save();
-  
+
         return redirect('/locais/' . $local->id . '/edit')->with('success', 'Local atualizado com sucesso!');
     }
 
-    public function ativarDesativarLocal(Request $request) {
+    public function ativarDesativarLocal(Request $request)
+    {
         $local = Local::find($request->local_id);
         $msg = "Local ativado com sucesso!";
         $situacao = 1;

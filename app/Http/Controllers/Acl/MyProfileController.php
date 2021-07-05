@@ -27,15 +27,15 @@ class MyProfileController extends Controller
     {
         $user_id = Auth::id();
         $request->validate([
-            'name'=>'required|string|max:255',
-            'email'=> 'required|string|email|max:255|unique:users,email,' . $user_id . ',id'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user_id . ',id'
         ]);
-  
+
         $user = User::find($user_id);
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->save();
-  
+
         return redirect('/my-profile')->with('success', 'Usuário atualizado com sucesso!');
     }
 
@@ -45,11 +45,11 @@ class MyProfileController extends Controller
         $request->validate([
             'password' => 'required|string|min:8|confirmed'
         ]);
-  
+
         $user = User::find($user_id);
         $user->password = Hash::make($request->get('password'));
         $user->save();
-  
+
         return redirect('/my-profile')->with('success', 'Senha atualizada com sucesso!');
     }
 

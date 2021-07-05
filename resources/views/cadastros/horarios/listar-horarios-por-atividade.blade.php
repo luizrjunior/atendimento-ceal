@@ -18,8 +18,15 @@ $arrDiaSemana = array(
 
 @section('content')
 <div class="container">
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
+            @include('components.alertas')
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <h4>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
@@ -41,9 +48,6 @@ $arrDiaSemana = array(
                 </div>
 
                 <div class="card-body">
-
-                    @include('components.alertas')
-
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -66,46 +70,44 @@ $arrDiaSemana = array(
                         @foreach($datas as $data)
 
                             @php
-                            $horario_id = $data['horario_id'];
+                                $horario_id = $data['horario_id'];
+                                $bloqueado = false;
+                                $bloqueio = new \App\Http\Controllers\Cadastros\BloqueioController();
+                                $st_bloqueio = $bloqueio->verificarBloqueio($horario_id, $data['data_atendimento']);
+                                if (count($st_bloqueio) > 0) {
+                                    $bloqueado = true;
+                                }
+                            @endphp
+
+                            @if (!$bloqueado)
+
+                            @php
                             $atendimentoController[$horario_id] = new \App\Http\Controllers\Atendimentos\AtendimentoController();
+
+
+                            $situacaoVaga = 0;
+                            $descricaoVaga2 = "";
 
                             $atendimentos = $atendimentoController[$horario_id]->numeroVagasAtendimento($data['horario_id'], 1, $data['data_atendimento']);
                             $atendimentosFila = $atendimentoController[$horario_id]->numeroVagasAtendimento($data['horario_id'], 2, $data['data_atendimento']);
-                            @endphp
 
-                            @if ($data['numero_vagas'] > 0)
-                                @if ($atendimentos < $data['numero_vagas'])
-
-                                    @php
+                            if ($data['numero_vagas'] > 0) {
+                                if ($atendimentos < $data['numero_vagas']) {
+                                    $situacaoVaga = 1;//AGENDADO
                                     $descricaoVaga = str_pad(($data['numero_vagas'] - $atendimentos), 2, 0, STR_PAD_LEFT) . " Vagas Disponíveis";
-                                    $descricaoVaga2 = "";
-                                    $situacaoVaga = 1;
-                                    @endphp
-
-                                @else
-
-                                    @if ($atendimentosFila < $data['numero_vagas_espera'])
-
-                                        @php
+                                } else {
+                                    if ($atendimentosFila < $data['numero_vagas_espera']) {
+                                        $situacaoVaga = 2;//NA FILA DE ESPERA
                                         $descricaoVaga = str_pad(($data['numero_vagas_espera'] - $atendimentosFila), 2, 0, STR_PAD_LEFT) . " Vagas Disponíveis na Fila de Espera*";
                                         $descricaoVaga2 = "*Essas vagas ficam aguardando o cancelamento ou desistência de algum atendimento no dia.";
-                                        $situacaoVaga = 2;
-                                        @endphp
-
-                                    @else
-
-                                        @php
+                                    } else {
                                         $descricaoVaga = "NÃO HÁ VAGAS DISPONÍVEIS NO MOMENTO. POR FAVOR AGUARDE...";
-                                        $situacaoVaga = 0;
-                                        @endphp
-                                    @endif
-                                @endif
-                            @else
-                                @php
+                                    }
+                                }
+                            } else {
                                 $descricaoVaga = "NÃO HÁ VAGAS DISPONÍVEIS NO MOMENTO. POR FAVOR AGUARDE...";
-                                $situacaoVaga = 0;
-                                @endphp
-                            @endif
+                            }
+                            @endphp
 
                             @if ($situacaoVaga != 0)
                             <tr style="cursor: pointer;" onclick="abrirAtendimento('{{$data['horario_id']}}', '{{$situacaoVaga}}', '{{$data['data_atendimento']}}');">
@@ -132,6 +134,8 @@ $arrDiaSemana = array(
                             @php
                                 $i++;
                             @endphp
+                            @endif
+
                         @endforeach
 
                         </table>

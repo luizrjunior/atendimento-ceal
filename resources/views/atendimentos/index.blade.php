@@ -24,11 +24,11 @@
     );
     $bgColor = array(
         '1' => "primary",
-        '2' => "danger",
-        '3' => "warning",
+        '2' => "warning",
+        '3' => "danger",
         '4' => "success",
-        '5' => "default",
-        '6' => "default"
+        '5' => "info",
+        '6' => "secondary"
     );
 @endphp
 

@@ -10,9 +10,9 @@ use App\Models\Colaborador;
 
 class ColaboradorController extends Controller
 {
-    const MESSAGES_ERRORS = [	
+    const MESSAGES_ERRORS = [
         'pessoa_id.unique' => 'A pessoa informada já está associada como colaborador. Por favor, '
-        . 'você pode verificar isso?',
+            . 'você pode verificar isso?',
     ];
 
     public function __construct()
@@ -41,8 +41,8 @@ class ColaboradorController extends Controller
         $data = $this->filtrosPesquisa($request);
 
         $colaboradores = Colaborador::select(
-                'colaboradores.id', 'colaboradores.situacao', 
-                'pessoas.nome', 'pessoas.telefone', 'pessoas.bairro')
+            'colaboradores.id', 'colaboradores.situacao',
+            'pessoas.nome', 'pessoas.telefone', 'pessoas.bairro')
             ->join('pessoas', 'colaboradores.pessoa_id', 'pessoas.id')
             ->where(function ($query) use ($data) {
                 if ($data['nome_psq'] != "") {
@@ -69,7 +69,7 @@ class ColaboradorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,19 +81,19 @@ class ColaboradorController extends Controller
                 Rule::unique('colaboradores'),
             ],
         ]);
-        
+
         $colaborador = new Colaborador([
             'pessoa_id' => $request->get('pessoa_id')
         ]);
         $colaborador->save();
-    
+
         return redirect('/colaboradores/' . $colaborador->id . '/edit')->with('success', 'Colaborador adicionado com sucesso!');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -102,7 +102,8 @@ class ColaboradorController extends Controller
         return view('pessoas.colaboradores.edit', compact('colaborador'));
     }
 
-    public function ativarDesativarColaborador(Request $request) {
+    public function ativarDesativarColaborador(Request $request)
+    {
         $colaborador = Colaborador::find($request->colaborador_id);
         $msg = "Colaborador ativado com sucesso!";
         $situacao = 1;

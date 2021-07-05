@@ -40,21 +40,21 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-          'name'=>'required|string|max:255',
-          'email'=> 'required|string|email|max:255|unique:users',
-          'password' => 'required|string|min:8|confirmed'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed'
         ]);
 
         $user = new User([
-          'name' => $request->get('name'),
-          'email'=> $request->get('email'),
-          'password'=> Hash::make($request->get('password'))
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password'))
         ]);
         $user->save();
 
@@ -64,7 +64,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -76,22 +76,22 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required|string|max:255',
-            'email'=> 'required|string|email|max:255|unique:users,email,' . $id . ',id'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id . ',id'
         ]);
-  
+
         $user = User::find($id);
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->save();
-  
+
         return redirect('/users/' . $user->id . '/edit')->with('success', 'Usuário atualizado com sucesso!');
     }
 

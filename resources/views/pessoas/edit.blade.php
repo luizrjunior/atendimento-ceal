@@ -45,7 +45,7 @@
 
                             @include('pessoas.partials.edit-pessoa')
 
-                            <div class="form-group">
+                            <div class="form-group mb-0">
                                 <button type="submit" class="btn btn-primary">
                                     Atualizar
                                 </button>

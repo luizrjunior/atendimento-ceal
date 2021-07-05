@@ -39,18 +39,18 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|string|max:255|unique:roles'
+            'name' => 'required|string|max:255|unique:roles'
         ]);
-  
+
         $role = new Role([
             'name' => $request->get('name'),
-            'description'=> $request->get('description')
+            'description' => $request->get('description')
         ]);
         $role->save();
 
@@ -60,7 +60,7 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,21 +72,21 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required|string|max:255|unique:roles,name,' . $id . ',id'
+            'name' => 'required|string|max:255|unique:roles,name,' . $id . ',id'
         ]);
-  
+
         $role = Role::find($id);
         $role->name = $request->get('name');
         $role->description = $request->get('description');
         $role->save();
-  
+
         return redirect('/roles/' . $role->id . '/edit')->with('success', 'Perfil atualizado com sucesso!');
     }
 

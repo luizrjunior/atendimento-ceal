@@ -38,7 +38,7 @@ class BloqueioController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -71,7 +71,7 @@ class BloqueioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Bloqueio  $bloqueio
+     * @param \App\Models\Bloqueio $bloqueio
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,8 +83,8 @@ class BloqueioController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bloqueio  $bloqueio
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Bloqueio $bloqueio
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -111,6 +111,32 @@ class BloqueioController extends Controller
         $bloqueio->save();
 
         return redirect('/bloqueios/' . $bloqueio->id . '/edit')->with('success', 'Bloqueio alterado com sucesso!');
+    }
+
+    public function ativarDesativarBloqueio(Request $request)
+    {
+        $bloqueio = Bloqueio::find($request->bloqueio_id);
+        $msg = "Bloqueio ativado com sucesso!";
+        $situacao = 1;
+        if ($bloqueio->situacao == 1) {
+            $msg = "Bloqueio desativado com sucesso!";
+            $situacao = 2;
+        }
+        $bloqueio->situacao = $situacao;
+        $bloqueio->save();
+
+        $dados = array();
+        $dados['textoMsg'] = $msg;
+
+        return response()->json($dados, 200);
+    }
+
+    public function verificarBloqueio($horario_id, $data)
+    {
+        $data_atendimento = \DateTime::createFromFormat('d/m/Y', $data)->format('Y-m-d');
+        $bloqueio = Bloqueio::where('horario_id', $horario_id)->where('situacao', 1)
+            ->where('data_inicio', '<=', $data_atendimento)->where('data_fim', '>=', $data_atendimento)->get();
+        return $bloqueio;
     }
 
 }

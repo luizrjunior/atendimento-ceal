@@ -29,11 +29,11 @@ class OrientacaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'descricao'=>'required|string|max:255|unique:orientacoes'
+            'descricao' => 'required|string|max:255|unique:orientacoes'
         ]);
 
         $encoding = mb_internal_encoding();
-  
+
         $orientacao = new Orientacao([
             'descricao' => mb_strtoupper($request->get('descricao'), $encoding)
         ]);
@@ -51,19 +51,20 @@ class OrientacaoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'descricao'=>'required|string|max:255|unique:orientacoes,descricao,' . $id . ',id'
+            'descricao' => 'required|string|max:255|unique:orientacoes,descricao,' . $id . ',id'
         ]);
 
         $encoding = mb_internal_encoding();
-  
+
         $orientacao = Orientacao::find($id);
         $orientacao->descricao = mb_strtoupper($request->get('descricao'), $encoding);
         $orientacao->save();
-  
+
         return redirect('/orientacoes/' . $orientacao->id . '/edit')->with('success', 'Orientação atualizada com sucesso!');
     }
 
-    public function ativarDesativarOrientacao(Request $request) {
+    public function ativarDesativarOrientacao(Request $request)
+    {
         $orientacao = Orientacao::find($request->orientacao_id);
         $msg = "Orientação ativada com sucesso!";
         $situacao = 1;

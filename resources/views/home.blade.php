@@ -6,11 +6,15 @@
 
 @section('content')
     <div class="container">
+
         <div class="row justify-content-center">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
 
-            @include('components.alertas')
-
-            <div class="col-md-8">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         {{ __('Atividades Disponíveis') }}
@@ -85,3 +89,4 @@
         </div>
     </div>
 @endsection
+

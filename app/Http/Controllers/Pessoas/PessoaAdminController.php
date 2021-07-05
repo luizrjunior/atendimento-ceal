@@ -38,16 +38,16 @@ class PessoaAdminController extends Controller
         $data = $this->filtrosPesquisa($request);
 
         $pessoas = Pessoa::where(function ($query) use ($data) {
-                if ($data['nome_psq'] != "") {
-                    $query->where('nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
-                }
-                if ($data['cpf_psq'] != "") {
-                    $query->where('cpf', $data['cpf_psq']);
-                }
-                if (Session::get('tela') == 'create_atendimento_admin') {
-                    $query->orWhere('cpf', $data['nome_psq']);
-                }
-            })->orderBy('nome')->paginate($data['totalPage']);
+            if ($data['nome_psq'] != "") {
+                $query->where('nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
+            }
+            if ($data['cpf_psq'] != "") {
+                $query->where('cpf', $data['cpf_psq']);
+            }
+            if (Session::get('tela') == 'create_atendimento_admin') {
+                $query->orWhere('cpf', $data['nome_psq']);
+            }
+        })->orderBy('nome')->paginate($data['totalPage']);
 
         return view('pessoas.admin.index', compact('pessoas', 'data'));
     }
@@ -61,13 +61,13 @@ class PessoaAdminController extends Controller
     {
         $request->validate([
             'cpf' => 'nullable|cpf|unique:pessoas',
-            'nome'=>'required|string|max:255',
-            'nascimento'=>'required|date_format:d/m/Y',
-            'sexo'=>'required',
-            'telefone'=>'required|max:15',
-            'profissao'=>'nullable|string|max:255',
-            'socio'=>'required',
-            'bairro'=>'required|string|max:255'
+            'nome' => 'required|string|max:255',
+            'nascimento' => 'required|date_format:d/m/Y',
+            'sexo' => 'required',
+            'telefone' => 'required|max:15',
+            'profissao' => 'nullable|string|max:255',
+            'socio' => 'required',
+            'bairro' => 'required|string|max:255'
         ]);
 
         $encoding = mb_internal_encoding();
@@ -99,18 +99,18 @@ class PessoaAdminController extends Controller
     {
         $request->validate([
             'cpf' => 'nullable|cpf|unique:pessoas,cpf,' . $id . ',id',
-            'nome'=>'required|string|max:255',
-            'nascimento'=>'required|date_format:d/m/Y',
-            'sexo'=>'required',
-            'telefone'=>'required|max:15',
-            'profissao'=>'nullable|string|max:255',
-            'socio'=>'required',
-            'bairro'=>'required|string|max:255'
+            'nome' => 'required|string|max:255',
+            'nascimento' => 'required|date_format:d/m/Y',
+            'sexo' => 'required',
+            'telefone' => 'required|max:15',
+            'profissao' => 'nullable|string|max:255',
+            'socio' => 'required',
+            'bairro' => 'required|string|max:255'
         ]);
 
         $encoding = mb_internal_encoding();
         $nascimento = \DateTime::createFromFormat('d/m/Y', $request->nascimento)->format('Y-m-d');
-  
+
         $pessoa = Pessoa::find($id);
         $pessoa->cpf = $request->get('cpf');
         $pessoa->nome = mb_strtoupper($request->get('nome'), $encoding);
@@ -121,7 +121,7 @@ class PessoaAdminController extends Controller
         $pessoa->socio = $request->get('socio');
         $pessoa->bairro = mb_strtoupper($request->get('bairro'), $encoding);
         $pessoa->save();
-  
+
         return redirect('/pessoas-admin/' . $pessoa->id . '/edit')->with('success', 'Dados Cadastrais atualizado com sucesso!');
     }
 

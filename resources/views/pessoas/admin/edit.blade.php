@@ -34,11 +34,15 @@
         }
     </style>
     <div class="container">
+
         <div class="row justify-content-center">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
 
-            @include('components.alertas')
-
-            <div class="col-md-8">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <div class="card uper">
                     <div class="card-header">
                         Editar Dados Cadastrais
@@ -65,17 +69,18 @@
 
                             @include('pessoas.partials.edit-pessoa')
 
-                            <div class="form-group">
+                            <div class="form-group mb-0">
                                 <button type="submit" class="btn btn-primary" onclick="return validar();">
-                                    Atualizar Dados da Pessoa
+                                    Atualizar
                                 </button>
                                 @if (Session::get('tela') == 'create_atendimento_admin' && Session::get('horario_id') != '' && Session::get('situacao') != '' && Session::get('data_atendimento') != '')
-                                    <button id="btnSelecionarPessoa" type="button" class="btn btn-info"
-                                            onclick="selecionarPessoaParaAtendimento();">
-                                        Selecionar Pessoa Para Atendimento
-                                    </button>
+                                <button id="btnSelecionarPessoa" type="button" class="btn btn-info"
+                                        onclick="selecionarPessoaParaAtendimento();">
+                                    Selecionar
+                                </button>
                                 @endif
                             </div>
+
                         </form>
 
                     </div>

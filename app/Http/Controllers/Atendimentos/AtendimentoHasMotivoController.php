@@ -31,7 +31,7 @@ class AtendimentoHasMotivoController extends Controller
             foreach ($motivos as $motivo) {
                 $atendimento_has_motivo[$i] = new AtendimentoHasMotivo([
                     'atendimento_id' => $request->get('atendimento_id'),
-                    'motivo_id'=> $motivo
+                    'motivo_id' => $motivo
                 ]);
                 $atendimento_has_motivo[$i]->save();
             }

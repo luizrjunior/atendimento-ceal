@@ -39,13 +39,13 @@ class FuncaoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:funcoes'
+            'nome' => 'required|string|max:255|unique:funcoes'
         ]);
 
         $encoding = mb_internal_encoding();
@@ -61,7 +61,7 @@ class FuncaoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -73,26 +73,27 @@ class FuncaoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:funcoes,nome,' . $id . ',id'
+            'nome' => 'required|string|max:255|unique:funcoes,nome,' . $id . ',id'
         ]);
-  
+
         $encoding = mb_internal_encoding();
 
         $funcao = Funcao::find($id);
         $funcao->nome = mb_strtoupper($request->get('nome'), $encoding);
         $funcao->save();
-  
+
         return redirect('/funcoes/' . $funcao->id . '/edit')->with('success', 'Função atualizada com sucesso!');
     }
 
-    public function ativarDesativarFuncao(Request $request) {
+    public function ativarDesativarFuncao(Request $request)
+    {
         $funcao = Funcao::find($request->funcao_id);
         $msg = "Função ativada com sucesso!";
         $situacao = 1;

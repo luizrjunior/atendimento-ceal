@@ -40,13 +40,13 @@ class AtividadeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:atividades'
+            'nome' => 'required|string|max:255|unique:atividades'
         ]);
 
         $encoding = mb_internal_encoding();
@@ -64,7 +64,7 @@ class AtividadeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -77,16 +77,16 @@ class AtividadeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'=>'required|string|max:255|unique:atividades,nome,' . $id . ',id'
+            'nome' => 'required|string|max:255|unique:atividades,nome,' . $id . ',id'
         ]);
-  
+
         $encoding = mb_internal_encoding();
         $somente_colaborador = $request->get('somente_colaborador') ? $request->get('somente_colaborador') : 1;
 
@@ -94,11 +94,12 @@ class AtividadeController extends Controller
         $atividade->somente_colaborador = $somente_colaborador;
         $atividade->nome = mb_strtoupper($request->get('nome'), $encoding);
         $atividade->save();
-  
+
         return redirect('/atividades/' . $atividade->id . '/edit')->with('success', 'Atividade atualizada com sucesso!');
     }
 
-    public function ativarDesativarAtividade(Request $request) {
+    public function ativarDesativarAtividade(Request $request)
+    {
         $atividade = Atividade::find($request->atividade_id);
         $msg = "Atividade ativada com sucesso!";
         $situacao = 1;
