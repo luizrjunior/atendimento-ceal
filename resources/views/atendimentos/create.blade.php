@@ -9,6 +9,11 @@
         '7' => "Domingo",
     );
     $data = date('d/m/Y', strtotime($data_atendimento));
+    $is_valid = "";
+    $paciente = isset($paciente) ? $paciente : null;
+    if ($paciente->id != "") {
+        $is_valid = "is-valid";
+    }
 @endphp
 
 @extends('layouts.app')
@@ -29,7 +34,11 @@
             src="{{ asset('/js/atendimentos/create-edit-atendimento.js') }}"></script>
     <script>
         @if (Session::get('tela') != '')
-        $("#nome").prop('disabled', false);
+        $(document).ready(function () {
+            $("#nome_psq").prop('disabled', false);
+            $("#cpf_psq").mask("999.999.999-99");
+            showProtocoloCPF();
+        });
         @endif
     </script>
 @endsection
@@ -41,9 +50,15 @@
         }
     </style>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
 
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <h4>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor"
                          xmlns="http://www.w3.org/2000/svg">
@@ -102,14 +117,12 @@
                     </div>
                     <div class="card-body">
 
-                        @include('components.alertas')
-
-                        <form method="post" action="{{ route('atendimentos.store') }}" id="formAtendimentosCreate" name="formAtendimentosCreate">
+                        <form method="post" action="{{ route('atendimentos.store') }}" id="formAtendimentosCreate"
+                              name="formAtendimentosCreate">
                             @csrf
 
                             <input type="hidden" id="atendimento_id" name="atendimento_id" value="">
                             <input type="hidden" id="paciente_id" name="paciente_id" value="{{$paciente->id}}">
-                            <input type="hidden" id="nome_psq" name="nome_psq" value="">
 
                             <div class="form-group">
                                 <label for="atividade_id">Atividade</label>
@@ -167,8 +180,8 @@
                                 <label for="situacao">Situação</label>
                                 <select class="form-control @error('situacao') is-invalid @enderror" id="situacao"
                                         name="situacao">
-                                    <option value="1"> AGENDADO</option>
-                                    <option value="2"> FILA DE ESPERA</option>
+                                    <option value="1" @if($situacao == 1) selected @endif> AGENDADO</option>
+                                    <option value="2" @if($situacao == 2) selected @endif> FILA DE ESPERA</option>
                                 </select>
                                 @error('situacao')
                                 <span class="invalid-feedback" role="alert">
@@ -194,9 +207,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="nome">
-                                    Nome Completo (Pessoa Atendida/Paciente)
-                                </label>
+                                <label for="nome">Nome Completo (Pessoa Atendida/Paciente)</label>
                                 @if (Session::get('tela') != '')
                                     <a href="javascript:buscarPessoaAtendimento();" class="float-right">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -205,21 +216,47 @@
                                         </svg>
                                         Buscar
                                     </a>
+                                    <span class="float-right">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                               id="inlineRadio1" value="option1" onclick="showProtocoloCPF();" checked>
+                                        <label class="form-check-label" for="inlineRadio1">Nome</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                               id="inlineRadio2" value="option2" onclick="showProtocoloCPF();">
+                                        <label class="form-check-label" for="inlineRadio2">CPF</label>
+                                    </div>
+                                </span>
                                 @endif
-                                <div class='input-group date'>
-                                    <input type='text' class="form-control @error('paciente_id') is-invalid @enderror"
-                                           id="nome" name="nome" value="{{ $paciente->nome }}"
-                                           placeholder="Digite Nome ou CPF no formato: 999.999.999-99. Clique em buscar."
+                                <div id="divInputTextNome">
+                                    <input type='text'
+                                           class="form-control @error('paciente_id') is-invalid @enderror {{$is_valid}} maiuscula"
+                                           id="nome_psq" name="nome_psq" value="{{ $paciente->nome }}"
+                                           placeholder="Digite Nome Completo (Pessoa Atendida/Paciente). Clique em buscar."
                                            disabled autocomplete="nome">
-                                    <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                                    @error('paciente_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+
+                                    @php
+                                        $display = 'none';
+                                        if ($paciente->id != "") {
+                                            $display = 'block';
+                                        }
+                                    @endphp
+                                    <span id="divSucessoPessoa" class="valid-feedback" role="alert" style="display: {{ $display }};">
+                                        Pessoa validada com sucesso!
+                                    </span>
+
                                 </div>
-                                @error('paciente_id')
-                                <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                                @enderror
+                                <div id="divInputTextCPF" style="display: none">
+                                    <input type='text' class="form-control"
+                                           id="cpf_psq" name="cpf_psq" value=""
+                                           placeholder="Digite Nº CPF (Pessoa Atendida/Paciente). Clique em buscar.">
+                                </div>
                             </div>
 
                             <div class="form-group mb-0">
@@ -227,6 +264,7 @@
                                     Confirmar Atendimento
                                 </button>
                             </div>
+
                         </form>
 
                     </div>

@@ -31,7 +31,7 @@
 
                         <div class="form-group">
                             <label for="numero">Número</label>
-                            <input id="numero" type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" value="{{ $local->numero }}" required autocomplete="numero" autofocus>
+                            <input id="numero" type="text" class="form-control @error('numero') is-invalid @enderror maiuscula" name="numero" value="{{ $local->numero }}" required autocomplete="numero" autofocus>
                             @error('numero')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             <label for="nome">{{ __('Name') }}</label>
-                            <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ $local->nome }}" required autocomplete="nome">
+                            <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror maiuscula" name="nome" value="{{ $local->nome }}" required autocomplete="nome">
                             @error('nome')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

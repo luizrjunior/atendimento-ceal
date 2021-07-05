@@ -54,11 +54,11 @@ class ParticipanteController extends Controller
             'colaborador_id' => 'required',
             'funcao_id' => 'required',
         ], self::MESSAGES_ERRORS);
-  
+
         $participante = new Participante([
             'horario_id' => $request->get('horario_id'),
-            'colaborador_id'=> $request->get('colaborador_id'),
-            'funcao_id'=> $request->get('funcao_id')
+            'colaborador_id' => $request->get('colaborador_id'),
+            'funcao_id' => $request->get('funcao_id')
         ]);
         $participante->save();
 

@@ -32,7 +32,7 @@ class AtendimentoHasOrientacaoController extends Controller
             foreach ($orientacoes as $orientacao) {
                 $atendimento_has_orientacao[$i] = new AtendimentoHasOrientacao([
                     'atendiment_id' => $request->get('atendimento_id'),
-                    'orientacao_id'=> $orientacao
+                    'orientacao_id' => $orientacao
                 ]);
                 $atendimento_has_orientacao[$i]->save();
             }

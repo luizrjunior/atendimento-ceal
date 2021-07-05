@@ -10,11 +10,11 @@ use App\Models\UserHasRole;
 
 class UserHasRoleController extends Controller
 {
-    const MESSAGES_ERRORS = [	
+    const MESSAGES_ERRORS = [
         'role_id.required' => 'O Perfil de Usuário precisa ser informado. Por favor, '
-        . 'você pode verificar isso?',
+            . 'você pode verificar isso?',
         'role_id.unique' => 'O Perfil de Usuário informado já está associado para este usuário. Por favor, '
-        . 'você pode verificar isso?',
+            . 'você pode verificar isso?',
     ];
 
     public function loadRolesUser($user_id)
@@ -30,10 +30,10 @@ class UserHasRoleController extends Controller
                 Rule::unique('users_has_roles')->where('user_id', $request->user_id),
             ],
         ], self::MESSAGES_ERRORS);
-  
+
         $user_has_role = new UserHasRole([
             'user_id' => $request->get('user_id'),
-            'role_id'=> $request->get('role_id')
+            'role_id' => $request->get('role_id')
         ]);
         $user_has_role->save();
 
@@ -42,8 +42,8 @@ class UserHasRoleController extends Controller
 
     public function destroy(Request $request)
     {
-         UserHasRole::where('user_id', $request->uhr_user_id)->where('role_id', $request->uhr_role_id)->delete();
-         return redirect('/users/' . $request->uhr_user_id . '/edit')->with('success', 'Perfil de Usuário removido com sucesso!');
+        UserHasRole::where('user_id', $request->uhr_user_id)->where('role_id', $request->uhr_role_id)->delete();
+        return redirect('/users/' . $request->uhr_user_id . '/edit')->with('success', 'Perfil de Usuário removido com sucesso!');
     }
 
 }

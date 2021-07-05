@@ -39,28 +39,28 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|string|max:255|unique:permissions'
-          ]);
-  
-          $permission = new Permission([
+            'name' => 'required|string|max:255|unique:permissions'
+        ]);
+
+        $permission = new Permission([
             'name' => $request->get('name'),
-            'description'=> $request->get('description')
-          ]);
-          $permission->save();
-  
-          return redirect('/permissions/' . $permission->id . '/edit')->with('success', 'Permissão adicionada com sucesso!');
+            'description' => $request->get('description')
+        ]);
+        $permission->save();
+
+        return redirect('/permissions/' . $permission->id . '/edit')->with('success', 'Permissão adicionada com sucesso!');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -73,21 +73,21 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required|string|max:255|unique:permissions,name,' . $id . ',id'
+            'name' => 'required|string|max:255|unique:permissions,name,' . $id . ',id'
         ]);
-  
+
         $permission = Permission::find($id);
         $permission->name = $request->get('name');
         $permission->description = $request->get('description');
         $permission->save();
-  
+
         return redirect('/permissions/' . $permission->id . '/edit')->with('success', 'Permissão atualizada com sucesso!');
     }
 

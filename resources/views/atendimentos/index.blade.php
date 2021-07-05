@@ -13,7 +13,8 @@
         '2' => "FILA DE ESPERA",
         '3' => "CANCELADO",
         '4' => "CONCLUÍDO",
-        '5' => "LIBERADO"
+        '5' => "LIBERADO",
+        '6' => "EM ANDAMENTO",
     );
     $arrForma = array(
         '0' => "INDEFINIDO",
@@ -23,10 +24,11 @@
     );
     $bgColor = array(
         '1' => "primary",
-        '2' => "danger",
-        '3' => "warning",
+        '2' => "warning",
+        '3' => "danger",
         '4' => "success",
-        '5' => "default"
+        '5' => "info",
+        '6' => "secondary"
     );
 @endphp
 

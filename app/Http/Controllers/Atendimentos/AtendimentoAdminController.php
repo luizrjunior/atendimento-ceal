@@ -75,11 +75,12 @@ class AtendimentoAdminController extends Controller
     {
         $data = $this->filtrosPesquisa($request);
         $atendimentos = Atendimento::select(
-                'atendimentos.id as id', 'atendimentos.situacao as situacao', 'atendimentos.forma as forma', 'atendimentos.data_atendimento as dataAtendimento', 
-                'atividades.nome as nomeAtividade', 'horarios.dia_semana as diaSemana', 
-                'horarios.hora_inicio as horaInicio', 'horarios.hora_termino as horaTermino', 
-                'locais.numero as numeroLocal', 'locais.nome as nomeLocal', 
-                'pacientes.nome as nomePaciente', 'atendentes.nome as nomeAtendente')
+            'atendimentos.id as id', 'atendimentos.situacao as situacao', 'atendimentos.forma as forma',
+            'atendimentos.data_atendimento as dataAtendimento',
+            'atividades.nome as nomeAtividade', 'horarios.dia_semana as diaSemana',
+            'horarios.hora_inicio as horaInicio', 'horarios.hora_termino as horaTermino',
+            'locais.numero as numeroLocal', 'locais.nome as nomeLocal',
+            'pacientes.nome as nomePaciente', 'atendentes.nome as nomeAtendente')
             ->join('horarios', 'atendimentos.horario_id', 'horarios.id')
             ->join('atividades', 'horarios.atividade_id', 'atividades.id')
             ->join('locais', 'horarios.local_id', 'locais.id')
@@ -95,7 +96,7 @@ class AtendimentoAdminController extends Controller
                 if ($data['data_termino_psq'] != "") {
                     $query->where('atendimentos.data_atendimento', '<=', $data['data_termino_psq'] . ' 23:59:59');
                 }
-        
+
                 if ($data['atividade_id_psq'] != "") {
                     $query->where('horarios.atividade_id', $data['atividade_id_psq']);
                 }
@@ -117,9 +118,9 @@ class AtendimentoAdminController extends Controller
                     $query->where('pacientes.nome', 'LIKE', "%" . strtoupper($data['nome_paciente_psq']) . "%");
                 }
             })->orderBy('atendimentos.data_atendimento')->orderBy('pacientes.nome')->paginate($data['totalPage']);
-            // })->orderBy('pessoas.nome')->toSql();
+        // })->orderBy('pessoas.nome')->toSql();
 
-            // dd($atendimentos);
+        // dd($atendimentos);
 
         return view('atendimentos-admin.index', compact('data', 'atendimentos'));
     }
@@ -128,11 +129,6 @@ class AtendimentoAdminController extends Controller
     {
         Session::put('tela', 'create_atendimento_admin');
         return redirect('/home')->with('success', 'Por gentileza, selecione a Atividade do Atendimento!');
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function edit($id)
@@ -148,18 +144,18 @@ class AtendimentoAdminController extends Controller
     {
         $data_atendimento = \DateTime::createFromFormat('d/m/Y', $request->data_atendimento)->format('Y-m-d');
         $request->validate([
-            'horario_id'=>'required',
-            'situacao'=>'required',
-            'forma'=>'different:forma_validate',
-            'atendente_id'=>'required',
-            'paciente_id'=>[
+            'horario_id' => 'required',
+            'situacao' => 'required',
+            'forma' => 'different:forma_validate',
+            'atendente_id' => 'required',
+            'paciente_id' => [
                 'required',
                 Rule::unique('atendimentos')->where(function ($query) use ($request, $id, $data_atendimento) {
                     $query->where('id', "<>", $id)->where('horario_id', "=", $request->horario_id)
-                    ->where('data_atendimento', "=", $data_atendimento);
+                        ->where('data_atendimento', "=", $data_atendimento);
                 }),
             ],
-            'data_atendimento'=>'required|date_format:d/m/Y|after_or_equal:today'
+            'data_atendimento' => 'required|date_format:d/m/Y|after_or_equal:today'
         ], self::MESSAGES_ERRORS);
 
         $atendimento = Atendimento::find($id);
@@ -171,7 +167,7 @@ class AtendimentoAdminController extends Controller
         // NÃO É PERMITIDO ALTERAR O PACIENTE
         // $atendimento->paciente_id = $request->get('paciente_id');
         $atendimento->save();
-  
+
         return redirect('/atendimentos-admin/' . $atendimento->id . '/edit')->with('success', 'Atendimento atualizado com sucesso!');
     }
 
@@ -184,7 +180,7 @@ class AtendimentoAdminController extends Controller
     public function salvarObservacoesAtendimento(Request $request)
     {
         $request->validate([
-            'observacoes'=>'required'
+            'observacoes' => 'required'
         ]);
 
         $atendimento = Atendimento::find($request->atendimento_id);
@@ -194,7 +190,7 @@ class AtendimentoAdminController extends Controller
         return redirect('/atendimentos-admin/' . $atendimento->id . '/edit')->with('success', 'Observação salva com sucesso!');
     }
 
-    public function marcarNovoAtendimento(Request $request) 
+    public function marcarNovoAtendimento(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'forma' => 'different:forma_validate',
@@ -215,6 +211,24 @@ class AtendimentoAdminController extends Controller
         Session::put('paciente_id_atendimento_admin', $atendimento->paciente_id);
 
         $msg = "Atendimento alterado com sucesso!";
+
+        $dados = array();
+        $dados['textoMsg'] = $msg;
+
+        return response()->json($dados, 200);
+    }
+
+    public function cancelarAtendimento(Request $request)
+    {
+        $atendimento = Atendimento::find($request->atendimento_id);
+        $msg = "Atendimento ativado com sucesso!";
+        $situacao = 1;
+        if ($atendimento->situacao == 1) {
+            $msg = "Atendimento desativado com sucesso!";
+            $situacao = 2;
+        }
+        $atendimento->situacao = $situacao;
+        $atendimento->save();
 
         $dados = array();
         $dados['textoMsg'] = $msg;

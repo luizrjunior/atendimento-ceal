@@ -1,6 +1,8 @@
 function validar() {
     $('#carregando').show();
     $("#horario_id").prop('disabled', false);
+    $("#situacao").prop('disabled', false);
+    $("#forma").prop('disabled', false);
     $("#data_atendimento").prop('disabled', false);
 }
 
@@ -9,9 +11,9 @@ function carregarSelectHorarios() {
     $.ajax({
         type: 'POST',
         url: formURL,
-        data: { 
+        data: {
             _token: $("input[name='_token']").val(),
-            atividade_id: $("#atividade_id").val() 
+            atividade_id: $("#atividade_id").val()
         },
         dataType: "json",
         success: function (data) {
@@ -100,25 +102,45 @@ function abrirAbas(expr) {
     }
 }
 
+function showProtocoloCPF() {
+    $('#divInputTextNome').show();
+    $('#divInputTextCPF').hide();
+    $("#cpf_psq").val('');
+    if ($('input:radio[name=inlineRadioOptions]:checked').val() == 'option2') {
+        $('#divInputTextNome').hide();
+        $('#divInputTextCPF').show();
+        $("#nome_psq").val('');
+    }
+}
+
 function buscarPessoaAtendimento() {
+
+    $('#carregando').show();
     var formURL = top.routeBuscarPessoaAtendimento;
     $.ajax({
         type: 'POST',
         url: formURL,
         data: {
             _token: $("input[name='_token']").val(),
-            nome: $("#nome").val()
+            nome_psq: $("#nome_psq").val(),
+            cpf_psq: $("#cpf_psq").val()
         },
         dataType: "json",
         success: function (data) {
             console.log(data);
             if (data.qtde_pessoas == '1') {
+                $('#divInputTextNome').show();
+                $('#divInputTextCPF').hide();
+                $("#cpf_psq").val('');
+
                 $("#paciente_id").val(data.id);
-                $("#nome").val(data.nome);
+                $("#nome_psq").val(data.nome);
+                $('#nome_psq').removeClass('is-invalid');
+                $('#nome_psq').addClass('is-valid');
+                $('#carregando').hide();
             }
             if (data.qtde_pessoas != '1') {
                 //CHAMAR O CADASTRO DE PESSOAS AQUI NESTA PARTE
-                alert('fadsfasd');
                 abrirCadastroPessoas();
             }
         }
@@ -126,16 +148,14 @@ function buscarPessoaAtendimento() {
 }
 
 function abrirCadastroPessoas() {
-    // $('input:hidden[name=_method]').val('');
-    $("#nome_psq").val($("#nome").val());
     $('#formAtendimentosCreate').attr('action', top.routeAbrirCadastroPessoas);
     $("#formAtendimentosCreate").submit();
 }
 
 $(document).ready(function () {
     $("#data_atendimento").mask("99/99/9999");
-    $('#data_atendimento').datepicker({	
-        format: "dd/mm/yyyy",	
+    $('#data_atendimento').datepicker({
+        format: "dd/mm/yyyy",
         language: "pt-BR"
     });
 
@@ -146,5 +166,4 @@ $(document).ready(function () {
     if (top.valorSelectAtividade != "") {
         carregarSelectHorarios();
     }
-
 });

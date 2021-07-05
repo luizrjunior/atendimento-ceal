@@ -29,11 +29,11 @@ class MotivoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'descricao'=>'required|string|max:255|unique:motivos'
+            'descricao' => 'required|string|max:255|unique:motivos'
         ]);
 
         $encoding = mb_internal_encoding();
-  
+
         $motivo = new Motivo([
             'descricao' => mb_strtoupper($request->get('descricao'), $encoding)
         ]);
@@ -51,19 +51,20 @@ class MotivoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'descricao'=>'required|string|max:255|unique:motivos,descricao,' . $id . ',id'
+            'descricao' => 'required|string|max:255|unique:motivos,descricao,' . $id . ',id'
         ]);
 
         $encoding = mb_internal_encoding();
-  
+
         $motivo = Motivo::find($id);
         $motivo->descricao = mb_strtoupper($request->get('descricao'), $encoding);
         $motivo->save();
-  
+
         return redirect('/motivos/' . $motivo->id . '/edit')->with('success', 'Motivo atualizado com sucesso!');
     }
 
-    public function ativarDesativarMotivo(Request $request) {
+    public function ativarDesativarMotivo(Request $request)
+    {
         $motivo = Motivo::find($request->motivo_id);
         $msg = "Motivo ativado com sucesso!";
         $situacao = 1;
