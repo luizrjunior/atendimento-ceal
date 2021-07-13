@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    Sistema de Agendamento de Atendimentos do Centro Espírita André Luiz
+                    Sistema de Atendimentos do Centro Espírita André Luiz
                 </div>
             </div>
         </div>

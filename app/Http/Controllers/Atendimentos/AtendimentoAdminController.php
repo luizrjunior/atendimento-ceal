@@ -127,7 +127,12 @@ class AtendimentoAdminController extends Controller
 
     public function create()
     {
+        Session::put('horario_id', null);
+        Session::put('situacao', null);
+        Session::put('data_atendimento', null);
+        Session::put('paciente_id', null);
         Session::put('tela', 'create_atendimento_admin');
+
         return redirect('/home')->with('success', 'Por gentileza, selecione a Atividade do Atendimento!');
     }
 
@@ -155,7 +160,7 @@ class AtendimentoAdminController extends Controller
                         ->where('data_atendimento', "=", $data_atendimento);
                 }),
             ],
-            'data_atendimento' => 'required|date_format:d/m/Y|after_or_equal:today'
+            'data_atendimento' => 'required|date_format:d/m/Y'
         ], self::MESSAGES_ERRORS);
 
         $atendimento = Atendimento::find($id);

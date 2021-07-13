@@ -36,7 +36,8 @@ class HomeController extends Controller
         }
         if (count($pessoa) == 1) {
             Session::put('pessoa_id', $pessoa[0]->id);
-            $colaborador = Colaborador::where('pessoa_id', $pessoa[0]->id)->get();
+            $colaborador = Colaborador::where('pessoa_id', $pessoa[0]->id)->where('situacao', 1)->get();
+            Session::put('colaborador_id', null);
             if (count($colaborador) > 0) {
                 Session::put('colaborador_id', $colaborador[0]->id);
             }

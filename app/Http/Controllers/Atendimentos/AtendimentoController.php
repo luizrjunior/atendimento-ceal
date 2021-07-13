@@ -104,24 +104,15 @@ class AtendimentoController extends Controller
         ]);
         $atendimento->save();
 
-        Session::put('horario_id', $request->horario_id);
-        Session::put('situacao', $request->situacao);
-        Session::put('data_atendimento', $request->data_atendimento);
-        Session::put('paciente_id', $request->paciente_id);
+        Session::put('horario_id', null);
+        Session::put('situacao', null);
+        Session::put('data_atendimento', null);
+        Session::put('paciente_id', null);
 
         return redirect('/atendimentos/' . $atendimento->id . '/edit')->with('success', 'Atendimento adicionado com sucesso!');
     }
 
     public function edit($id)
-    {
-        $atendimento = Atendimento::find($id);
-        $horario = Horario::find($atendimento->horario_id);
-        $paciente = Pessoa::find($atendimento->paciente_id);
-
-        return view('atendimentos.edit', compact('horario', 'paciente', 'atendimento'));
-    }
-
-    public function editAdmin($id)
     {
         $atendimento = Atendimento::find($id);
         $horario = Horario::find($atendimento->horario_id);
@@ -149,7 +140,7 @@ class AtendimentoController extends Controller
                         ->where('data_atendimento', "=", $data_atendimento);
                 }),
             ],
-            'data_atendimento' => 'required|date_format:d/m/Y|after_or_equal:today',
+            'data_atendimento' => 'required|date_format:d/m/Y',
         ]);
 
         $atendimento = Atendimento::find($id);

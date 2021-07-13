@@ -28,7 +28,12 @@
     </style>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <div class="card uper">
                     <div class="card-header">
                         Adicionar Bloqueio de Atendimento
@@ -42,9 +47,6 @@
                         </a>
                     </div>
                     <div class="card-body">
-
-                        @include('components.alertas')
-
                         <form method="post" action="{{ route('bloqueios.update', $bloqueio->id) }}">
                             @method('PATCH')
                             @csrf

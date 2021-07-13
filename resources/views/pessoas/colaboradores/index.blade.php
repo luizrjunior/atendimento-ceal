@@ -53,9 +53,9 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                     <div class="form-group col-md-6">
                         <label for="situacao_psq">Situação</label>
                         <select class="form-control @error('situacao_psq') is-invalid @enderror" id="situacao_psq" name="situacao_psq">
-                            <option value=""> - - SELECIONE - - </option>
-                            <option value="1">ATIVO</option>
-                            <option value="2">DESATIVADO</option>
+                            <option value=""> - - TODAS - - </option>
+                            <option value="1">ATIVADOS</option>
+                            <option value="2">DESATIVADOS</option>
                         </select>
                         @error('situacao_psq')
                         <span class="invalid-feedback" role="alert">
@@ -91,7 +91,6 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <td><b>Cadastrado em</b></td>
                         <td><b>Nome</b></td>
                         <td><b>Telefone</b></td>
                         <td><b>Bairro</b></td>
@@ -102,7 +101,6 @@ $totalPage = $data['totalPage'] ? $data['totalPage'] : 25;
                 <tbody>
                     @foreach($colaboradores as $colaborador)
                     <tr>
-                        <td>{{date('d/m/Y H:i:s', strtotime($colaborador->created_at))}}</td>
                         <td>{{$colaborador->nome}}</td>
                         <td>{{$colaborador->telefone}}</td>
                         <td>{{$colaborador->bairro}}</td>

@@ -40,12 +40,12 @@ class PessoaAdminController extends Controller
         $pessoas = Pessoa::where(function ($query) use ($data) {
             if ($data['nome_psq'] != "") {
                 $query->where('nome', 'LIKE', "%" . strtoupper($data['nome_psq']) . "%");
+                if (Session::get('tela') == 'create_atendimento_admin') {
+                    $query->orWhere('cpf', $data['nome_psq']);
+                }
             }
             if ($data['cpf_psq'] != "") {
                 $query->where('cpf', $data['cpf_psq']);
-            }
-            if (Session::get('tela') == 'create_atendimento_admin') {
-                $query->orWhere('cpf', $data['nome_psq']);
             }
         })->orderBy('nome')->paginate($data['totalPage']);
 

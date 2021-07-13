@@ -20,7 +20,12 @@
 </style>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
+            @include('components.alertas')
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card uper">
                 <div class="card-header">
                     Adicionar Colaborador
@@ -34,12 +39,8 @@
                     </a>
                 </div>
                 <div class="card-body">
-
-                    @include('components.alertas')
-
                     <form method="post" action="{{ route('colaboradores.store') }}">
                         @csrf
-
                         <input type="hidden" id="pessoa_id" name="pessoa_id" value="">
 
                         @include('pessoas.partials.create-pessoa')

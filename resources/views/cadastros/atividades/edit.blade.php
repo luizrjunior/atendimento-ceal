@@ -21,8 +21,12 @@ $checked = $atividade->somente_colaborador == "2" ? "checked" : "";
 </style>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-
+        <div class="col-md-12">
+            @include('components.alertas')
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card uper">
                 <div class="card-header">
                     Editar Atividade
@@ -44,9 +48,6 @@ $checked = $atividade->somente_colaborador == "2" ? "checked" : "";
                     </a>
                 </div>
                 <div class="card-body">
-
-                    @include('components.alertas')
-
                     <form method="post" action="{{ route('atividades.update', $atividade->id) }}">
                         @method('PATCH')
                         @csrf

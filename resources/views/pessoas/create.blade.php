@@ -15,9 +15,12 @@
     </style>
     <div class="container">
         <div class="row justify-content-center">
-            @include('components.alertas')
-
-            <div class="col-md-8">
+            <div class="col-md-12">
+                @include('components.alertas')
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
                 <div class="card uper">
                     <div class="card-header">
                         Adicionar Dados Cadastrais
