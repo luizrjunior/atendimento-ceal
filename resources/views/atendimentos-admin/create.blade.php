@@ -138,7 +138,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="nome">Nome Atendido</label>
+                                <label for="nome">Nome Assistido</label>
                                 <div class='input-group date'>
                                     <input type='text' class="form-control @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ $pessoa->nome }}" disabled

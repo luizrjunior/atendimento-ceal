@@ -30,7 +30,12 @@
         '5' => "LIBERADO",
         '6' => "EM ANDAMENTO"
     );
+    $disabledBtnAtualizar = "";
+    $atendimento = isset($atendimento) ? $atendimento : null;
     $data_atendimento = date('d/m/Y', strtotime($atendimento->data_atendimento));
+    if ($atendimento->situacao == 3 || $atendimento->situacao == 4) {
+        $disabledBtnAtualizar = "disabled";
+    }
 @endphp
 
 @extends('layouts.app')
@@ -258,7 +263,7 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary" onclick="return validar();">
+                                <button type="submit" class="btn btn-primary" onclick="return validar();" {{ $disabledBtnAtualizar }}>
                                     Atualizar
                                 </button>
                                 <button type="button" class="btn btn-info" onclick="marcarNovoAtendimento();">
