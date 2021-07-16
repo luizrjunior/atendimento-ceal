@@ -164,20 +164,13 @@ class HorarioController extends Controller
         $atividade_id = $request->atividade_id;
         $atividade = Atividade::find($atividade_id);
 
-        /**
-         * 1º - FAZES LOOP DE 30 DIAS A PARTIR DA DATA ATUAL
-         * 2º - PEGAR SOMENTE AS DATAS EM QUE O DIA DA SEMANA CORRESPONDENTE AO DIA SELECINADO PELO USUARIO
-         */
-
         $dtInicial = date('d/m/Y');
-        $dtFinal = date("d/m/Y", mktime(0, 0, 0, (date('m') + 1), 0, date('Y')));
+        $timestamp = strtotime("+15 days");
+        $dtFinal = date('d/m/Y', $timestamp);
 
-        //Star date
         $dateStart = $this->transformDate($dtInicial);
-        //End date
         $dateEnd = $this->transformDate($dtFinal);
 
-        //Prints days according to the interval
         $dateRanges = array();
         $datas = array();
         $i = 0;
@@ -189,45 +182,14 @@ class HorarioController extends Controller
                 $texto1 = $arrDiaSemana[$horario[0]->dia_semana] . ' Dia ' . $dateStart->format('d/m/Y');
                 $texto2 = 'De ' . substr($horario[0]->hora_inicio, 0, -3) . ' horas até ' . substr($horario[0]->hora_termino, 0, -3) . ' horas';
                 $texto3 = 'Local: ' . $horario[0]->local->nome . ' - ' . $horario[0]->local->numero;
+
                 $datas[$i]['horario_id'] = $horario[0]->id;
                 $datas[$i]['data_atendimento'] = $dateStart->format('d/m/Y');
                 $datas[$i]['numero_vagas'] = $horario[0]->numero_vagas;
                 $datas[$i]['numero_vagas_espera'] = $horario[0]->numero_vagas_espera;
-                if ($horario[0]->dia_semana == 1 && $dateWeed == 'Mon') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
-                if ($horario[0]->dia_semana == 2 && $dateWeed == 'Tue') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
-                if ($horario[0]->dia_semana == 3 && $dateWeed == 'Wed') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
-                if ($horario[0]->dia_semana == 4 && $dateWeed == 'Thu') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
-                if ($horario[0]->dia_semana == 5 && $dateWeed == 'Fri') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
-                if ($horario[0]->dia_semana == 6 && $dateWeed == 'Sat') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
-                if ($horario[0]->dia_semana == 7 && $dateWeed == 'Sun') {
-                    $datas[$i]['texto1'] = $texto1;
-                    $datas[$i]['texto2'] = $texto2;
-                    $datas[$i]['texto3'] = $texto3;
-                }
+                $datas[$i]['texto1'] = $texto1;
+                $datas[$i]['texto2'] = $texto2;
+                $datas[$i]['texto3'] = $texto3;
                 $i++;
             }
             $dateRanges[] = $dateStart->format('D d/m');
