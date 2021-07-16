@@ -207,7 +207,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="nome">Nome Completo (Pessoa Atendida/Paciente)</label>
+                                <label for="nome">Nome Completo Assistida(o)</label>
                                 @if (Session::get('tela') != '')
                                     <a href="javascript:buscarPessoaAtendimento();" class="float-right">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -233,7 +233,7 @@
                                     <input type='text'
                                            class="form-control @error('paciente_id') is-invalid @enderror {{$is_valid}} maiuscula"
                                            id="nome_psq" name="nome_psq" value="{{ $paciente->nome }}"
-                                           placeholder="Digite Nome Completo (Pessoa Atendida/Paciente). Clique em buscar."
+                                           placeholder="Digite Nome Completo Assistida(o). Clique em buscar."
                                            disabled autocomplete="nome">
                                     @error('paciente_id')
                                     <span class="invalid-feedback" role="alert">
@@ -255,7 +255,7 @@
                                 <div id="divInputTextCPF" style="display: none">
                                     <input type='text' class="form-control"
                                            id="cpf_psq" name="cpf_psq" value=""
-                                           placeholder="Digite Nº CPF (Pessoa Atendida/Paciente). Clique em buscar.">
+                                           placeholder="Digite Nº CPF Assistida(o). Clique em buscar.">
                                 </div>
                             </div>
 

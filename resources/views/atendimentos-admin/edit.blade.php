@@ -188,7 +188,7 @@
                             <div class="form-group">
                                 <label for="situacao">Situação Atendimento</label>
                                 <select class="form-control @error('situacao') is-invalid @enderror" id="situacao"
-                                        name="situacao">
+                                        name="situacao" {{ $disabledBtnAtualizar }}>
                                     <option value="1"> AGENDADO</option>
                                     <option value="2"> FILA DE ESPERA</option>
                                     <option value="3"> CANCELADO</option>
@@ -207,7 +207,7 @@
                                  class="form-group {{ $errors->has('forma') ? 'has-error' : '' }}">
                                 <label for="forma">Forma de Atendimento</label>
                                 <select class="form-control @error('forma') is-invalid @enderror" id="forma"
-                                        name="forma">
+                                        name="forma" {{ $disabledBtnAtualizar }}>
                                     <option value="0"> INDEFINIDO</option>
                                     <option value="1"> ATENDIMENTO VIRTUAL</option>
                                     <option value="2"> ATENDIMENTO PRESENCIAL</option>
@@ -227,7 +227,7 @@
                                  class="form-group {{ $errors->has('atendente_id') ? 'has-error' : '' }}">
                                 <label for="atendente_id">Atendente Responsável</label>
                                 <select class="form-control @error('atendente_id') is-invalid @enderror"
-                                        id="atendente_id" name="atendente_id" required>
+                                        id="atendente_id" name="atendente_id" required {{ $disabledBtnAtualizar }}>
                                     <option value=""> - - NENHUM - -</option>
                                     @php
                                         $colaboradorController = new \App\Http\Controllers\Pessoas\ColaboradorController();
@@ -246,7 +246,7 @@
                             </div>
 
                             <div class="form-group" style="display: none;">
-                                <label for="nome">Nome Completo (Pessoa Atendida/Paciente)</label>
+                                <label for="nome">Nome Completo Assistida(o)</label>
                                 <div class='input-group date'>
                                     <input type='text' class="form-control @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ $paciente->nome }}" disabled
@@ -266,10 +266,10 @@
                                 <button type="submit" class="btn btn-primary" onclick="return validar();" {{ $disabledBtnAtualizar }}>
                                     Atualizar
                                 </button>
-                                <button type="button" class="btn btn-info" onclick="marcarNovoAtendimento();">
+                                <button type="button" class="btn btn-info" onclick="marcarNovoAtendimento();" {{ $disabledBtnAtualizar }}>
                                     Marcar Novo Atendimento
                                 </button>
-                                <button type="button" class="btn btn-danger" onclick="cancelarAtendimento();">
+                                <button type="button" class="btn btn-danger" onclick="cancelarAtendimento();" {{ $disabledBtnAtualizar }}>
                                     Cancelar Atendimento
                                 </button>
                             </div>
@@ -356,7 +356,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" {{ $disabledBtnAtualizar }}>
                                     Salvar
                                 </button>
                             </div>
@@ -443,7 +443,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" {{ $disabledBtnAtualizar }}>
                                     Salvar
                                 </button>
                             </div>
@@ -484,7 +484,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" {{ $disabledBtnAtualizar }}>
                                     Salvar
                                 </button>
                             </div>

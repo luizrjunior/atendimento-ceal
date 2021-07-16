@@ -18,7 +18,7 @@ class AtendimentoController extends Controller
         'forma.different' => 'O campo Forma de Atendimento precisa ser definido. '
             . 'Por favor, você pode verificar isso?',
 
-        'paciente_id.required' => 'Não encontramos a Pessoa Atendida/Paciente. Por favor, '
+        'paciente_id.required' => 'Não encontramos a Assistida(o). Por favor, '
             . 'você pode verificar isso? Clique em buscar.',
 
         'paciente_id.unique' => 'Permissão Negada! Já existe atendimento registrado para este dia da semana. Por favor, '
