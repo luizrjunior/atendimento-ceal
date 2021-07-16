@@ -246,7 +246,7 @@
                             </div>
 
                             <div class="form-group" style="display: none;">
-                                <label for="nome">Nome Completo Assistida(o)</label>
+                                <label for="nome">Assistida(o)</label>
                                 <div class='input-group date'>
                                     <input type='text' class="form-control @error('nome') is-invalid @enderror"
                                            id="nome" name="nome" value="{{ $paciente->nome }}" disabled

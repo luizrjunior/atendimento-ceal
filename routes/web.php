@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    Session::put('horario_id', null);
+    Session::put('situacao', null);
+    Session::put('data_atendimento', null);
+    Session::put('paciente_id', null);
+    Session::put('tela', null);
+
     return view('welcome');
 });
 

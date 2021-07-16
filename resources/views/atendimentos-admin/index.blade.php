@@ -180,7 +180,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="nome_paciente_psq">{{ __('Name') }} do Paciente</label>
+                                    <label for="nome_paciente_psq">{{ __('Name') }} da Assistida(o)</label>
                                     <input id="nome_paciente_psq" type="text" class="form-control maiuscula"
                                            name="nome_paciente_psq" value="{{ $nome_paciente_psq }}"
                                            autocomplete="nome_paciente_psq">
@@ -207,7 +207,7 @@
                                             <td><b>Dia e Horário</b></td>
                                             {{-- <td><b>Local</b></td>
                                             <td><b>Forma</b></td> --}}
-                                            <td><b>Paciente</b></td>
+                                            <td><b>Assistida(o)</b></td>
                                             <td><b>Situação</b></td>
                                             <td colspan="2"><b>Ações</b></td>
                                         </tr>
