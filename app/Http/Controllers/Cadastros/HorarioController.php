@@ -165,7 +165,7 @@ class HorarioController extends Controller
         $atividade = Atividade::find($atividade_id);
 
         $dtInicial = date('d/m/Y');
-        $timestamp = strtotime("+15 days");
+        $timestamp = strtotime("+30 days");
         $dtFinal = date('d/m/Y', $timestamp);
 
         $dateStart = $this->transformDate($dtInicial);
